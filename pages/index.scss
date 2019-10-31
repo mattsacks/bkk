@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 250px;
+  margin: 0 auto;
+}
+
+.heading {
+  color: var(--text-color);
+  font-family: "VT323";
+  font-size: 4rem;
+
+  &.noAnimation {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  span {
+    display: block;
+    opacity: 0;
+  }
+}

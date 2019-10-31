@@ -1,0 +1,48 @@
+.loginForm {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // min-height: 100vh;
+}
+
+.input {
+  color: var(--text-color);
+  background: var(--input-background);
+  width: 250px;
+  margin-bottom: 32px;
+  padding: 8px;
+  border: 2px solid var(--border-color);
+  box-shadow: 4px 4px var(--border-color);
+  transition: box-shadow linear 150ms;
+
+  &::placeholder {
+    // color: darken(white, 35%);
+  }
+
+  &:focus {
+    box-shadow: 8px 8px var(--border-color);
+  }
+}
+
+.submit {
+  padding: 8px;
+  width: 270px; // FIXME
+
+  &:hover {
+    box-shadow: 8px 8px var(--border-color);
+    cursor: pointer;
+  }
+
+  &[disabled] {
+    color: darken(white, 35%);
+    box-shadow: none;
+    // background-image: repeating-linear-gradient(
+    //   45deg,
+    //   white,
+    //   white 15px,
+    //   black 15px,
+    //   black 30px
+    // );
+  }
+}
