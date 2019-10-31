@@ -36,3 +36,9 @@ $unit: 8px;
   background: var(--text-color);
   color: var(--input-background);
 }
+
+.songs {
+  color: var(--text-color);
+  max-height: 75vh;
+  overflow-y: scroll;
+}

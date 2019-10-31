@@ -44,19 +44,21 @@ function Index() {
 
   return (
     <div className={styles.container}>
-      <h1
-        className={classNames(styles.heading, {
-          [styles.noAnimation]: hasSeenAnimation
-        })}
-      >
-        <span>Baby</span>
-        <span>Ketten</span>
-        <span>Karaoke</span>
-      </h1>
       {songs != null ? (
         <SongList songs={songs} />
       ) : (
-        <LoginForm onLogin={setLoggedIn} />
+        <div>
+          <h1
+            className={classNames(styles.heading, {
+              [styles.noAnimation]: hasSeenAnimation
+            })}
+          >
+            <span>Baby</span>
+            <span>Ketten</span>
+            <span>Karaoke</span>
+          </h1>
+          <LoginForm onLogin={setLoggedIn} />
+        </div>
       )}
     </div>
   );
