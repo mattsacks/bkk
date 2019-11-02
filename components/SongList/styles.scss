@@ -33,16 +33,17 @@
 .artist {
   background-color: var(--header-background);
   color: var(--header-text-color);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: bold;
-  padding: $unit ($unit / 2);
+  padding: $unit ($unit * 1.5);
   position: sticky;
   top: 0;
 }
 
 .songButton {
   background: var(--input-background);
+  color: var(--text-color);
   font-size: 1rem;
-  padding: ($unit * 1.5) ($unit / 2);
+  padding: ($unit * 1.5);
   text-transform: capitalize;
 }
