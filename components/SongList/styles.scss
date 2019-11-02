@@ -1,44 +1,48 @@
-$unit: 8px;
+@import "~lib/vars";
 
-.artist, .song {
+.songList {
+  border: 2px solid var(--border-color);
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
   text-transform: capitalize;
 }
 
-.artist {
-  background: var(--input-background);
-  font-size: 1.3rem;
-  font-weight: 800;
-  padding: $unit * 2;
-  position: sticky;
-  top: 0;
-
-  @media (prefers-color-scheme: dark) {
-    background: var(--input-background);
-    color: var(--text-color);
-  }
-}
-
-.song {
-  background: var(--input-background);
-  border-bottom: 0.5px solid var(--border-color);
-  margin: 0;
-  padding: $unit * 2;
+.searchSongs {
+  background-color: var(--input-background);
+  color: var(--text-color);
   width: 100%;
-  text-align: left;
-
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--text-color);
-  }
-}
-
-.adding {
-  background: var(--text-color);
-  color: var(--input-background);
 }
 
 .songs {
   color: var(--text-color);
-  max-height: 75vh;
-  overflow-y: scroll;
+}
+
+.songButton {
+  border-bottom: 2px solid var(--border-color);
+  display: block;
+  font-size: 1rem;
+  text-align: left;
+  width: 100%;
+
+  &:last-child {
+    border-bottom: 0 none;
+  }
+}
+
+.artist {
+  background-color: var(--header-background);
+  color: var(--header-text-color);
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: $unit ($unit / 2);
+  position: sticky;
+  top: 0;
+}
+
+.songButton {
+  background: var(--input-background);
+  font-size: 1rem;
+  padding: ($unit * 1.5) ($unit / 2);
+  text-transform: capitalize;
 }

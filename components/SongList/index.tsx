@@ -36,7 +36,7 @@ function SongList(props: { songs: Song[] }) {
   const fuse = new Fuse(songs, fuseOptions);
 
   // Group songs by artist
-  const groupedByArtist = songs.reduce((grouped, song: Song) => {
+  const groupedByArtist = filteredSongs.reduce((grouped, song: Song) => {
     if (grouped[song.artist] == undefined) {
       grouped[song.artist] = [];
     }
@@ -47,19 +47,38 @@ function SongList(props: { songs: Song[] }) {
   }, {});
 
   const songsByArtist = [];
-  const songElements = filteredSongs.map((filteredSong) => {
-    return (
-      <button onClick={() => addToQueue(filteredSong)}>
-        <b>{filteredSong.artist}</b>
-        {filteredSong.name}
-      </button>
+  for (const artist in groupedByArtist) {
+    const songElements = [];
+
+    for (const song of groupedByArtist[artist]) {
+      songElements.push(
+        <button
+          className={styles.songButton}
+          key={song.id}
+          onClick={() => addToQueue(song)}
+        >
+          <div className={styles.song}>{song.name}</div>
+        </button>
+      );
+    }
+
+    songsByArtist.push(
+      <div key={artist}>
+        <div className={styles.artist}>{artist}</div>
+        {songElements}
+      </div>
     );
-  });
+  }
 
   return (
-    <div>
-      <input onChange={searchSongs} type="search" placeholder="search songz" />
-      <div className={styles.songs}>{songElements}</div>
+    <div className={styles.songList}>
+      <input
+        className={styles.searchSongs}
+        onChange={searchSongs}
+        type="text"
+        placeholder="search songz"
+      />
+      <div className={styles.songs}>{songsByArtist}</div>
     </div>
   );
 }

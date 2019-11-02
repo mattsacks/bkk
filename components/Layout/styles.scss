@@ -1,24 +1,30 @@
+@import "~lib/vars";
 @import "~normalize.css";
 @import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
 
-$font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-$font-size: 24px;
-
-$light-grey: #f2f5f7;
-
 :root {
   --border-color: black;
+  --header-background: black;
+  --header-text-color: white;
   --input-background: white;
   --text-color: black;
+  --unit: $unit;
 
   @media (prefers-color-scheme: dark) {
     --border-color: white;
+    --header-background: white;
+    --header-text-color: black;
     --input-background: black;
     --text-color: white;
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
+  font-size: $font-size;
   @media (prefers-color-scheme: dark) {
     background: black;
   }
@@ -29,7 +35,6 @@ body {
   background-image: url("/background-light.png");
   background-repeat: repeat;
   font-family: $font-family;
-  font-size: $font-size;
   height: 100vh;
   transform: translateZ(0);
   will-change: background-position;
@@ -41,7 +46,12 @@ body {
 
 button {
   -webkit-appearance: none;
-  border: 0 none;
+  appearance: none;
+  border: none;
+  outline: none;
+}
+
+input {
   appearance: none;
 }
 
