@@ -2,8 +2,8 @@
 
 .songList {
   border: 2px solid var(--border-color);
-  margin: 0 auto;
-  max-width: 800px;
+  margin: 2rem auto;
+  max-width: 690px; // nice
   width: 100%;
   text-transform: capitalize;
 }
@@ -34,16 +34,25 @@
   background-color: var(--header-background);
   color: var(--header-text-color);
   font-size: 0.75rem;
-  font-weight: bold;
+  font-weight: bolder;
   padding: $unit ($unit * 1.5);
   position: sticky;
   top: 0;
 }
 
 .songButton {
+  align-items: center;
   background: var(--input-background);
   color: var(--text-color);
+  display: flex;
   font-size: 1rem;
+  justify-content: space-between;
   padding: ($unit * 1.5);
   text-transform: capitalize;
+}
+
+.songIcon {
+  $size: $unit * 2;
+  height: $size;
+  width: $size;
 }

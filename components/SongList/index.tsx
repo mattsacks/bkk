@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SVG from "react-inlinesvg";
 import Fuse from "fuse.js";
 import request from "lib/request";
 import { Song } from "lib/types";
@@ -15,7 +16,6 @@ async function addToQueue(song: Song) {
 
 function SongList(props: { songs: Song[] }) {
   const { songs } = props;
-  const [addingTrack, setAddingTrack] = useState(-1);
   const [filteredSongs, setFilteredSongs] = useState([]);
 
   function searchSongs(event) {
@@ -58,6 +58,7 @@ function SongList(props: { songs: Song[] }) {
           onClick={() => addToQueue(song)}
         >
           <div className={styles.song}>{song.name}</div>
+          <SVG className={styles.songIcon} src="/right-chevron.svg" />
         </button>
       );
     }
