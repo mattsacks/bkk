@@ -64,7 +64,7 @@ function SongList(props: { songs: Song[] }) {
     }
 
     songsByArtist.push(
-      <div key={artist}>
+      <div className={styles.artistGroup} key={artist}>
         <div className={styles.artist}>{artist}</div>
         {songElements}
       </div>

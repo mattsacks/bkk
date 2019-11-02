@@ -1,7 +1,6 @@
 @import "~lib/vars";
 
 .songList {
-  border: 2px solid var(--border-color);
   margin: 2rem auto;
   max-width: 690px; // nice
   width: 100%;
@@ -11,10 +10,14 @@
 .searchSongs {
   background-color: var(--input-background);
   color: var(--text-color);
+  position: sticky;
+  top: 0;
   width: 100%;
+  z-index: 2;
 }
 
 .songs {
+  margin-top: 1rem;
   color: var(--text-color);
 }
 
@@ -30,6 +33,11 @@
   }
 }
 
+.artistGroup {
+  margin-bottom: 1rem;
+  border: 2px solid var(--border-color);
+}
+
 .artist {
   background-color: var(--header-background);
   color: var(--header-text-color);
@@ -37,7 +45,7 @@
   font-weight: bolder;
   padding: $unit ($unit * 1.5);
   position: sticky;
-  top: 0;
+  top: $unit * 4;
 }
 
 .songButton {
