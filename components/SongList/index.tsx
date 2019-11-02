@@ -47,41 +47,12 @@ function SongList(props: { songs: Song[] }) {
   }, {});
 
   const songsByArtist = [];
-  // for (const artist in groupedByArtist) {
-  //   const songElements = groupedByArtist[artist].map((artistSong) => {
-  //     let className =
-  //       artistSong.id == addingTrack
-  //         ? `${styles.song} ${styles.adding}`
-  //         : styles.song;
-
-  //     return (
-  //       <button
-  //         className={className}
-  //         key={`${artist}-${artistSong.id}`}
-  //         onClick={() => {
-  //           setAddingTrack(artistSong.id);
-  //           addToQueue(artistSong).then(() => setAddingTrack(-1));
-  //         }}
-  //       >
-  //         {artistSong.name} {artistSong.tags}
-  //       </button>
-  //     );
-  //   });
-  //   // {songElements}
-
-  //   songsByArtist.push(
-  //     <div key={artist}>
-  //       <div className={styles.artist}>{artist}</div>
-  //     </div>
-  //   );
-  // }
-
-  const songElements = filteredSongs.map((song) => {
+  const songElements = filteredSongs.map((filteredSong) => {
     return (
-      <div>
-        <b>{song.artist}</b>
-        {song.name}
-      </div>
+      <button onClick={() => addToQueue(filteredSong)}>
+        <b>{filteredSong.artist}</b>
+        {filteredSong.name}
+      </button>
     );
   });
 

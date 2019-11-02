@@ -12,7 +12,7 @@ let hasSeenAnimation = false;
 
 function Index() {
   const [isLoggedIn, setLoggedIn] = useLoggedIn();
-  const [songs, setSongs] = useState(undefined);
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     async function getSongs() {
@@ -42,26 +42,29 @@ function Index() {
     }
   }, [isLoggedIn]);
 
-  return (
-    <div className={styles.container}>
-      {songs != null ? (
-        <SongList songs={songs} />
-      ) : (
-        <div>
-          <h1
-            className={classNames(styles.heading, {
-              [styles.noAnimation]: hasSeenAnimation
-            })}
-          >
-            <span>Baby</span>
-            <span>Ketten</span>
-            <span>Karaoke</span>
-          </h1>
-          <LoginForm onLogin={setLoggedIn} />
-        </div>
-      )}
-    </div>
-  );
+  // Don't render anything for the initial page
+  if (!process.browser) {
+    return null;
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div>
+        <h1
+          className={classNames(styles.heading, {
+            [styles.noAnimation]: hasSeenAnimation
+          })}
+        >
+          <span>Baby</span>
+          <span>Ketten</span>
+          <span>Karaoke</span>
+        </h1>
+        <LoginForm onLogin={setLoggedIn} />
+      </div>
+    );
+  }
+
+  return <SongList songs={songs} />;
 }
 
 export default Index;
