@@ -28,14 +28,20 @@
   text-align: left;
   width: 100%;
 
-  &:last-child {
-    border-bottom: 0 none;
+  @media (min-width: 700px) {
+    &:last-child {
+      border-bottom: 0 none;
+    }
   }
 }
 
 .artistGroup {
   margin-bottom: 2rem;
   border: 2px solid var(--border-color);
+
+  @media (max-width: 700px) {
+    border: none;
+  }
 }
 
 .artist {

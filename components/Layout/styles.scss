@@ -8,7 +8,7 @@
   --header-text-color: white;
   --input-background: white;
   --text-color: black;
-  --unit: $unit;
+  --unit: #{$unit};
 
   @media (prefers-color-scheme: dark) {
     --border-color: #2b2b2b;
