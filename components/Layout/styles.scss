@@ -10,6 +10,7 @@ $background-height: 896px;
   --header-text-color: white;
   --input-background: white;
   --text-color: black;
+  --text-shadow: black;
   --unit: #{$unit};
 
   @media (prefers-color-scheme: dark) {
@@ -60,6 +61,11 @@ body {
   @media (prefers-color-scheme: dark) {
     background-image: url("/background-dark.png");
   }
+}
+
+main {
+  backdrop-filter: blur(5px);
+  height: 100vh;
 }
 
 button {

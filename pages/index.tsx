@@ -24,22 +24,6 @@ function Index() {
     if (loggedIn.authed) {
       getSongs();
     }
-
-    // Animation
-    if (!hasSeenAnimation) {
-      const ANIMATION_DURATION = 1000;
-
-      anime({
-        delay: anime.stagger(ANIMATION_DURATION / 3),
-        duration: ANIMATION_DURATION,
-        easing: "spring(1, 90, 30, 0)",
-        opacity: 1,
-        targets: `.${styles.heading} span`,
-        translateX: ["-75px", 0]
-      });
-
-      hasSeenAnimation = true;
-    }
   }, [loggedIn.authed]);
 
   // Don't render anything for the initial page
@@ -49,15 +33,13 @@ function Index() {
 
   if (!loggedIn.authed) {
     return (
-      <div>
+      <div className={styles.container}>
         <h1
           className={classNames(styles.heading, {
-            [styles.noAnimation]: hasSeenAnimation
+            [styles.noAnimation]: !hasSeenAnimation
           })}
         >
-          <span>Baby</span>
-          <span>Ketten</span>
-          <span>Karaoke</span>
+            baby ketten karaoke
         </h1>
         <LoginForm loggedIn={loggedIn} onLogin={setLoggedIn} />
       </div>
