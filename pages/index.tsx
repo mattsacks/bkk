@@ -11,7 +11,7 @@ import styles from "./index.scss";
 let hasSeenAnimation = false;
 
 function Index() {
-  const [isLoggedIn, setLoggedIn] = useLoggedIn();
+  const [loggedIn, setLoggedIn] = useLoggedIn();
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function Index() {
       setSongs(songs);
     }
 
-    if (isLoggedIn) {
+    if (loggedIn.authed) {
       getSongs();
     }
 
@@ -40,14 +40,14 @@ function Index() {
 
       hasSeenAnimation = true;
     }
-  }, [isLoggedIn]);
+  }, [loggedIn.authed]);
 
   // Don't render anything for the initial page
   if (!process.browser) {
     return null;
   }
 
-  if (!isLoggedIn) {
+  if (!loggedIn.authed) {
     return (
       <div>
         <h1
@@ -59,7 +59,7 @@ function Index() {
           <span>Ketten</span>
           <span>Karaoke</span>
         </h1>
-        <LoginForm onLogin={setLoggedIn} />
+        <LoginForm loggedIn={loggedIn} onLogin={setLoggedIn} />
       </div>
     );
   }

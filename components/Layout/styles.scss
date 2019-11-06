@@ -2,6 +2,8 @@
 @import "~normalize.css";
 @import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
 
+$background-height: 896px;
+
 :root {
   --border-color: black;
   --header-background: black;
@@ -11,8 +13,8 @@
   --unit: #{$unit};
 
   @media (prefers-color-scheme: dark) {
-    --border-color: #2b2b2b;
-    --header-background: #2b2b2b;
+    --border-color: white;
+    --header-background: white;
     // --header-text-color: white;
     --input-background: black;
     --text-color: white;
@@ -34,16 +36,26 @@ html {
 html, body {
   margin: 0;
   min-height: 100vh;
+  overflow: hidden;
   padding: 0;
 }
 
 body {
-  animation: background 20s linear infinite forwards;
-  background-image: url("/background-light.png");
-  background-repeat: repeat;
   font-family: $font-family;
   transform: translateZ(0);
-  will-change: background-position;
+}
+
+.background {
+  // animation: background 20s linear infinite forwards;
+  background-image: url("/background-light.png");
+  background-repeat: repeat;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: -$background-height;
+  transform: translateZ(0);
+  z-index: -1;
 
   @media (prefers-color-scheme: dark) {
     background-image: url("/background-dark.png");
@@ -58,15 +70,13 @@ button {
 }
 
 input {
+  -webkit-appearance: none;
   appearance: none;
+  border-radius: 0;
 }
 
 @keyframes background {
-  from {
-    background-position: 0 0;
-  }
-
   to {
-    background-position: 0 896px;
+    transform: translateY(#{$background-height});
   }
 }

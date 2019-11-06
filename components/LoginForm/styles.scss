@@ -3,13 +3,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // min-height: 100vh;
+  margin: 0 auto;
+  width: 250px;
 }
 
 .input {
   color: var(--text-color);
   background: var(--input-background);
-  width: 250px;
+  width: 100%;
   margin-bottom: 32px;
   padding: 8px;
   border: 2px solid var(--border-color);
@@ -27,7 +28,7 @@
 
 .submit {
   padding: 8px;
-  width: 270px; // FIXME
+  width: 100%;
 
   &:hover {
     box-shadow: 8px 8px var(--border-color);
@@ -45,4 +46,12 @@
     //   black 30px
     // );
   }
+}
+
+.statusText {
+  color: var(--text-color);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
 }

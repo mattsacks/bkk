@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import { withFormik, FormikProps } from "formik";
 import styles from "./styles.scss";
@@ -10,6 +10,7 @@ interface LoginFormValues {
 }
 
 interface LoginFormProps {
+  loggedIn: any;
   onLogin: LoginRequest;
 }
 
@@ -18,15 +19,37 @@ function LoginForm(props: LoginFormProps & FormikProps<LoginFormValues>) {
     errors,
     handleChange,
     handleSubmit,
+    loggedIn,
     isValid,
     onLogin,
     values
   } = props;
 
+  const [isLoggingIn, setLoggingInState] = useState(loggedIn.authed);
+
+  const submitForm = useCallback(
+    (e) => {
+      e.preventDefault();
+      setLoggingInState(true);
+      handleSubmit();
+    },
+    [loggedIn.authed]
+  );
+
+  useEffect(() => {
+    if (loggedIn.authed && isLoggingIn) {
+      setLoggingInState(false);
+    } else if (loggedIn.status && isLoggingIn) {
+      setLoggingInState(false);
+    }
+  }, [loggedIn]);
+
   return (
-    <form className={styles.loginForm} onSubmit={handleSubmit}>
+    <form className={styles.loginForm} onSubmit={submitForm}>
       <input
         autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="none"
         name="name"
         className={styles.input}
         onChange={handleChange}
@@ -37,6 +60,8 @@ function LoginForm(props: LoginFormProps & FormikProps<LoginFormValues>) {
       />
       <input
         autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="none"
         name="room"
         className={styles.input}
         onChange={handleChange}
@@ -47,12 +72,14 @@ function LoginForm(props: LoginFormProps & FormikProps<LoginFormValues>) {
       />
       <button
         className={classNames(styles.input, styles.submit)}
-        disabled={!isValid}
-        onClick={() => handleSubmit}
+        disabled={!isValid || isLoggingIn}
         type="submit"
       >
-        sing songz!
+        {isLoggingIn ? "loading…" : "sing songz!"}
       </button>
+      {loggedIn.status && (
+        <div className={styles.statusText}>{loggedIn.status}</div>
+      )}
     </form>
   );
 }

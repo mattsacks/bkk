@@ -7,10 +7,16 @@ export interface LoginRequest {
   (name: string, room: string): Promise<boolean | string>;
 }
 
-function useLoggedIn(): [boolean, LoginRequest] {
-  const [isLoggedIn, setLoggedin] = React.useState(
-    Cookies.get("mathis_user_is_logged_in") != undefined
-  );
+interface LoggedInState {
+  authed: boolean;
+  status: string | null;
+}
+
+function useLoggedIn(): [LoggedInState, LoginRequest] {
+  const [loggedIn, setLoggedIn] = React.useState<LoggedInState>({
+    authed: Cookies.get("mathisUserIsLoggedIn") != undefined,
+    status: null
+  });
 
   const loginUser: LoginRequest = async function login(name, room) {
     const response = await request("user/signin", {
@@ -22,15 +28,21 @@ function useLoggedIn(): [boolean, LoginRequest] {
     });
 
     if (response.status === 200) {
-      Cookies.set("mathis_user_is_logged_in", true);
-      setLoggedin(true);
+      Cookies.set("mathisUserIsLoggedIn", true);
+      setLoggedIn({
+        authed: true,
+        status: null
+      });
       return true;
     } else {
-      return false;
+      setLoggedIn({
+        authed: false,
+        status: response.statusText
+      });
     }
-  }
+  };
 
-  return [isLoggedIn, loginUser];
+  return [loggedIn, loginUser];
 }
 
 export default useLoggedIn;
