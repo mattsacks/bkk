@@ -1,44 +1,27 @@
-import React, { useEffect, useState } from "react";
-import anime from "animejs";
+import React, { useState } from "react";
 import classNames from "classnames";
 import { Song } from "lib/types";
 import request from "lib/request";
 import useLoggedIn from "lib/useLoggedIn";
 import LoginForm from "components/LoginForm";
-import SongList from "components/SongList";
+import App from "components/App";
 import styles from "./index.scss";
-
-let hasSeenAnimation = false;
 
 function Index() {
   const [loggedIn, setLoggedIn] = useLoggedIn();
-  const [songs, setSongs] = useState([]);
-
-  useEffect(() => {
-    async function getSongs() {
-      const response = await request("songs");
-      const songs = await response.json();
-      setSongs(songs);
-    }
-
-    if (loggedIn.authed) {
-      getSongs();
-    }
-  }, [loggedIn.authed]);
 
   // Don't render anything for the initial page
   if (!process.browser) {
     return null;
   }
 
+  // TODO this should be on a separate page
   if (!loggedIn.authed) {
     return (
       <div className={styles.container}>
         <div className={styles.heading}>
           <h1
-            className={classNames(styles.bkk, {
-              [styles.noAnimation]: !hasSeenAnimation
-            })}
+            className={classNames(styles.bkk)}
           >
             baby ketten karaoke
           </h1>
@@ -49,7 +32,7 @@ function Index() {
     );
   }
 
-  return <SongList songs={songs} />;
+  return <App />;
 }
 
 export default Index;

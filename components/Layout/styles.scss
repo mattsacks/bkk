@@ -36,8 +36,7 @@ html {
 
 html, body {
   margin: 0;
-  min-height: 100vh;
-  overflow: hidden;
+  max-height: 100vh;
   padding: 0;
 }
 
@@ -48,6 +47,7 @@ body {
 
 .background {
   // animation: background 20s linear infinite forwards;
+  background-attachment: fixed;
   background-image: url("/background-light.png");
   background-repeat: repeat;
   bottom: 0;

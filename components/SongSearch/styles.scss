@@ -1,0 +1,11 @@
+@import "~lib/vars";
+
+.searchSongs {
+  background-color: var(--header-background);
+  border: none;
+  color: var(--header-text-color);
+  font-style: italic;
+  outline: none;
+  padding: $unit * 1.5;
+  width: 100%;
+}

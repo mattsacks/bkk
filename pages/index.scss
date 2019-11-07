@@ -9,7 +9,7 @@
 }
 
 .heading {
-  color: white;
+  color: var(--text-color);
   display: block;
   font-family: "VT323";
   margin-bottom: 1.5rem;
@@ -24,11 +24,7 @@
 }
 
 .version {
-  font-size: 0.8rem;
-}
-
-@function heading-shadow($color) {
-  @return 3px 3px #{$color};
+  font-size: 0.9rem;
 }
 
 $color-cycle-colors: (
@@ -43,17 +39,21 @@ $color-cycle-colors: (
 
 $color-cycle-colors-interval: 100 / length($color-cycle-colors);
 
+@mixin heading-shadow($color) {
+  text-shadow: 3px 3px #{$color};
+}
+
 @keyframes color-cycle {
   @for $i from 1 through length($color-cycle-colors) {
     $color: nth($color-cycle-colors, $i);
 
     #{($i - 1) * $color-cycle-colors-interval}% {
-      text-shadow: heading-shadow($color);
+      @include heading-shadow($color);
     }
   }
 
   // Loop back
   100% {
-    text-shadow: heading-shadow(nth($color-cycle-colors, 1));
+    @include heading-shadow(nth($color-cycle-colors, 1));
   }
 }
