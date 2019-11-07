@@ -14,8 +14,8 @@ $background-height: 896px;
   --unit: #{$unit};
 
   @media (prefers-color-scheme: dark) {
-    --border-color: white;
-    --header-background: white;
+    --border-color: #2b2b2b;
+    --header-background: #2b2b2b;
     // --header-text-color: white;
     --input-background: black;
     --text-color: white;
@@ -65,6 +65,7 @@ body {
 
 main {
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   height: 100vh;
 }
 

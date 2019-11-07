@@ -1,24 +1,30 @@
 @import "~lib/vars";
 
-.songList {
-  margin: 2rem auto;
-  max-width: 690px; // nice
-  width: 100%;
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.songListContainer {
+  overflow-x: hidden;
+  overflow-y: auto;
   text-transform: capitalize;
+  transform: translateZ(0);
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.songList {
+  margin: 0 auto 5rem;
+  max-width: 690px; // nice
 }
 
 .searchSongs {
   background-color: var(--input-background);
   color: var(--text-color);
-  position: sticky;
-  top: 0;
   width: 100%;
   z-index: 2;
-}
-
-.songs {
-  margin-top: 1rem;
-  color: var(--text-color);
 }
 
 .songButton {
@@ -51,7 +57,7 @@
   font-weight: bolder;
   padding: $unit ($unit * 1.5);
   position: sticky;
-  top: $unit * 4;
+  top: 0;
 }
 
 .songButton {

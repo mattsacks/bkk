@@ -20,7 +20,7 @@ function Songs(props: { songs: Song[] }) {
   const [filteredSongs, setFilteredSongs] = useState([]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
       <SongSearchResults songs={filteredSongs} />
     </div>
@@ -108,8 +108,8 @@ function SongSearchResults(props: { songs: Song[] }) {
   }
 
   return (
-    <div className={styles.songList}>
-      <div className={styles.songs}>{songsByArtist}</div>
+    <div className={styles.songListContainer}>
+      <div className={styles.songList}>{songsByArtist}</div>
     </div>
   );
 }
