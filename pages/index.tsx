@@ -25,7 +25,7 @@ function Index() {
           >
             baby ketten karaoke
           </h1>
-          <div className={styles.version}>v0.0.1 alpha alpacca</div>
+          <div className={styles.version}>v0.0.1 alpha alpaca</div>
         </div>
         <LoginForm loggedIn={loggedIn} onLogin={setLoggedIn} />
       </div>
