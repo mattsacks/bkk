@@ -9,12 +9,51 @@
 }
 
 .heading {
-  background: var(--text-color);
-  color: var(--input-background);
+  color: white;
   display: block;
   font-family: "VT323";
-  font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  padding: $unit;
+  padding: $unit * 3;
   text-align: center;
+}
+
+.bkk {
+  animation: color-cycle 10s infinite forwards;
+  font-size: 1.69rem;
+  margin: 0;
+}
+
+.version {
+  font-size: 0.8rem;
+}
+
+@function heading-shadow($color) {
+  @return 3px 3px #{$color};
+}
+
+$color-cycle-colors: (
+  #da5454,
+  #da54ac,
+  #8054da,
+  #5075dc,
+  #39b9b2,
+  #2b9e23,
+  #d09429
+);
+
+$color-cycle-colors-interval: 100 / length($color-cycle-colors);
+
+@keyframes color-cycle {
+  @for $i from 1 through length($color-cycle-colors) {
+    $color: nth($color-cycle-colors, $i);
+
+    #{($i - 1) * $color-cycle-colors-interval}% {
+      text-shadow: heading-shadow($color);
+    }
+  }
+
+  // Loop back
+  100% {
+    text-shadow: heading-shadow(nth($color-cycle-colors, 1));
+  }
 }

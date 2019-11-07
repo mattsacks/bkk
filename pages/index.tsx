@@ -34,13 +34,16 @@ function Index() {
   if (!loggedIn.authed) {
     return (
       <div className={styles.container}>
-        <h1
-          className={classNames(styles.heading, {
-            [styles.noAnimation]: !hasSeenAnimation
-          })}
-        >
+        <div className={styles.heading}>
+          <h1
+            className={classNames(styles.bkk, {
+              [styles.noAnimation]: !hasSeenAnimation
+            })}
+          >
             baby ketten karaoke
-        </h1>
+          </h1>
+          <div className={styles.version}>v0.0.1 alpha alpacca</div>
+        </div>
         <LoginForm loggedIn={loggedIn} onLogin={setLoggedIn} />
       </div>
     );
