@@ -4,20 +4,25 @@ import { withFormik, FormikProps } from "formik";
 import styles from "./styles.scss";
 import request from "lib/request";
 
+const confirmText = "Are you sure you want to skip the current track?"
+
 async function skipTrack() {
-  await request("tracks/skip", {
-    body: {},
-    method: "POST"
-  });
+  if (confirm(confirmText)) {
+    await request("tracks/skip", {
+      body: {},
+      method: "POST"
+    })
+  }
 }
 
 function BookingControls() {
   return (
     <div className={styles.bookingControls} >
       <button
-        onClick={() => skipTrack()}
+        className={styles.skipTrackButton}
+        onClick={() => skipTrack() }
       >
-        >>
+        &#xe044;
       </button>
     </div>
   );

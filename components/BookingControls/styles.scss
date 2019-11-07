@@ -3,6 +3,28 @@
   bottom: 0;
   right: 0;
 
-  background-color: pink;
+  font-family: "VT323";
+  background-color: var(--input-background);
   width: 100%;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.skipTrackButton {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  padding: 8px;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.5rem;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &:active {
+    color: var(--input-background);
+    background-color: var(--text-color);
+  }
 }
