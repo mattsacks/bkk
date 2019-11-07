@@ -5,24 +5,45 @@ import { debounce } from "lodash";
 import request from "lib/request";
 import { Song } from "lib/types";
 import styles from "./styles.scss";
+import Modal from 'react-modal';
 
-async function addToQueue(song: Song) {
+async function addToQueue(song: Song, setAddedTrack:Function) {
   await request("tracks", {
     body: {
       song_id: song.id
     },
     method: "POST"
-  });
+  }).then(() => { setAddedTrack(true) });
 }
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 function Songs(props: { songs: Song[] }) {
   const { songs } = props;
   const [filteredSongs, setFilteredSongs] = useState([]);
+  const [addedTrack, setAddedTrack] = useState(false);
 
   return (
     <div className={styles.container}>
+      <Modal
+        isOpen={addedTrack}
+        onRequestClose={() => setAddedTrack(false)}
+        style={customStyles}
+        contentLabel="Track Added!"
+      >
+        <h2>Track Added!</h2>
+      </Modal>
       <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
-      <SongSearchResults songs={filteredSongs} />
+      <SongSearchResults songs={filteredSongs} setAddedTrack={setAddedTrack}/>
     </div>
   );
 }
@@ -68,8 +89,8 @@ const SongSearch = React.memo(
   (prevProps, nextProps) => prevProps.songs === nextProps.songs
 );
 
-function SongSearchResults(props: { songs: Song[] }) {
-  const { songs } = props;
+function SongSearchResults(props: { songs: Song[], setAddedTrack: Function }) {
+  const { songs, setAddedTrack } = props;
 
   // Group songs by artist
   const groupedByArtist = songs.reduce((grouped, song: Song) => {
@@ -91,7 +112,7 @@ function SongSearchResults(props: { songs: Song[] }) {
         <button
           className={styles.songButton}
           key={song.id}
-          onClick={() => addToQueue(song)}
+          onClick={() => addToQueue(song, setAddedTrack)}
         >
           <div className={styles.song}>{song.name}</div>
           <SVG className={styles.songIcon} src="/right-chevron.svg" />
