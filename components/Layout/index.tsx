@@ -4,11 +4,11 @@ import styles from "./styles.scss";
 
 export default function Layout(props) {
   return (
-    <React.Fragment>
+    <div className={styles.backgroundContainer}>
       <div className={styles.background} />
       <main className={styles.layout}>
         {props.children}
       </main>
-    </React.Fragment>
+    </div>
   );
 }
