@@ -4,6 +4,7 @@ import Fuse from "fuse.js";
 import { debounce } from "lodash";
 import request from "lib/request";
 import { Song } from "lib/types";
+import BookingControls from "components/BookingControls";
 import styles from "./styles.scss";
 
 async function addToQueue(song: Song) {
@@ -23,6 +24,7 @@ function Songs(props: { songs: Song[] }) {
     <div className={styles.container}>
       <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
       <SongSearchResults songs={filteredSongs} />
+      <BookingControls />
     </div>
   );
 }
