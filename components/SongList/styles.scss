@@ -11,21 +11,6 @@
   padding-bottom: 2rem;
 }
 
-
-.songButton {
-  border-bottom: 2px solid var(--border-color);
-  display: block;
-  font-size: 1rem;
-  text-align: left;
-  width: 100%;
-
-  @media (min-width: 700px) {
-    &:last-child {
-      border-bottom: 0 none;
-    }
-  }
-}
-
 .artistGroup {
   margin-bottom: 2rem;
   border: 2px solid var(--border-color);
@@ -45,25 +30,3 @@
   top: $unit * 6;
 }
 
-.songButton {
-  align-items: center;
-  background: var(--input-background);
-  color: var(--text-color);
-  cursor: pointer;
-  display: flex;
-  font-size: 1rem;
-  justify-content: space-between;
-  padding: ($unit * 1.5);
-  text-transform: capitalize;
-}
-
-.addedToQueue {
-  font-style: italic;
-  opacity: 0.8;
-}
-
-.songIcon {
-  $size: $unit * 2;
-  height: $size;
-  width: $size;
-}
