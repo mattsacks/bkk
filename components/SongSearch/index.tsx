@@ -3,7 +3,7 @@
 // Note: The component is memoized so it only re-renders when the list of songs
 // is changed.
 
-import React from "react";
+import React, { memo } from "react";
 import Fuse from "fuse.js";
 import { debounce } from "lodash";
 import { Song } from "lib/types";
@@ -47,7 +47,7 @@ function SongSearch(props: {
   );
 };
 
-export default React.memo(
+export default memo(
   SongSearch,
   (prevProps, nextProps) => prevProps.songs === nextProps.songs
 );

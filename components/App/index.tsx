@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import classnames from "classnames";
 import request from "lib/request";
 import SongSearch from "components/SongSearch";
 import SongList from "components/SongList";
@@ -30,6 +31,9 @@ export default function App() {
       </div>
       <div className={styles.toolbar}>
         <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
+        <div className={classnames(styles.loading, {
+          [styles.isLoading]: songs.length === 0
+        })}>loading songs…</div>
       </div>
       <SongList songs={filteredSongs} />
     </div>
