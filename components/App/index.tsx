@@ -4,6 +4,7 @@ import useLoggedIn from "lib/useLoggedIn";
 import request from "lib/request";
 import SongSearch from "components/SongSearch";
 import SongList from "components/SongList";
+import BookingControls from "components/BookingControls";
 import styles from "./styles.scss";
 
 async function getSongs() {
@@ -37,7 +38,12 @@ export default function App() {
           [styles.isLoading]: songs.length === 0
         })}>loading songs…</div>
       </div>
-      <SongList songs={filteredSongs} />
+      <div className={styles.content}>
+        <SongList songs={filteredSongs} />
+      </div>
+      <div className={styles.bottombar}>
+        <BookingControls />
+      </div>
     </div>
   );
 }
