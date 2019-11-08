@@ -1,48 +1,14 @@
 @import "~lib/vars";
 
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .songListContainer {
-  overflow-x: hidden;
-  overflow-y: auto;
   text-transform: capitalize;
-  transform: translateZ(0);
   width: 100%;
-  -webkit-overflow-scrolling: touch;
 }
 
 .songList {
-  margin: 0 auto 5rem;
+  margin: 0 auto;
   max-width: 690px; // nice
-}
-
-.searchSongs {
-  background-color: var(--input-background);
-  color: var(--text-color);
-  width: 100%;
-  z-index: 2;
-}
-
-.songButton {
-  border-bottom: 2px solid var(--border-color);
-  display: block;
-  font-size: 1rem;
-  text-align: left;
-  width: 100%;
-  @media (min-width: 700px) {
-    &:last-child {
-      border-bottom: 0 none;
-    }
-  }
-
-  &:active {
-    color: var(--input-background);
-    background-color: var(--text-color);
-  }
+  padding-bottom: 2rem;
 }
 
 .artistGroup {
@@ -61,22 +27,6 @@
   font-weight: bolder;
   padding: $unit ($unit * 1.5);
   position: sticky;
-  top: 0;
+  top: $unit * 6;
 }
 
-.songButton {
-  align-items: center;
-  background: var(--input-background);
-  color: var(--text-color);
-  display: flex;
-  font-size: 1rem;
-  justify-content: space-between;
-  padding: ($unit * 1.5);
-  text-transform: capitalize;
-}
-
-.songIcon {
-  $size: $unit * 2;
-  height: $size;
-  width: $size;
-}

@@ -1,0 +1,39 @@
+@import "~lib/vars";
+
+.toolbar {
+  left: 0;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.loading {
+  color: var(--text-color);
+  transition: 0.2s opacity ease-in-out;
+  font-family: "VT323";
+  font-size: 0.9rem;
+  padding: $unit * 1.5;
+  position: absolute;
+  bottom: -$unit * 4.5; // FIXME
+  opacity: 0;
+
+  &.isLoading {
+    opacity: 1;
+  }
+}
+
+.buttons {
+  display: flex;
+  font-family: "VT323";
+  justify-content: space-between;
+  margin: 0 ($unit * 1.5);
+  padding: ($unit * 1.5) 0;
+
+  button {
+    background: none;
+    color: var(--text-color);
+    padding: 0;
+    text-decoration: line-through;
+  }
+}

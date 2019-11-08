@@ -1,0 +1,32 @@
+@import "~lib/vars";
+
+.songButton {
+  align-items: center;
+  background: var(--input-background);
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+  padding: ($unit * 1.5);
+  text-align: left;
+  text-transform: capitalize;
+  width: 100%;
+
+  @media (min-width: 700px) {
+    &:last-child {
+      border-bottom: 0 none;
+    }
+  }
+}
+
+.addedToQueue {
+  font-style: italic;
+}
+
+.songIcon {
+  $size: $unit * 2;
+  height: $size;
+  width: $size;
+}
