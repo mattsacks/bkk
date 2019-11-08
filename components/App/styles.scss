@@ -8,24 +8,6 @@
   z-index: 2;
 }
 
-.content {
-  bottom: 0;
-  left: 0;
-  overflow: scroll;
-  position: absolute;
-  right: 0;
-  top: $unit * 6.75;
-}
-
-.bottombar {
-  background-color: var(--input-background);
-  bottom: 0;
-  height: $unit * 6.75;
-  left: 0;
-  position: absolute;
-  right: 0;
-}
-
 .loading {
   color: var(--text-color);
   transition: 0.2s opacity ease-in-out;
