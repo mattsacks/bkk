@@ -8,6 +8,11 @@
   z-index: 2;
 }
 
+.statusContainer {
+  position: relative;
+  top: -1rem;
+}
+
 .status {
   color: var(--text-color);
   transition: 0.2s opacity ease-in-out;

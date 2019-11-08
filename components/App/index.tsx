@@ -39,6 +39,8 @@ export default function App() {
       <Nav link="/queue" name="view queue" />
       <div className={styles.toolbar}>
         <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
+      </div>
+      <div className={styles.statusContainer}>
         <div
           className={classnames(styles.status, {
             [styles.isLoading]: songs.length === 0
