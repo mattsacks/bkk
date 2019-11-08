@@ -41,7 +41,8 @@ export function LoggedInContextProvider({ children }) {
     } else {
       setLoggedIn({
         authed: false,
-        status: response.statusText
+        status:
+          response.statusText || `unknown error (status ${response.status})`
       });
     }
   };
