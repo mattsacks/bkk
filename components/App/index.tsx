@@ -3,6 +3,7 @@ import classnames from "classnames";
 import request from "lib/request";
 import SongSearch from "components/SongSearch";
 import SongList from "components/SongList";
+import BookingControls from "components/BookingControls";
 import styles from "./styles.scss";
 
 async function getSongs() {
@@ -36,6 +37,7 @@ export default function App() {
         })}>loading songs…</div>
       </div>
       <SongList songs={filteredSongs} />
+      <BookingControls />
     </div>
   );
 }
