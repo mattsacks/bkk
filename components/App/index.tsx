@@ -36,8 +36,12 @@ export default function App() {
           [styles.isLoading]: songs.length === 0
         })}>loading songs…</div>
       </div>
-      <SongList songs={filteredSongs} />
-      <BookingControls />
+      <div className={styles.content}>
+        <SongList songs={filteredSongs} />
+      </div>
+      <div className={styles.bottombar}>
+        <BookingControls />
+      </div>
     </div>
   );
 }

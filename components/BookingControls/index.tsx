@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { withFormik, FormikProps } from "formik";
 import styles from "./styles.scss";
 import request from "lib/request";
+import SVG from "react-inlinesvg";
 
 const confirmText = "Are you sure you want to skip the current track?"
 
@@ -20,9 +21,9 @@ function BookingControls() {
     <div className={styles.bookingControls} >
       <button
         className={styles.skipTrackButton}
-        onClick={() => skipTrack() }
+        onClick={skipTrack}
       >
-        &#xe044;
+        <SVG className={styles.skipTrackIcon} src="/step-forward-solid.svg" />
       </button>
     </div>
   );
