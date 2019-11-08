@@ -50,7 +50,7 @@ body {
 }
 
 main {
-  $blur: 3px;
+  $blur: 5px;
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
   min-height: 100vh;

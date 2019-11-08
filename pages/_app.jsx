@@ -1,6 +1,7 @@
 import React from "react";
 import App from "next/app";
-import Layout from "../components/Layout";
+import Layout from "components/Layout";
+import { LoggedInContextProvider } from "lib/useLoggedIn";
 
 class Bond extends App {
   // Only uncomment this method if you have blocking data requirements for
@@ -18,9 +19,11 @@ class Bond extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <LoggedInContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </LoggedInContextProvider>
     )
   }
 }
