@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import classNames from "classnames";
-import { withFormik, FormikProps } from "formik";
 import styles from "./styles.scss";
 import request from "lib/request";
 import SVG from "react-inlinesvg";
