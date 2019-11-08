@@ -41,6 +41,7 @@ html, body {
 }
 
 body {
+  color: var(--text-color);
   font-family: $font-family;
   transform: translateZ(0);
 }

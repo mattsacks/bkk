@@ -14,7 +14,6 @@ interface LoggedInState {
 }
 
 const LOGGED_IN_COOKIE = "mathisUserIsLoggedIn";
-
 const LoggedInContext = createContext(null);
 
 export function LoggedInContextProvider({ children }) {

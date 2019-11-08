@@ -1,0 +1,11 @@
+@import "~lib/vars";
+
+.heading {
+  font-family: VT323;
+  color: var(--text-color);
+  margin: $unit * 2 0;
+}
+
+.queue {
+  margin: $unit * 1.5;
+}

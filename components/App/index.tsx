@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import useLoggedIn from "lib/useLoggedIn";
 import request from "lib/request";
+import Nav from "components/Nav";
 import SongSearch from "components/SongSearch";
 import SongList from "components/SongList";
 import styles from "./styles.scss";
@@ -27,10 +28,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      <div className={styles.buttons}>
-        <button onClick={logoutUser}>&lt; leave room</button>
-        <button>view queue &gt;</button>
-      </div>
+      <Nav link="/queue" name="view queue" />
       <div className={styles.toolbar}>
         <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
         <div className={classnames(styles.loading, {

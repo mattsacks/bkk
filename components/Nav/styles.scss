@@ -1,0 +1,17 @@
+@import "~lib/vars";
+
+.nav {
+  display: flex;
+  font-family: "VT323";
+  justify-content: space-between;
+  margin: 0 ($unit * 1.5);
+  padding: ($unit * 1.5) 0;
+}
+
+.navItem {
+  background: none;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0;
+  text-decoration: none;
+}
