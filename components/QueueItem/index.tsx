@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import styles from "./styles.scss";
 
 function QueueItem({ index, queue }) {
@@ -8,6 +9,7 @@ function QueueItem({ index, queue }) {
     <div className={styles.queueItem}>
       <span className={styles.index}>{indexText}:</span>
       {queue.song_name} by {queue.artist}
+      <span className={styles.user}>({queue.user_name})</span>
     </div>
   )
 }

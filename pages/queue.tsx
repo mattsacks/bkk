@@ -31,7 +31,7 @@ function QueuePage() {
     whoAmI().then((user) => {
       setUser(user);
     });
-  }, []);
+  }, [loggedIn.authed]);
 
   return (
     <React.Fragment>

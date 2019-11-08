@@ -7,24 +7,32 @@ import SongSearch from "components/SongSearch";
 import SongList from "components/SongList";
 import styles from "./styles.scss";
 
+let globalSongs = [];
+
 async function getSongs() {
   const response = await request("songs");
   const songs = await response.json();
 
+  globalSongs = songs;
   return songs;
 }
 
 export default function App() {
-  const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState(globalSongs);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const { 2: logoutUser } = useLoggedIn();
+  const { 0: loggedIn, 2: logoutUser } = useLoggedIn();
 
   // TODO make getSongs and setSongs into a useSongs hook
   useEffect(() => {
+    // Prevent reloading songs between navs
+    if (globalSongs.length !== 0) {
+      return;
+    }
+
     getSongs().then((songs) => {
       setSongs(songs);
     });
-  }, []);
+  }, [loggedIn.authed]);
 
   return (
     <div className={styles.app}>

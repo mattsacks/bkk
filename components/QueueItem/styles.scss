@@ -1,3 +1,14 @@
+@import "~lib/vars";
+
 .queueItem {
   font-family: VT323;
+  padding: $unit 0;
+}
+
+.index {
+  margin-right: $unit;
+}
+
+.user {
+  margin-left: $unit;
 }
