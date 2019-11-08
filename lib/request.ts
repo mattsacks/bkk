@@ -6,7 +6,7 @@ interface RequestParams {
   method?: string;
 }
 
-const API = process.env.MATHIS_API || "https://mathis-development.herokuapp.com/api/v1";
+const API = process.env.MATHIS_API || "https://mathis-prod.herokuapp.com/api/v1";
 
 async function request(
   endpoint: string,

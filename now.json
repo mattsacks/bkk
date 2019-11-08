@@ -1,7 +1,7 @@
 {
   "build": {
     "env": {
-      "MATHIS_API": "https://mathis-development.herokuapp.com/api/v1"
+      "MATHIS_API": "https://mathis-prod.herokuapp.com/api/v1"
     }
   }
 }
