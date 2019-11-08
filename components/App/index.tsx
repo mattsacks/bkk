@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div className={styles.app}>
       <div className={styles.buttons}>
-        <button onClick={logoutUser}>&lt; leave room</button>
+        <button>&lt; leave room</button>
         <button>view queue &gt;</button>
       </div>
       <div className={styles.toolbar}>
