@@ -24,6 +24,7 @@ function SongList(props: { songs: Song[] }) {
 
   const songsByArtist = [];
   for (const artist in groupedSongsByArtist) {
+    // TODO mark as type of SongListItem
     const songElements = [];
 
     for (const song of groupedSongsByArtist[artist]) {

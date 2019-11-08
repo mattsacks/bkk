@@ -20,7 +20,9 @@ function SongListItem(props: { song: Song }) {
 
   return (
     <button
-      className={styles.songButton}
+      className={classnames(styles.songButton, {
+        [styles.addedToQueue]: isAddedToQueue
+      })}
       disabled={isAddedToQueue}
       onClick={(e) => {
         addToQueue(song);
@@ -31,13 +33,7 @@ function SongListItem(props: { song: Song }) {
         }, 2500);
       }}
     >
-      <div
-        className={classnames(styles.song, {
-          [styles.isAddedToQueue]: isAddedToQueue
-        })}
-      >
-        {song.name}
-      </div>
+      <div className={styles.song}>{song.name}</div>
       {isAddedToQueue ? (
         <div>queued!</div>
       ) : (
