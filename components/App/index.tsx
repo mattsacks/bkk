@@ -39,9 +39,20 @@ export default function App() {
       <Nav link="/queue" name="view queue" />
       <div className={styles.toolbar}>
         <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
-        <div className={classnames(styles.loading, {
-          [styles.isLoading]: songs.length === 0
-        })}>loading songs…</div>
+        <div
+          className={classnames(styles.status, {
+            [styles.isLoading]: songs.length === 0
+          })}
+        >
+          loading songs…
+        </div>
+        <div
+          className={classnames(styles.status, {
+            [styles.hasResults]: songs.length !== 0 && filteredSongs.length !== 0
+          })}
+        >
+          { filteredSongs.length !== 0 && `${filteredSongs.length} results` }
+        </div>
       </div>
       <SongList songs={filteredSongs} />
     </div>

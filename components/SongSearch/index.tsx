@@ -39,7 +39,12 @@ function SongSearch(props: {
       className={styles.searchSongs}
       onChange={(e) => {
         e.persist();
-        debouncedSearchSongs(e.target.value);
+
+        const query = e.target.value;
+
+        if (query.length > 2 || query.length === 0) {
+          debouncedSearchSongs(e.target.value);
+        }
       }}
       type="text"
       placeholder="search songz"
