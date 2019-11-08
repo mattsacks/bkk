@@ -36,6 +36,8 @@ function SongSearch(props: {
 
   return (
     <input
+      autoComplete="off"
+      autoCapitalize="none"
       className={styles.searchSongs}
       onChange={(e) => {
         e.persist();
