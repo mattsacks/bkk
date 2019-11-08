@@ -4,18 +4,23 @@ import useLoggedIn from "lib/useLoggedIn";
 import styles from "./styles.scss";
 
 interface NavProps {
-  link: string,
-  name: string
-};
+  showLeaveRoom?: boolean;
+  link: string;
+  name: string;
+}
 
-function Nav({ link, name}: NavProps) {
+function Nav({ showLeaveRoom = true, link, name }: NavProps) {
   const { 2: logoutUser } = useLoggedIn();
 
   return (
     <nav className={styles.nav}>
-      <button className={styles.navItem} onClick={logoutUser}>
-        &lt; leave room
-      </button>
+      {showLeaveRoom ? (
+        <button className={styles.navItem} onClick={logoutUser}>
+          &lt; leave room
+        </button>
+      ) : (
+        <div />
+      )}
       <Link href={link}>
         <a className={styles.navItem}>{name} &gt;</a>
       </Link>

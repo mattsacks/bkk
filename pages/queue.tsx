@@ -35,7 +35,7 @@ function QueuePage() {
 
   return (
     <React.Fragment>
-      <Nav link="/" name="search songs" />
+      <Nav showLeaveRoom={false} link="/" name="search songs" />
       { user.userName != undefined && (
         <div className={styles.queue}>
           <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
