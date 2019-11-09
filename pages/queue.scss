@@ -9,3 +9,10 @@
 .queue {
   margin: $unit * 1.5;
 }
+
+.queueButtons {
+  display: flex;
+  font-family: VT323;
+  justify-content: space-between;
+  margin: $unit * 1.5;
+}

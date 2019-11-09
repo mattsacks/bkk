@@ -76,7 +76,9 @@ main {
 button {
   -webkit-appearance: none;
   appearance: none;
+  background: none;
   border: none;
+  color: var(--text-color);
   outline: none;
 }
 
