@@ -16,7 +16,7 @@ function Index() {
   }
 
   // TODO this should be on a separate page
-  if (!loggedIn.authed) {
+  if (!loggedIn.user) {
     return (
       <div className={styles.container}>
         <div className={styles.heading}>

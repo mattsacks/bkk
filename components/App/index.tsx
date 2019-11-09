@@ -32,7 +32,7 @@ export default function App() {
     getSongs().then((songs) => {
       setSongs(songs);
     });
-  }, [loggedIn.authed]);
+  }, [loggedIn.user]);
 
   return (
     <div className={styles.app}>

@@ -7,31 +7,15 @@ import Nav from "components/Nav";
 import Queue from "components/Queue";
 import styles from "./queue.scss";
 
-async function whoAmI() {
-  const response = await request("whoami");
-  const data = await response.json();
-
-  return data;
-}
-
 
 function QueuePage() {
   const router = useRouter();
-  const [loggedIn] = useLoggedIn();
-  const [user, setUser] = useState({
-    bookingKey: undefined,
-    userName: undefined
-  });
+  const [loggedInState] = useLoggedIn();
+  const user = loggedInState.user || {};
 
-  if (process.browser && !loggedIn.authed) {
+  if (process.browser && !user.userName) {
     router.push("/");
   }
-
-  useEffect(() => {
-    whoAmI().then((user) => {
-      setUser(user);
-    });
-  }, [loggedIn.authed]);
 
   return (
     <React.Fragment>

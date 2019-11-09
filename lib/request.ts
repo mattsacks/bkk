@@ -1,10 +1,15 @@
 // Wrapper around fetch() to make it nicer
 import fetch from "isomorphic-unfetch";
+import Cookies from "js-cookie";
+import qs from "qs";
+import { USER_COOKIE } from "lib/useLoggedIn";
 
 interface RequestParams {
   body?: object;
   method?: string;
 }
+
+let userQueryString = undefined;
 
 const API = process.env.MATHIS_API || "https://mathis-prod.herokuapp.com/api/v1";
 
@@ -12,7 +17,16 @@ async function request(
   endpoint: string,
   params: RequestParams = {}
 ): Promise<Response> {
-  const apiRequest = `${API}/${endpoint}`;
+  // FIXME this is gross and bad
+  if (userQueryString == undefined) {
+    const usercookie = Cookies.get(USER_COOKIE);
+
+    if (usercookie !== undefined) {
+      userQueryString = qs.stringify(JSON.parse(usercookie));
+    }
+  }
+
+  const apiRequest = `${API}/${endpoint}?${userQueryString || ""}`;
 
   const response = await fetch(apiRequest, {
     body: params.body ? JSON.stringify(params.body) : undefined,

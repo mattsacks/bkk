@@ -9,17 +9,19 @@ export interface LoginRequest {
 }
 
 interface LoggedInState {
-  authed: boolean;
   status: string | null;
+  user: { bookingKey: string, name: string } | null;
 }
 
-const LOGGED_IN_COOKIE = "mathisUserIsLoggedIn";
+export const USER_COOKIE = "mathisUser";
 const LoggedInContext = createContext(null);
 
 export function LoggedInContextProvider({ children }) {
+  const usercookie = Cookies.get(USER_COOKIE);
+
   const [loggedIn, setLoggedIn] = useState({
-    authed: Cookies.get(LOGGED_IN_COOKIE) != undefined,
-    status: null
+    status: null,
+    user: usercookie ? JSON.parse(usercookie) : null
   });
 
   const loginUser: LoginRequest = async function login(name, room) {
@@ -32,26 +34,31 @@ export function LoggedInContextProvider({ children }) {
     });
 
     if (response.status === 200) {
-      Cookies.set(LOGGED_IN_COOKIE, true);
+      const { bookingKey, userName } = await response.json();
+
+      Cookies.set(USER_COOKIE, {
+        bookingKey, userName
+      });
+
       setLoggedIn({
-        authed: true,
-        status: null
+        status: null,
+        user: { bookingKey, userName }
       });
       return true;
     } else {
       setLoggedIn({
-        authed: false,
         status:
-          response.statusText || `unknown error (status ${response.status})`
+          response.statusText || `unknown error (status ${response.status})`,
+        user: null
       });
     }
   };
 
   function logoutUser() {
-    Cookies.remove(LOGGED_IN_COOKIE);
+    Cookies.remove(USER_COOKIE);
     setLoggedIn({
-      authed: false,
-      status: null
+      status: null,
+      user: null
     });
   }
 

@@ -25,7 +25,7 @@ function Queue() {
 
   return (
     <div className={styles.queue}>
-      {queueItems}
+      { queueData.length === 0 ? "loading…" : queueItems}
     </div>
   );
 }
