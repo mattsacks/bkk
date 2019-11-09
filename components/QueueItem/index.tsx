@@ -4,7 +4,16 @@ import useLoggedIn from "lib/useLoggedIn";
 import styles from "./styles.scss";
 
 function QueueItem({ index, queue }) {
-  const indexText = index === 1 ? "up next" : index;
+  let indexText;
+
+  if (index === 1) {
+    indexText = "now playing";
+  } else if (index === 2) {
+    indexText = "up next";
+  } else {
+    indexText = index;
+  }
+
   const { user } = useLoggedIn()[0];
 
   return (
