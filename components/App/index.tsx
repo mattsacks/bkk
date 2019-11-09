@@ -19,6 +19,7 @@ async function getSongs() {
 
 export default function App() {
   const [songs, setSongs] = useState(globalSongs);
+  const [searchStatus, setSearchStatus] = useState(null);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const { 0: loggedIn, 2: logoutUser } = useLoggedIn();
 
@@ -38,7 +39,11 @@ export default function App() {
     <div className={styles.app}>
       <Nav link="/queue" name="view queue" />
       <div className={styles.toolbar}>
-        <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
+        <SongSearch
+          setFilteredSongs={setFilteredSongs}
+          setSearchStatus={setSearchStatus}
+          songs={songs}
+        />
       </div>
       <div className={styles.statusContainer}>
         <div
@@ -50,10 +55,10 @@ export default function App() {
         </div>
         <div
           className={classnames(styles.status, {
-            [styles.hasResults]: songs.length !== 0 && filteredSongs.length !== 0
+            [styles.searchStatus]: Boolean(searchStatus)
           })}
         >
-          { filteredSongs.length !== 0 && `${filteredSongs.length} results` }
+          {searchStatus}
         </div>
       </div>
       <SongList songs={filteredSongs} />

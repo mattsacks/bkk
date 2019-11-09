@@ -23,7 +23,7 @@
   bottom: -$unit * 4.5; // FIXME
   opacity: 0;
 
-  &.isLoading, &.hasResults {
+  &.isLoading, &.searchStatus {
     opacity: 1;
   }
 }

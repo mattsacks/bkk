@@ -19,20 +19,32 @@ const fuseOptions = {
   threshold: 0.2
 };
 
-function SongSearch(props: {
+interface SongSearchProps {
   setFilteredSongs: (songs: Song[]) => void;
+  setSearchStatus: (string) => void;
   songs: Song[];
-}) {
-  const { setFilteredSongs, songs } = props;
+};
 
+function SongSearch({
+  setFilteredSongs,
+  setSearchStatus,
+  songs
+}: SongSearchProps) {
   const fuse = new Fuse(songs, fuseOptions);
 
   function searchSongs(query) {
+    if (!query) {
+      setFilteredSongs([]);
+      setSearchStatus(null);
+      return;
+    }
+
     const searchResults = fuse.search(query);
     setFilteredSongs(searchResults);
+    setSearchStatus(`${searchResults.length} results`);
   }
 
-  const debouncedSearchSongs = debounce(searchSongs, 250);
+  const debouncedSearchSongs = debounce(searchSongs, 666);
 
   return (
     <input
@@ -43,17 +55,19 @@ function SongSearch(props: {
       onChange={(e) => {
         e.persist();
 
+        // FIXME
+        setSearchStatus("searching…");
         const query = e.target.value;
 
         if (query.length > 2 || query.length === 0) {
-          debouncedSearchSongs(e.target.value);
+          debouncedSearchSongs(query);
         }
       }}
       type="text"
       placeholder="search songz"
     />
   );
-};
+}
 
 export default memo(
   SongSearch,

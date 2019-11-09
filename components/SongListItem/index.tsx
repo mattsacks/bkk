@@ -33,7 +33,10 @@ function SongListItem(props: { song: Song }) {
         }, 2500);
       }}
     >
-      <div className={styles.song}>{song.name}</div>
+      <div>
+        {song.name}
+        <span className={styles.songTag}>{song.tags}</span>
+      </div>
       {isAddedToQueue ? (
         <div>queued!</div>
       ) : (
