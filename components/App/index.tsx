@@ -14,7 +14,6 @@ async function getSongs() {
   const songs = await response.json();
 
   // FIXME use this until backend fixes artist names
-  // (takes 500-1000ms)
   const formattedSongs = songs.map((song) => {
     const [last, ...rest] = song.artist.split(", ");
     song.artist = [...rest, last].join(" ");

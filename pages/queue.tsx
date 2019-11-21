@@ -18,7 +18,15 @@ async function fetchQueue() {
   const response = await request("playlist");
   const queue = await response.json();
 
-  return queue.tracks;
+  // FIXME use this until backend fixes artist names
+  const formattedTracks = queue.tracks.map((song) => {
+    const [last, ...rest] = song.artist.split(", ");
+    song.artist = [...rest, last].join(" ");
+    return song;
+  });
+
+
+  return formattedTracks;
 }
 
 function QueuePage() {
