@@ -10,13 +10,13 @@ import { Song } from "lib/types";
 import styles from "./styles.scss";
 
 const fuseOptions = {
-  distance: 100,
+  distance: 0,
   keys: [{ name: "artist", weight: 0.7 }, { name: "name", weight: 0.3 }],
   location: 0,
   maxPatternLength: 32,
   minMatchCharLength: 3,
   shouldSort: true,
-  threshold: 0.2
+  threshold: 0.1
 };
 
 interface SongSearchProps {
