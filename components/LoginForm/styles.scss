@@ -13,16 +13,12 @@
   width: 100%;
   margin-bottom: 32px;
   padding: 8px;
-  border: 2px solid var(--border-color);
-  box-shadow: 4px 4px var(--border-color);
+  border: 2px solid var(--box-shadow);
+  box-shadow: 4px 4px var(--box-shadow);
   transition: box-shadow linear 150ms;
 
-  &::placeholder {
-    // color: darken(white, 35%);
-  }
-
   &:focus {
-    box-shadow: 8px 8px var(--border-color);
+    box-shadow: 8px 8px var(--box-shadow);
   }
 }
 
@@ -38,20 +34,17 @@
   &[disabled] {
     color: darken(white, 35%);
     box-shadow: none;
-    // background-image: repeating-linear-gradient(
-    //   45deg,
-    //   white,
-    //   white 15px,
-    //   black 15px,
-    //   black 30px
-    // );
+
+    @media (prefers-color-scheme: dark) {
+      color: lighten(black, 35%); 
+    }
   }
 }
 
 .statusText {
   color: var(--text-color);
-  font-size: 0.55rem;
+  font-size: 0.9rem;
   font-weight: 800;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.5em;
   text-transform: uppercase;
 }
