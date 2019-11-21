@@ -2,7 +2,7 @@
 
 .queueItem {
   font-family: VT323;
-  padding: $unit 0;
+  padding: $unit;
 }
 
 .index {
@@ -15,4 +15,5 @@
 
 .mySong {
   background: var(--header-background);
+  color: var(--header-text-color);
 }

@@ -13,8 +13,16 @@ async function getSongs() {
   const response = await request("songs");
   const songs = await response.json();
 
-  globalSongs = songs;
-  return songs;
+  // FIXME use this until backend fixes artist names
+  // (takes 500-1000ms)
+  const formattedSongs = songs.map((song) => {
+    const [last, ...rest] = song.artist.split(", ");
+    song.artist = [...rest, last].join(" ");
+    return song;
+  });
+
+  globalSongs = formattedSongs;
+  return formattedSongs;
 }
 
 export default function App() {
