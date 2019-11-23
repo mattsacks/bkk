@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import useLoggedIn from "lib/useLoggedIn";
 import request from "lib/request";
+import { Song } from "lib/types";
 import Nav from "components/Nav";
-import SongSearch from "components/SongSearch";
+import SearchFilters, {
+  SongSearchFilter,
+  SongSearchFilters
+} from "components/SearchFilters";
 import SongList from "components/SongList";
+import SongSearch from "components/SongSearch";
 import styles from "./styles.scss";
 
 let globalSongs = [];
@@ -14,9 +19,10 @@ async function getSongs() {
   const songs = await response.json();
 
   // FIXME use this until backend fixes artist names
-  const formattedSongs = songs.map((song) => {
+  const formattedSongs = songs.map((song: Song) => {
     const [last, ...rest] = song.artist.split(", ");
-    song.artist = [...rest, last].join(" ");
+    rest.push(last);
+    song.artist = rest.join(" ");
     return song;
   });
 
@@ -27,8 +33,11 @@ async function getSongs() {
 export default function App() {
   const [songs, setSongs] = useState(globalSongs);
   const [searchStatus, setSearchStatus] = useState(null);
+  const [searchFilter, setSearchFilter] = useState<SongSearchFilter>(
+    SongSearchFilters.ALL
+  );
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const { 0: loggedIn, 2: logoutUser } = useLoggedIn();
+  const { 0: loggedIn } = useLoggedIn();
 
   // TODO make getSongs and setSongs into a useSongs hook
   useEffect(() => {
@@ -47,26 +56,33 @@ export default function App() {
       <Nav link="/queue" name="view queue" />
       <div className={styles.toolbar}>
         <SongSearch
+          activeSearchFilter={searchFilter}
           setFilteredSongs={setFilteredSongs}
           setSearchStatus={setSearchStatus}
           songs={songs}
         />
       </div>
-      <div className={styles.statusContainer}>
-        <div
-          className={classnames(styles.status, {
-            [styles.isLoading]: songs.length === 0
-          })}
-        >
-          loading songs…
+      <div className={styles.searchInfo}>
+        <div className={styles.statusContainer}>
+          <div
+            className={classnames(styles.status, {
+              [styles.isLoading]: songs.length === 0
+            })}
+          >
+            loading songs…
+          </div>
+          <div
+            className={classnames(styles.status, {
+              [styles.searchStatus]: Boolean(searchStatus)
+            })}
+          >
+            {searchStatus}
+          </div>
         </div>
-        <div
-          className={classnames(styles.status, {
-            [styles.searchStatus]: Boolean(searchStatus)
-          })}
-        >
-          {searchStatus}
-        </div>
+        <SearchFilters
+          activeSearchFilter={searchFilter}
+          setSearchFilter={setSearchFilter}
+        />
       </div>
       <SongList songs={filteredSongs} />
     </div>

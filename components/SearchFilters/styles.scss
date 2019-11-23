@@ -1,0 +1,19 @@
+@import "~lib/vars";
+
+.activeSearchFilter {
+  border-bottom: ($unit / 2) solid var(--text-color);
+}
+
+.searchFilter {
+  cursor: pointer;
+  margin-right: $unit * 2;
+  padding: 0;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.searchFilters {
+  margin-right: $unit * 1.5;
+}

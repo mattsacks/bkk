@@ -2,26 +2,30 @@
 
 .toolbar {
   left: 0;
-  margin-bottom: 1rem;
   position: sticky;
   top: 0;
   z-index: 2;
 }
 
+.searchInfo {
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
 .statusContainer {
+  flex-grow: 1;
   position: relative;
-  top: -1rem;
 }
 
 .status {
   color: var(--text-color);
   transition: 0.2s opacity ease-in-out;
   font-family: "VT323";
-  font-size: 0.9rem;
-  padding: $unit * 1.5;
-  position: absolute;
-  bottom: -$unit * 4.5; // FIXME
   opacity: 0;
+  padding: 0 ($unit * 1.5);
+  position: absolute;
+  top: 0;
 
   &.isLoading, &.searchStatus {
     opacity: 1;
