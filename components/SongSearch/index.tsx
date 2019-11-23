@@ -16,7 +16,7 @@ interface SongSearchProps {
 function search(query: string, filter: SongSearchFilter, songs: Song[]) {
   // FIXME prob doesn't scale, we'll want to remove characters we don't care
   // about
-  const queryTerms = query.split(" ");
+  const queryTerms = query.toLowerCase().split(" ");
 
   function matchSong(song: Song) {
     if (filter === SongSearchFilters.ALL) {
