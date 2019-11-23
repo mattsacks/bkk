@@ -1,8 +1,8 @@
 // View the current queue
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Song } from "lib/types";
 import request from "lib/request";
-import SVG from "react-inlinesvg";
 import useLoggedIn from "lib/useLoggedIn";
 import Nav from "components/Nav";
 import Queue from "components/Queue";
@@ -19,9 +19,10 @@ async function fetchQueue() {
   const queue = await response.json();
 
   // FIXME use this until backend fixes artist names
-  const formattedTracks = queue.tracks.map((song) => {
+  const formattedTracks = queue.tracks.map((song: Song) => {
     const [last, ...rest] = song.artist.split(", ");
-    song.artist = [...rest, last].join(" ");
+    rest.push(last);
+    song.artist = rest.join(" ");
     return song;
   });
 
