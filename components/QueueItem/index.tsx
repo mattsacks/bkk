@@ -4,11 +4,11 @@ import useLoggedIn from "lib/useLoggedIn";
 import styles from "./styles.scss";
 
 function QueueItem({ index, queue }) {
-  let indexText;
+  let indexText: string;
 
-  if (index === 1) {
+  if (index === 0) {
     indexText = "now playing";
-  } else if (index === 2) {
+  } else if (index === 1) {
     indexText = "up next";
   } else {
     indexText = index;

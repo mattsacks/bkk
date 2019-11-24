@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import request from "lib/request";
+import React from "react";
 import QueueItem from "components/QueueItem";
 import styles from "./styles.scss";
 
 function Queue({ queueData }) {
   const queueItems = queueData.map((queue, i) => (
-    <QueueItem key={queue.id} index={i + 1} queue={queue} />
+    <QueueItem key={queue.id} index={i} queue={queue} />
   ));
 
   return (
