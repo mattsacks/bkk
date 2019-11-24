@@ -12,3 +12,12 @@
   justify-content: space-between;
   margin: $unit * 1.5;
 }
+
+.queueButtons button {
+  padding: 0;
+
+  &:disabled {
+    font-style: italic;
+    opacity: 0.8;
+  }
+}

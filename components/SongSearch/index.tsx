@@ -13,6 +13,9 @@ interface SongSearchProps {
   songs: Song[];
 }
 
+// TODO
+// * convert accent characters to non-accents?
+//   i.e, pokémon -> pokemon
 function search(query: string, filter: SongSearchFilter, songs: Song[]) {
   // FIXME prob doesn't scale, we'll want to remove characters we don't care
   // about
@@ -32,6 +35,8 @@ function search(query: string, filter: SongSearchFilter, songs: Song[]) {
 
   return songs.filter(matchSong);
 }
+
+let persistedQuery: string;
 
 function SongSearch({
   activeSearchFilter,
@@ -57,6 +62,16 @@ function SongSearch({
     searchSongs(inputRef.current.value);
   }, [activeSearchFilter]);
 
+  useEffect(() => {
+    if (persistedQuery) {
+      searchSongs(persistedQuery);
+    }
+
+    return function() {
+      persistedQuery = inputRef.current.value;
+    };
+  }, []);
+
   const debouncedSearchSongs = debounce(searchSongs, 666);
 
   return (
@@ -76,9 +91,10 @@ function SongSearch({
           debouncedSearchSongs(query);
         }
       }}
+      placeholder="search songz"
       ref={inputRef}
       type="text"
-      placeholder="search songz"
+      value={persistedQuery}
     />
   );
 }

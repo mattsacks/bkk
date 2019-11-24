@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import classNames from "classnames";
-import { Song } from "lib/types";
-import request from "lib/request";
+import React from "react";
+import classnames from "classnames";
 import useLoggedIn from "lib/useLoggedIn";
 import LoginForm from "components/LoginForm";
 import App from "components/App";
@@ -21,7 +19,7 @@ function Index() {
       <div className={styles.container}>
         <div className={styles.heading}>
           <h1
-            className={classNames(styles.bkk)}
+            className={classnames(styles.bkk)}
           >
             baby ketten karaoke
           </h1>
