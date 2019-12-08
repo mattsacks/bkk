@@ -14,14 +14,16 @@ async function nextTrack() {
   });
 }
 
-// TODO
 async function pauseTrack() {
-  return null;
+  await request("tracks/pause", {
+    method: "POST"
+  });
 }
 
-// TODO
 async function playTrack() {
-  return null;
+  await request("tracks/play", {
+    method: "POST"
+  });
 }
 
 async function fetchQueue() {
