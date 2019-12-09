@@ -62,15 +62,16 @@ function SongSearch({
     searchSongs(inputRef.current.value);
   }, [activeSearchFilter]);
 
-  useEffect(() => {
-    if (persistedQuery) {
-      searchSongs(persistedQuery);
-    }
+  // FIXME: This freezes the input from changing
+  /* useEffect(() => { */
+  /*   if (persistedQuery) { */
+  /*     searchSongs(persistedQuery); */
+  /*   } */
 
-    return function() {
-      persistedQuery = inputRef.current.value;
-    };
-  }, []);
+  /*   return function() { */
+  /*     persistedQuery = inputRef.current.value; */
+  /*   }; */
+  /* }, []); */
 
   const debouncedSearchSongs = debounce(searchSongs, 666);
 
