@@ -3,6 +3,15 @@ import App from "next/app";
 import Layout from "components/Layout";
 import { LoggedInContextProvider } from "lib/useLoggedIn";
 
+import bugsnag from "@bugsnag/js";
+import bugsnagReact from "@bugsnag/plugin-react";
+
+console.error("BUGSNAG API", process.env.BUGSNAG_API_KEY);
+
+const bugsnagClient = bugsnag(process.env.BUGSNAG_API_KEY);
+bugsnagClient.use(bugsnagReact, React);
+const ErrorBoundary = bugsnagClient.getPlugin("react");
+
 class Bond extends App {
   // Only uncomment this method if you have blocking data requirements for
   // every single page in your application. This disables the ability to
@@ -19,12 +28,14 @@ class Bond extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <LoggedInContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </LoggedInContextProvider>
-    )
+      <ErrorBoundary>
+        <LoggedInContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </LoggedInContextProvider>
+      </ErrorBoundary>
+    );
   }
 }
 

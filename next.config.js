@@ -1,5 +1,11 @@
+console.error("NODE ENV", process.env.NODE_ENV);
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: ".env.build" });
+}
+
 const path = require("path");
 const withSass = require("@zeit/next-sass");
+const withSourceMaps = require("@zeit/next-source-maps");
 
 const webpackConfig = {
   cssModules: true,
@@ -8,6 +14,7 @@ const webpackConfig = {
     localIdentName: "[local]___[hash:base64:5]"
   },
   env: {
+    BUGSNAG_API_KEY: process.env.BUGSNAG_API_KEY,
     MATHIS_API: process.env.MATHIS_API
   },
   webpack(config) {
@@ -16,4 +23,4 @@ const webpackConfig = {
   }
 };
 
-module.exports = withSass(webpackConfig);
+module.exports = withSourceMaps(withSass(webpackConfig));
