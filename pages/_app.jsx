@@ -6,8 +6,6 @@ import { LoggedInContextProvider } from "lib/useLoggedIn";
 import bugsnag from "@bugsnag/js";
 import bugsnagReact from "@bugsnag/plugin-react";
 
-console.error("BUGSNAG API", process.env.BUGSNAG_API_KEY);
-
 const bugsnagClient = bugsnag(process.env.BUGSNAG_API_KEY);
 bugsnagClient.use(bugsnagReact, React);
 const ErrorBoundary = bugsnagClient.getPlugin("react");
