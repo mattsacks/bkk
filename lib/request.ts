@@ -11,7 +11,14 @@ interface RequestParams {
 
 let userQueryString = undefined;
 
-const API = process.env.MATHIS_API || "https://mathis-prod.herokuapp.com/api/v1";
+let API = process.env.MATHIS_API;
+
+// Override API if on the development domain
+if (location.origin.includes("dev.bkk.bar")) {
+  API = "https://mathis-development.herokuapp.com/api/v1";
+} else if (!API) {
+  API = "https://mathis-prod.herokuapp.com/api/v1"
+}
 
 async function request(
   endpoint: string,
