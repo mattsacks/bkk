@@ -79,7 +79,7 @@ function QueuePage() {
     //  update isPaused if currently paused
   }, []);
 
-  if (process.browser && !user.userName) {
+  if (process.browser && !user.username) {
     router.push("/");
   }
 
@@ -98,7 +98,7 @@ function QueuePage() {
           { isSkipping ? "skipping…" : "skip current song \u00BB" }
         </button>
       </div>
-      {user.userName != undefined && (
+      {user.username != undefined && (
         <div className={styles.queue}>
           <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
           <Queue queueData={queueData} />

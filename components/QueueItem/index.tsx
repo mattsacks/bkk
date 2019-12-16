@@ -19,7 +19,7 @@ function QueueItem({ index, queue }) {
   return (
     <div
       className={classnames(styles.queueItem, {
-        [styles.mySong]: user.userName === queue.user_name
+        [styles.mySong]: user.username === queue.user_name
         // James should go to jail for this right here
       })}
     >
