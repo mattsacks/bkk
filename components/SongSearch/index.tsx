@@ -22,12 +22,13 @@ function search(query: string, filter: SongSearchFilter, songs: Song[]) {
   const queryTerms = query.toLowerCase().split(" ");
 
   function matchSong(song: Song) {
+    // FIXME: Remove toLowerCase()
     if (filter === SongSearchFilters.ALL) {
-      return queryTerms.every(queryTerm => `${song.artist} ${song.name}`.includes(queryTerm));
+      return queryTerms.every(queryTerm => `${song.artist} ${song.name}`.toLowerCase().includes(queryTerm));
     } else if (filter === SongSearchFilters.ARTIST) {
-      return queryTerms.every(queryTerm => `${song.artist}`.includes(queryTerm));
+      return queryTerms.every(queryTerm => `${song.artist}`.toLowerCase().includes(queryTerm));
     } else if (filter === SongSearchFilters.SONG) {
-      return queryTerms.every(queryTerm => `${song.name}`.includes(queryTerm));
+      return queryTerms.every(queryTerm => `${song.name}`.toLowerCase().includes(queryTerm));
     } else {
       return true;
     }
@@ -61,17 +62,6 @@ function SongSearch({
   useEffect(() => {
     searchSongs(inputRef.current.value);
   }, [activeSearchFilter]);
-
-  // FIXME: This freezes the input from changing
-  /* useEffect(() => { */
-  /*   if (persistedQuery) { */
-  /*     searchSongs(persistedQuery); */
-  /*   } */
-
-  /*   return function() { */
-  /*     persistedQuery = inputRef.current.value; */
-  /*   }; */
-  /* }, []); */
 
   const debouncedSearchSongs = debounce(searchSongs, 666);
 
