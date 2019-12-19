@@ -25,12 +25,17 @@ async function request(
   const token = Cookies.get(USER_COOKIE);
   const apiRequest = `${API}/${endpoint}`;
 
+  const headers = {
+    "Content-Type": "application/json"
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`
+  }
+
   const response = await fetch(apiRequest, {
     body: params.body ? JSON.stringify(params.body) : undefined,
-    headers: {
-      "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
+    headers,
     method: params.method
   });
 
