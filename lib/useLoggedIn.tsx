@@ -21,9 +21,9 @@ export function LoggedInContextProvider({ children }) {
   const usercookie = Cookies.get(USER_COOKIE);
 
   const [loggedIn, setLoggedIn] = useState<LoggedInState>({
-    token: usercookie || null, // FIXME: use ??
-    status: null,
-    user: null
+    token: usercookie || undefined, // FIXME: use ??
+    status: undefined,
+    user: undefined
   });
 
   const loginUser: LoginRequest = async function login(name, room) {
@@ -42,16 +42,16 @@ export function LoggedInContextProvider({ children }) {
 
       setLoggedIn({
         token,
-        status: null,
-        user: null
+        status: undefined,
+        user: undefined
       });
       return true;
     } else {
       setLoggedIn({
-        token: null,
+        token: undefined,
         status:
           response.statusText || `unknown error (status ${response.status})`,
-        user: null
+        user: undefined
       });
     }
   };

@@ -49,7 +49,7 @@ export default function App() {
     getSongs().then((songs) => {
       setSongs(songs);
     });
-  }, [loggedIn.user]);
+  }, [loggedIn.token]);
 
   return (
     <div className={styles.app}>

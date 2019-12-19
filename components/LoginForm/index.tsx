@@ -25,7 +25,7 @@ function LoginForm(props: LoginFormProps & FormikProps<LoginFormValues>) {
     values
   } = props;
 
-  const [isLoggingIn, setLoggingInState] = useState(loggedIn.authed);
+  const [isLoggingIn, setLoggingInState] = useState(loggedIn.token);
 
   const submitForm = useCallback(
     (e) => {

@@ -15,7 +15,7 @@ let API = process.env.MATHIS_API;
 if (process.browser && location.origin.includes("dev.bkk.bar")) {
   API = "https://mathis-development.herokuapp.com/api/v1";
 } else if (!API) {
-  API = "https://mathis-prod.herokuapp.com/api/v1"
+  API = "https://mathis-prod.herokuapp.com/api/v1";
 }
 
 async function request(
@@ -25,17 +25,12 @@ async function request(
   const token = Cookies.get(USER_COOKIE);
   const apiRequest = `${API}/${endpoint}`;
 
-  const headers = {
-    "Content-Type": "application/json"
-  };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`
-  }
-
   const response = await fetch(apiRequest, {
     body: params.body ? JSON.stringify(params.body) : undefined,
-    headers,
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+      "Content-Type": "application/json"
+    },
     method: params.method
   });
 

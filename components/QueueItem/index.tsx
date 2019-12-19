@@ -14,7 +14,7 @@ function QueueItem({ index, queue }) {
     indexText = index;
   }
 
-  const { user } = useLoggedIn()[0];
+  const { user = {} } = useLoggedIn()[0];
 
   return (
     <div

@@ -47,7 +47,7 @@ function QueuePage() {
   const [isPaused, setIsPaused] = useState(false);
   const [isSkipping, setIsSkipping] = useState(false);
   const [loggedInState] = useLoggedIn();
-  const user = loggedInState.user || {};
+  const { token, user = {} } = loggedInState;
 
   async function getQueue() {
     const queue = await fetchQueue();
@@ -79,7 +79,7 @@ function QueuePage() {
     //  update isPaused if currently paused
   }, []);
 
-  if (process.browser && !user.username) {
+  if (process.browser && !token) {
     router.push("/");
   }
 
@@ -98,12 +98,10 @@ function QueuePage() {
           { isSkipping ? "skipping…" : "skip current song \u00BB" }
         </button>
       </div>
-      {user.username != undefined && (
-        <div className={styles.queue}>
-          <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
-          <Queue queueData={queueData} />
-        </div>
-      )}
+      <div className={styles.queue}>
+        <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
+        <Queue queueData={queueData} />
+      </div>
     </React.Fragment>
   );
 }
