@@ -1,8 +1,7 @@
 {
   "build": {
     "env": {
-      "BUGSNAG_API_KEY": "4f7e913d634866b2c9068d6750e23386",
-      "MATHIS_API": "https://mathis-prod.herokuapp.com/api/v1"
+      "BUGSNAG_API_KEY": "4f7e913d634866b2c9068d6750e23386"
     }
   }
 }
