@@ -14,7 +14,7 @@ let userQueryString = undefined;
 let API = process.env.MATHIS_API;
 
 // Override API if on the development domain
-if (!API && process.browser) {
+if (process.browser) {
   if (/(?:dev\.bkk\.bar|bkk-.*\.now.sh)/.test(location.origin)) {
     API = "https://mathis-development.herokuapp.com/api/v1";
   } else if (!API) {
