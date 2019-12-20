@@ -28,17 +28,21 @@ async function playTrack() {
 
 async function fetchQueue() {
   const response = await request("playlist");
-  const queue = await response.json();
+  if (response.ok) {
+    const queue = await response.json();
 
-  // FIXME use this until backend fixes artist names
-  const formattedTracks = queue.tracks.map((song: Song) => {
-    const [last, ...rest] = song.artist.split(", ");
-    rest.push(last);
-    song.artist = rest.join(" ");
-    return song;
-  });
+    // FIXME use this until backend fixes artist names
+    const formattedTracks = queue.tracks.map((song: Song) => {
+      const [last, ...rest] = song.artist.split(", ");
+      rest.push(last);
+      song.artist = rest.join(" ");
+      return song;
+    });
 
-  return formattedTracks;
+    return formattedTracks;
+  } else {
+    return [];
+  }
 }
 
 function QueuePage() {
@@ -46,12 +50,15 @@ function QueuePage() {
   const [queueData, setQueue] = useState([]);
   const [isPaused, setIsPaused] = useState(false);
   const [isSkipping, setIsSkipping] = useState(false);
+  const [isLoadingQueue, setIsLoadingQueue] = useState(true);
   const [loggedInState] = useLoggedIn();
   const { token, user = {} } = loggedInState;
 
   async function getQueue() {
+    setIsLoadingQueue(true);
     const queue = await fetchQueue();
     setQueue(queue);
+    setIsLoadingQueue(false);
   }
 
   async function skipSong() {
@@ -100,7 +107,7 @@ function QueuePage() {
       </div>
       <div className={styles.queue}>
         <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
-        <Queue queueData={queueData} />
+        <Queue queueData={queueData} loading={isLoadingQueue} />
       </div>
     </React.Fragment>
   );
