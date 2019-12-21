@@ -9,19 +9,21 @@ export interface LoginRequest {
 }
 
 interface LoggedInState {
+  token: string | null,
   status: string | null;
   user: { bookingKey: string, username: string } | null;
 }
 
-export const USER_COOKIE = "mathisUser";
+export const USER_COOKIE = "mathis_user";
 const LoggedInContext = createContext(null);
 
 export function LoggedInContextProvider({ children }) {
   const usercookie = Cookies.get(USER_COOKIE);
 
   const [loggedIn, setLoggedIn] = useState<LoggedInState>({
-    status: null,
-    user: usercookie ? JSON.parse(usercookie) : null
+    token: usercookie || undefined, // FIXME: use ??
+    status: undefined,
+    user: undefined
   });
 
   const loginUser: LoginRequest = async function login(name, room) {
@@ -34,22 +36,22 @@ export function LoggedInContextProvider({ children }) {
     });
 
     if (response.status === 200) {
-      const { bookingKey, username } = await response.json();
+      const { token } = await response.json();
 
-      Cookies.set(USER_COOKIE, {
-        bookingKey, username
-      });
+      Cookies.set(USER_COOKIE, token);
 
       setLoggedIn({
-        status: null,
-        user: { bookingKey, username }
+        token,
+        status: undefined,
+        user: undefined
       });
       return true;
     } else {
       setLoggedIn({
+        token: undefined,
         status:
           response.statusText || `unknown error (status ${response.status})`,
-        user: null
+        user: undefined
       });
     }
   };
@@ -57,6 +59,7 @@ export function LoggedInContextProvider({ children }) {
   function logoutUser() {
     Cookies.remove(USER_COOKIE);
     setLoggedIn({
+      token: null,
       status: null,
       user: null
     });

@@ -6,7 +6,7 @@ import { Song } from "lib/types";
 import styles from "./styles.scss";
 
 async function addToQueue(song: Song) {
-  await request("tracks", {
+  return request("tracks", {
     body: {
       song_id: song.id
     },
@@ -25,12 +25,20 @@ function SongListItem(props: { song: Song }) {
       })}
       disabled={isAddedToQueue}
       onClick={(e) => {
-        addToQueue(song);
-        setIsAddedToQueue(true);
+        addToQueue(song).then((response) => {
+          if (response.ok) {
+            setIsAddedToQueue(true);
 
-        setTimeout(() => {
-          setIsAddedToQueue(false);
-        }, 2500);
+            setTimeout(() => {
+              setIsAddedToQueue(false);
+            }, 2500);
+          } else {
+            response.json().then((body) => {
+              alert("Could not add track: " + body.error)
+            });
+          }
+        });
+
       }}
     >
       <div>

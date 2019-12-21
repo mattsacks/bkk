@@ -9,8 +9,6 @@ interface RequestParams {
   method?: string;
 }
 
-let userQueryString = undefined;
-
 let API = process.env.MATHIS_API;
 
 // Override API if on the development domain
@@ -26,21 +24,13 @@ async function request(
   endpoint: string,
   params: RequestParams = {}
 ): Promise<Response> {
-  // FIXME this is gross and bad
-  if (userQueryString == undefined) {
-    const usercookie = Cookies.get(USER_COOKIE);
-
-    if (usercookie !== undefined) {
-      userQueryString = qs.stringify(JSON.parse(usercookie));
-    }
-  }
-
-  const apiRequest = `${API}/${endpoint}?${userQueryString || ""}`;
+  const token = Cookies.get(USER_COOKIE);
+  const apiRequest = `${API}/${endpoint}`;
 
   const response = await fetch(apiRequest, {
     body: params.body ? JSON.stringify(params.body) : undefined,
-    credentials: "include",
     headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
       "Content-Type": "application/json"
     },
     method: params.method
