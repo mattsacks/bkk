@@ -20,7 +20,6 @@ function QueueItem({ index, queue }) {
     <div
       className={classnames(styles.queueItem, {
         [styles.mySong]: user.username === queue.user_name
-        // James should go to jail for this right here
       })}
     >
       <span className={styles.index}>{indexText}:</span>

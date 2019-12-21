@@ -9,7 +9,7 @@ function Queue({ queueData, loading }) {
 
   return (
     <div className={styles.queue}>
-      { loading ? "loading.." : queueItems }
+      { loading ? "loading…" : queueItems }
     </div>
   );
 }

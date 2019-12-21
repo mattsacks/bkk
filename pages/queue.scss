@@ -10,11 +10,14 @@
   display: flex;
   font-family: VT323;
   justify-content: space-between;
-  margin: $unit * 1.5;
+  margin: ($unit * 1.5) $unit;
 }
 
 .queueButtons button {
-  padding: 0;
+  background-color: var(--text-color);
+  color: var(--input-background);
+  min-width: $unit * 10;
+  padding: ($unit / 2) $unit;
 
   &:disabled {
     font-style: italic;

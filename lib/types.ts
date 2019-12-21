@@ -4,3 +4,8 @@ export interface Song {
   name: string;
   tags: string;
 }
+
+export interface User {
+  bookingKey: string;
+  userName: string;
+}

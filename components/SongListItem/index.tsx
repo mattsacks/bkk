@@ -48,7 +48,7 @@ function SongListItem(props: { song: Song }) {
       {isAddedToQueue ? (
         <div>queued!</div>
       ) : (
-        <SVG className={styles.songIcon} src="/right-chevron.svg" />
+        "+"
       )}
     </button>
   );
