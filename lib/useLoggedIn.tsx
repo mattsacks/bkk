@@ -66,7 +66,7 @@ export function LoggedInContextProvider({ children }) {
   }
 
   return (
-    <LoggedInContext.Provider value={[loggedIn, loginUser, logoutUser]}>
+    <LoggedInContext.Provider value={[loggedIn, loginUser, logoutUser, setLoggedIn]}>
       {children}
     </LoggedInContext.Provider>
   );

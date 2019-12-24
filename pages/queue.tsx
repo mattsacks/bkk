@@ -67,8 +67,7 @@ function QueuePage() {
   const [isPaused, setIsPaused] = useState(false);
   const [isSkipping, setIsSkipping] = useState(false);
   const [isLoadingQueue, setIsLoadingQueue] = useState(true);
-  const [user, setUser] = useState<User>(emptyUser);
-  const [loggedInState] = useLoggedIn();
+  const { 0: loggedInState, 3: setLoggedIn } = useLoggedIn();
   const { token } = loggedInState;
 
   // FIXME these get defined on every render
@@ -103,7 +102,13 @@ function QueuePage() {
 
   async function getUser() {
     const user = await whoAmI();
-    setUser(user);
+    setLoggedIn({
+      ...loggedInState,
+      user: {
+        bookingKey: user.bookingKey,
+        username: user.userName
+      }
+    });
   }
 
   useEffect(() => {
@@ -120,7 +125,7 @@ function QueuePage() {
       <Nav showLeaveRoom={false} link="/" name="search songs" />
       <div className={styles.queue}>
         <div className={styles.queueButtons}>
-          { !isLoadingQueue && (
+          {!isLoadingQueue && (
             <React.Fragment>
               <button
                 className={styles.playPause}
@@ -138,7 +143,9 @@ function QueuePage() {
             </React.Fragment>
           )}
         </div>
-        <h1 className={styles.heading}>{user.bookingKey} queue:</h1>
+        <h1 className={styles.heading}>
+          {loggedInState.user?.bookingKey} queue:
+        </h1>
         <Queue queueData={queueData} loading={isLoadingQueue} />
       </div>
     </React.Fragment>
