@@ -17,6 +17,23 @@ async function addToQueue(song: Song) {
 function SongListItem(props: { song: Song }) {
   const { song } = props;
   const [isAddedToQueue, setIsAddedToQueue] = useState(false);
+  const [errorMessage, setError] = useState();
+
+  async function queueSong() {
+    const response = await addToQueue(song);
+
+    if (response.ok) {
+      setIsAddedToQueue(true);
+      setTimeout(() => {
+        setIsAddedToQueue(false);
+      }, 2500);
+    } else {
+      const { error } = await response.json();
+
+      // TODO set error and disable all buttons
+      setError(`Error: ${error.Code}`);
+    }
+  }
 
   return (
     <button
@@ -24,28 +41,15 @@ function SongListItem(props: { song: Song }) {
         [styles.addedToQueue]: isAddedToQueue
       })}
       disabled={isAddedToQueue}
-      onClick={(e) => {
-        addToQueue(song).then((response) => {
-          if (response.ok) {
-            setIsAddedToQueue(true);
-
-            setTimeout(() => {
-              setIsAddedToQueue(false);
-            }, 2500);
-          } else {
-            response.json().then((body) => {
-              alert("Could not add track: " + body.error)
-            });
-          }
-        });
-
-      }}
+      onClick={queueSong}
     >
       <div>
         {song.name}
         <span className={styles.songTag}>{song.tags}</span>
       </div>
-      {isAddedToQueue ? (
+      {errorMessage ? (
+        <div>{errorMessage}</div>
+      ) : isAddedToQueue ? (
         <div>queued!</div>
       ) : (
         "+"
