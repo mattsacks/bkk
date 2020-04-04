@@ -69,7 +69,7 @@ export default function QueueItemPage() {
 
   if (!queue) {
     return (
-      <div className="app-container">
+      <div className="app-container flex flex-col flex-1">
         <Nav>
           <NavItem href="/queue" text="&lt; view queue" />
           <div></div>
