@@ -34,10 +34,9 @@ export async function getServerSideProps({ req }) {
   const props: { token?: string } = {};
 
   // Create an object with a key,val for each cookie in the request
-  const cookies = Object.assign(
-    {},
-    ...req.headers.cookie.split("; ").map(qs.parse)
-  );
+  const cookies = req.headers.cookie
+    ? Object.assign({}, ...req.headers.cookie.split("; ").map(qs.parse))
+    : {};
 
   const token = cookies[USER_COOKIE];
   if (token) {
