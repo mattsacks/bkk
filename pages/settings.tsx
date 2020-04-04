@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav, { NavItem } from "components/Nav";
 import Router from "next/router";
 import useTheme from "lib/useTheme";
@@ -8,12 +8,25 @@ import styles from "./settings.module.css";
 
 type Theme = keyof typeof THEMES;
 
+let cachedRendered = false;
+
 function Settings({ setToken }: { setToken: (value?: string) => void }) {
   const [currentTheme, changeTheme] = useTheme();
+  const [hasRendered, setHasRendered] = useState(cachedRendered);
+
+  // Used to prevent a className mismatch when highlighting the current them
+  // (stored in localStorage). Cached in module space so this is only done on
+  // hydration.
+  useEffect(() => {
+    if (!hasRendered) {
+      cachedRendered = true;
+      setHasRendered(true);
+    }
+  }, []);
 
   const ThemeSwatches = Object.keys(THEMES).map((theme) => {
     const name = THEMES[theme];
-    const isCurrentTheme = process.browser && theme === currentTheme;
+    const isCurrentTheme = hasRendered && theme === currentTheme;
 
     return (
       <div key={theme}>
