@@ -1,0 +1,3 @@
+.invert {
+  @apply bg-primary text-secondary;
+}

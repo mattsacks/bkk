@@ -1,0 +1,14 @@
+.list-item {
+  @apply
+    border-2
+    border-primary
+    flex
+    items-center
+    justify-between
+    mb-6
+    p-3;
+
+  @screen md {
+    @apply mb-6 p-4;
+  }
+}

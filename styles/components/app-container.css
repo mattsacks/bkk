@@ -1,0 +1,7 @@
+.app-container {
+  @apply px-3 max-w-full w-full;
+
+  @screen md {
+    @apply max-w-lg mx-auto;
+  }
+}

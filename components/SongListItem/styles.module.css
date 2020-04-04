@@ -1,0 +1,6 @@
+.submitTransition {
+  composes:
+    global(duration-300)
+    global(ease-out)
+    global(transition-opacity);
+}

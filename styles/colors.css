@@ -1,0 +1,74 @@
+/* Classes generated from [theme]-primary in tailwind config */
+:root {
+  --default-light: #FAFAFA;
+  --default-dark: #0A0A0A;
+
+  --color-primary: var(--default-light);
+  --color-secondary: var(--default-dark);
+
+  --default-primary: var(--default-light);
+  --default-secondary: var(--default-dark);
+
+  --blue-light: #bed8d5;
+  --blue-dark: #18435e;
+  --blue-primary: var(--blue-light);
+  --blue-secondary: var(--blue-dark);
+
+  --terminal-light: #00FF84;
+  --terminal-dark: #001C15;
+  --terminal-primary: var(--terminal-light);
+  --terminal-secondary: var(--terminal-dark);
+
+  --watermelon-light: #FFA9A5;
+  --watermelon-dark: #326367;
+  --watermelon-primary: var(--watermelon-light);
+  --watermelon-secondary: var(--watermelon-dark);
+
+  --earl-grey-light: #cfd2e9;
+  --earl-grey-dark: #374146;
+  --earl-grey-primary: var(--earl-grey-light);
+  --earl-grey-secondary: var(--earl-grey-dark);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-primary: var(--default-dark);
+    --color-secondary: var(--default-light);
+
+    --default-primary: var(--default-dark);
+    --default-secondary: var(--default-light);
+
+    --blue-primary: var(--blue-dark);
+    --blue-secondary: var(--blue-light);
+
+    --terminal-primary: var(--terminal-dark);
+    --terminal-secondary: var(--terminal-light);
+
+    --watermelon-primary: var(--watermelon-dark);
+    --watermelon-secondary: var(--watermelon-light);
+
+    --earl-grey-primary: var(--earl-grey-dark);
+    --earl-grey-secondary: var(--earl-grey-light);
+  }
+}
+
+[data-theme="blue"] {
+  --color-primary: var(--blue-primary);
+  --color-secondary: var(--blue-secondary);
+}
+
+[data-theme="terminal"] {
+  --color-primary: var(--terminal-primary);
+  --color-secondary: var(--terminal-secondary);
+}
+
+[data-theme="watermelon"] {
+  --color-primary: var(--watermelon-primary);
+  --color-secondary: var(--watermelon-secondary);
+}
+
+[data-theme="earl-grey"] {
+  --color-primary: var(--earl-grey-primary);
+  --color-secondary: var(--earl-grey-secondary);
+}
+
