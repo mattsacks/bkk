@@ -1,0 +1,8 @@
+.queueNavLink {
+  composes:
+    global(w-3);
+
+  composes:
+    global(sm:flex-1)
+    global(sm:w-auto);
+}

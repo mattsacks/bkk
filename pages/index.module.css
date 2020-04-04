@@ -1,0 +1,14 @@
+.heading {
+  composes:
+    global(bg-primary)
+    global(p-6)
+    global(text-center)
+    global(text-secondary);
+
+  composes:
+    global(md:flex)
+    global(md:flex-1)
+    global(md:flex-col)
+    global(md:h-48)
+    global(md:justify-center);
+}

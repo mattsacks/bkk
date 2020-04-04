@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css?family=VT323&display=block");
+
+/* purgecss start ignore */
+@import "tailwindcss/base";
+
+@import "./colors.css";
+@import "./global.css";
+@import "./components/*.css";
+
+@import "tailwindcss/components";
+/* purgecss end ignore */
+
+@import "tailwindcss/utilities";

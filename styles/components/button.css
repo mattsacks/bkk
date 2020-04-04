@@ -1,0 +1,15 @@
+.button {
+  @apply
+    bg-primary
+    px-4
+    py-2
+    text-secondary;
+
+  &:active {
+    @apply opacity-75;
+  }
+}
+
+.button-thin {
+  @apply py-1;
+}
