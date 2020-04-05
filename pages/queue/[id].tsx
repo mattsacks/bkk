@@ -4,6 +4,7 @@ import useSWR, { mutate } from "swr";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/router";
 import request from "lib/request";
+import { WithTokenProps } from "lib/withToken";
 import Nav, { NavItem } from "components/Nav";
 import Loading from "components/Loading";
 import styles from "./styles.module.css";
@@ -19,11 +20,13 @@ function getLabel(index: number) {
   }
 }
 
-export default function QueueItemPage() {
+type Props = WithTokenProps;
+
+export default function QueueItemPage({ token }: Props) {
   const router = useRouter();
   const id = parseInt(router.query.id as string);
 
-  const { data: queue } = useSWR(id ? "/playlist" : null);
+  const { data: queue } = useSWR(token && id ? "/playlist" : null);
 
   const queueData = queue?.tracks.find((item) => item.id === id);
   const index = queue?.tracks.indexOf(queueData);
@@ -77,11 +80,6 @@ export default function QueueItemPage() {
         <Loading />
       </div>
     );
-  }
-
-  if (!queueData) {
-    // TODO: Show an error message instead about the missing queue id
-    router.push("/queue");
   }
 
   return (

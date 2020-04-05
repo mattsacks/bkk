@@ -1,24 +1,18 @@
 // View the current queue
 import React, { useEffect, useMemo, useState } from "react";
 import useSWR, { mutate } from "swr";
-import { useRouter } from "next/router";
 import formatTracks from "lib/formatTracks";
+import { WithTokenProps } from "lib/withToken";
 import usePost from "lib/usePost";
-import withToken from "lib/withToken";
-import { TokenState } from "lib/types";
 import Nav, { NavItem } from "components/Nav";
 import Loading from "components/Loading";
 import Queue from "components/Queue";
 
-interface Props {
-  token: TokenState;
-  setToken: (newToken: TokenState) => void;
-}
+type Props = WithTokenProps;
 
 function QueuePage({ token }: Props) {
-  const router = useRouter();
-  const { data: queue } = useSWR("/playlist");
-  const { data: user } = useSWR("/whoami");
+  const { data: queue } = useSWR(token && "/playlist");
+  const { data: user } = useSWR(token && "/whoami");
 
   const { postRequest: skipTrack } = usePost("/tracks/skip");
   const { postRequest: pauseTrack } = usePost("/tracks/pause");
@@ -54,10 +48,6 @@ function QueuePage({ token }: Props) {
   async function play() {
     setIsPaused(false);
     await playTrack();
-  }
-
-  if (process.browser && !token) {
-    router.replace("/");
   }
 
   if (!queue || !user) {
@@ -108,4 +98,4 @@ function QueuePage({ token }: Props) {
   );
 }
 
-export default withToken(QueuePage);
+export default QueuePage;

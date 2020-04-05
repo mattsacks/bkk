@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "lib/request";
-import {
-  TokenState,
-  Song
-} from "lib/types";
+import { Song } from "lib/types";
+import { WithTokenProps } from "lib/withToken";
 import Nav, { NavItem } from "components/Nav";
 import SongList from "components/SongList";
 import Loading from "components/Loading";
@@ -20,12 +18,10 @@ function formatSongs(songs: Song[]): Song[] {
   });
 }
 
-interface Props {
-  setToken: (newToken: TokenState) => void;
-}
+type Props = WithTokenProps;
 
-export default function App({ setToken }: Props) {
-  const { data: songs } = useSWR("/songs", async (endpoint) => {
+export default function App({ token, setToken }: Props) {
+  const { data: songs } = useSWR(token && "/songs", async (endpoint) => {
     const songs = (await fetcher(endpoint)) as Song[];
     return formatSongs(songs);
   });

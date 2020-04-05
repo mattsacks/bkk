@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav, { NavItem } from "components/Nav";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import useTheme from "lib/useTheme";
 import withToken from "lib/withToken";
 import { THEMES } from "lib/types";
@@ -11,6 +11,7 @@ type Theme = keyof typeof THEMES;
 let cachedRendered = false;
 
 function Settings({ setToken }: { setToken: (value?: string) => void }) {
+  const router = useRouter();
   const [currentTheme, changeTheme] = useTheme();
   const [hasRendered, setHasRendered] = useState(cachedRendered);
 
@@ -79,7 +80,7 @@ function Settings({ setToken }: { setToken: (value?: string) => void }) {
             className="button"
             onClick={() => {
               setToken(null);
-              Router.push("/");
+              router.push("/login");
             }}
           >
             Leave room

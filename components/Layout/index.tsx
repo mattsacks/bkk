@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import useTheme from "lib/useTheme";
+import withToken, { WithTokenProps } from "lib/withToken";
 
-export default function Layout(props: { children: React.ReactNode }) {
+interface Props extends WithTokenProps {
+  children: any;
+}
+
+function Layout({ children, token, setToken }: Props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!token) {
+      router.replace("/login");
+    }
+  }, [token]);
+
   // Add body[data-theme] to every page
   useTheme();
 
@@ -29,7 +43,9 @@ export default function Layout(props: { children: React.ReactNode }) {
 
         <title>Baby Ketten Karaoke</title>
       </Head>
-      <main>{props.children}</main>
+      <main>{React.cloneElement(children, { token, setToken })}</main>
     </React.Fragment>
   );
 }
+
+export default withToken(Layout);
