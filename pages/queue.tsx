@@ -73,9 +73,9 @@ function QueuePage({ token }: Props) {
           <React.Fragment>
             <div className="sm:flex block sm:justify-between sm:items-center mb-8">
               <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
-              <div className="flex sm:block justify-between">
+              <div className="xs:flex sm:block justify-between">
                 <button
-                  className={`sm:mr-6 button button-thin`}
+                  className={`mb-2 mr-2 xs:mb-0 sm:mr-6 button button-thin`}
                   onClick={isPaused ? play : pause}
                 >
                   {isPaused ? "play" : "pause"}
