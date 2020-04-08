@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import withToken from "lib/withToken";
 import { TokenState } from "lib/types";
 import LoginForm from "components/LoginForm";
-import styles from "./index.module.css";
+import styles from "./login.module.css";
 
 interface Props {
   token: TokenState;
@@ -20,16 +20,16 @@ function Login({ token, setToken }: Props) {
   }, [token]);
 
   return (
-    <>
+    <div className="md:flex md:flex-1 md:items-stretch">
       <div className={styles.heading}>
         <h1 className="text-4xl md:text-5xl font-bold mx-auto md:w-56 md:w-full max-w-sm">
           baby ketten karaoke
         </h1>
       </div>
-      <div className="md:flex-1 bg-secondary w-full">
+      <div className="bg-secondary w-full md:flex md:flex-grow md:items-center md:w-auto">
         <LoginForm setToken={setToken} />
       </div>
-    </>
+    </div>
   );
 }
 

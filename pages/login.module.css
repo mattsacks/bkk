@@ -7,8 +7,11 @@
 
   composes:
     global(md:flex)
-    global(md:flex-1)
-    global(md:flex-col)
-    global(md:h-48)
-    global(md:justify-center);
+    global(md:h-auto)
+    global(md:items-center)
+    global(md:w-1/3);
+
+  @screen md {
+    min-width: 18rem;
+  }
 }
