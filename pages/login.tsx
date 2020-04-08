@@ -20,9 +20,9 @@ function Login({ token, setToken }: Props) {
   }, [token]);
 
   return (
-    <div className="md:flex md:flex-1 md:items-stretch">
+    <div className="lg:flex lg:flex-1 lg:items-stretch">
       <div className={styles.heading}>
-        <h1 className="text-4xl md:text-5xl font-bold mx-auto md:w-56 md:w-full max-w-sm">
+        <h1 className="text-4xl md:text-5xl font-bold mx-auto">
           baby ketten karaoke
         </h1>
       </div>
