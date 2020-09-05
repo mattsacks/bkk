@@ -23,9 +23,9 @@ module.exports = {
         primary: "var(--terminal-primary)",
         secondary: "var(--terminal-secondary)"
       },
-      watermelon: {
-        primary: "var(--watermelon-primary)",
-        secondary: "var(--watermelon-secondary)"
+      miami: {
+        primary: "var(--miami-primary)",
+        secondary: "var(--miami-secondary)"
       },
       "earl-grey": {
         primary: "var(--earl-grey-primary)",

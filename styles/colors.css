@@ -9,8 +9,8 @@
   --default-primary: var(--default-light);
   --default-secondary: var(--default-dark);
 
-  --blue-light: #bed8d5;
-  --blue-dark: #18435e;
+  --blue-light: #E5E9F0;
+  --blue-dark: #2e353f;
   --blue-primary: var(--blue-light);
   --blue-secondary: var(--blue-dark);
 
@@ -19,10 +19,10 @@
   --terminal-primary: var(--terminal-light);
   --terminal-secondary: var(--terminal-dark);
 
-  --watermelon-light: #FFA9A5;
-  --watermelon-dark: #326367;
-  --watermelon-primary: var(--watermelon-light);
-  --watermelon-secondary: var(--watermelon-dark);
+  --miami-light: #FFA9A5;
+  --miami-dark: #326367;
+  --miami-primary: var(--miami-light);
+  --miami-secondary: var(--miami-dark);
 
   --earl-grey-light: #cfd2e9;
   --earl-grey-dark: #374146;
@@ -44,8 +44,8 @@
     --terminal-primary: var(--terminal-dark);
     --terminal-secondary: var(--terminal-light);
 
-    --watermelon-primary: var(--watermelon-dark);
-    --watermelon-secondary: var(--watermelon-light);
+    --miami-primary: var(--miami-dark);
+    --miami-secondary: var(--miami-light);
 
     --earl-grey-primary: var(--earl-grey-dark);
     --earl-grey-secondary: var(--earl-grey-light);
@@ -62,9 +62,9 @@
   --color-secondary: var(--terminal-secondary);
 }
 
-[data-theme="watermelon"] {
-  --color-primary: var(--watermelon-primary);
-  --color-secondary: var(--watermelon-secondary);
+[data-theme="miami"] {
+  --color-primary: var(--miami-primary);
+  --color-secondary: var(--miami-secondary);
 }
 
 [data-theme="earl-grey"] {

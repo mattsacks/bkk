@@ -28,11 +28,11 @@
     global(text-terminal-primary);
 }
 
-.watermelon {
+.miami {
   composes:
-    global(bg-watermelon-secondary)
-    global(border-watermelon-primary)
-    global(text-watermelon-primary);
+    global(bg-miami-secondary)
+    global(border-miami-primary)
+    global(text-miami-primary);
 }
 
 .earl-grey {

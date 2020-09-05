@@ -13,9 +13,8 @@ export type SongSearchFilter = typeof SongSearchFilters[keyof typeof SongSearchF
 export const THEMES = {
   default: "bkk",
   terminal: "term",
-  blue: "aight",
-  "earl-grey": "earl",
-  watermelon: "watermelon"
+  blue: "nord",
+  miami: "miami"
 };
 
 // -------------------- API
