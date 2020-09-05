@@ -35,10 +35,7 @@ function SongListItem(props: { song: Song }) {
       >
         <div className="text-left capitalize">
           <h4 className="text-lg md:text-xl ">{song.name}</h4>
-          <h3 className="text-sm">
-            {song.artist} [{song.tags.replace(/[()]/g, "")}]
-          </h3>
-          <h3 className="text-sm hidden">[{song.tags.replace(/[()]/g, "")}]</h3>
+          <h3 className="text-sm">{song.artist}</h3>
         </div>
         <span className={`pl-3 md:text-xl ${wasAdded ? "opacity-0" : ""}`}>
           +
