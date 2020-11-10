@@ -132,8 +132,21 @@ export default function QueueItemPage({ token }: Props) {
           <h3 className="">
             Song by <span className="capitalize">{queueData.artist}</span>
           </h3>
-          <h3 className="">Karaoke by {queueData.tags.replace(/[()]/g, "")}</h3>
         </div>
+      </div>
+      <div className="mb-3 flex justify-between">
+        {index === 0 ? (
+          <div />
+        ) : (
+          <button className="mr-1 underline">
+            {index === 1 ? "sing now" : "sing sooner"} (#{index + 1 - 1})
+          </button>
+        )}
+        {index === queue?.tracks.length - 1 ? (
+          <div />
+        ) : (
+          <button className="ml-1 underline">sing later (#{index + 2})</button>
+        )}
       </div>
       <div className="mb-3 mx-auto">
         <button
