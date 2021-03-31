@@ -1,6 +1,10 @@
 html {
   font-family: "VT323";
-  font-size: 24px;
+  font-size: 20px;
+
+  @screen xs {
+    font-size: 24px;
+  }
 
   @screen md {
     font-size: 26px;
