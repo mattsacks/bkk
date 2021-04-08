@@ -10,7 +10,7 @@ interface SongSearchProps {
 
 function search(query: string, filter: SongSearchFilter, songs: Song[]) {
   const queryTerms = query
-    .replace(/[\d]/g, "")
+    // .replace(/[\d]/g, "") maybe don't do this?
     .toLowerCase()
     .split(" ");
 
@@ -60,7 +60,7 @@ function SongSearch({ setFilteredSongs, songs }: SongSearchProps) {
         /* setSearchStatus("searching…"); */
         const query = e.target.value;
 
-        if (query.length > 2 || query.length === 0) {
+        if (query.length > 1 || query.length === 0) {
           debouncedSearchSongs(query);
         }
       }}
