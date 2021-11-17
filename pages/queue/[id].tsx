@@ -8,6 +8,7 @@ import { WithTokenProps } from "lib/withToken";
 import Nav, { NavItem } from "components/Nav";
 import Loading from "components/Loading";
 import styles from "./styles.module.css";
+import formatTracks from 'lib/formatTracks';
 /* import GeniusAnnotations from "components/GeniusAnnotations"; */
 
 function getLabel(index: number) {
@@ -28,7 +29,8 @@ export default function QueueItemPage({ token }: Props) {
 
   const { data: queue } = useSWR(token && id ? "/playlist" : null);
 
-  const queueData = queue?.tracks.find((item) => item.id === id);
+  let queueData = queue?.tracks.find((item) => item.id === id);
+  [queueData] = formatTracks([queueData]);
   const index = queue?.tracks.indexOf(queueData);
 
   useHotkeys(
