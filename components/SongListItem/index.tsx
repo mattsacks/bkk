@@ -37,8 +37,8 @@ function SongListItem(props: { song: Song }) {
           <h4 className="text-lg md:text-xl ">{song.name}</h4>
           <h3 className="text-sm">{song.artist}</h3>
         </div>
-        <span className={`pl-3 md:text-xl ${wasAdded ? "opacity-0" : ""}`}>
-          +
+        <span className={`pl-3 md:text-xl`}>
+          {wasAdded ? "added!" : "+"}
         </span>
       </button>
     </div>
