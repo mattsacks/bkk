@@ -13,6 +13,7 @@ html {
 
 html, body, #__next {
   @apply text-primary bg-secondary h-full;
+  line-height: calc(1em + 0.5rem);
 }
 
 main {

@@ -1,6 +1,7 @@
 .heading {
   composes:
     global(bg-primary)
+    global(leading-snug)
     global(p-6)
     global(text-center)
     global(text-secondary);

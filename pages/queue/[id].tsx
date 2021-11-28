@@ -8,7 +8,7 @@ import { WithTokenProps } from "lib/withToken";
 import Nav, { NavItem } from "components/Nav";
 import Loading from "components/Loading";
 import styles from "./styles.module.css";
-import formatTracks from 'lib/formatTracks';
+import formatTracks from "lib/formatTracks";
 /* import GeniusAnnotations from "components/GeniusAnnotations"; */
 
 function getLabel(index: number) {
@@ -138,14 +138,14 @@ export default function QueueItemPage({ token }: Props) {
             )}
           </div>
         </div>
-        <div className="mb-6">
+        <div className="my-3">
           <h4>{queueData.user_name}</h4>
-          <h3 className="text-xl capitalize">{queueData.song_name}</h3>
         </div>
-        <div className="mb-6">
-          <h3 className="">
-            Song by <span className="capitalize">{queueData.artist}</span>
-          </h3>
+        <div className="my-3">
+          <h3 className="text-xl capitalize">{queueData.song_name}</h3>
+          <div>
+            <span className="capitalize">{queueData.artist}</span>
+          </div>
         </div>
       </div>
       <div className="mb-3 flex justify-between">

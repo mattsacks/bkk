@@ -3,6 +3,7 @@
 /* purgecss start ignore */
 @import "tailwindcss/base";
 
+@import "./reset.css";
 @import "./colors.css";
 @import "./global.css";
 @import "./components/*.css";

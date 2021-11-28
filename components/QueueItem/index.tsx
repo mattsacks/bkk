@@ -20,7 +20,7 @@ function QueueItem({ label, queue }: Props) {
               {queue.song_name}
             </div>
           </div>
-          <div>&gt;</div>
+          <div className="w-1/3 text-right">&gt;</div>
         </div>
       </a>
     </Link>
