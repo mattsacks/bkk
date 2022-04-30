@@ -13,7 +13,7 @@
     "classnames": "^2.2.6",
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "next": "^12.1.5",
     "postcss-easy-import": "^3.0.0",
     "postcss-import": "^12.0.1",
