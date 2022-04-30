@@ -1,12 +1,5 @@
 /// <reference types="next" />
-/// <reference types="next/types/global" />
+/// <reference types="next/image-types/global" />
 
-declare module "*.scss" {
-  const content: { [className: string]: string };
-  export = content;
-}
-
-declare module "*.svg" {
-  const content: unknown;
-  export default content;
-}
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.

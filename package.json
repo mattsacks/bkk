@@ -14,7 +14,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.20",
-    "next": "^10.1.3",
+    "next": "^12.1.5",
     "postcss-easy-import": "^3.0.0",
     "postcss-import": "^12.0.1",
     "qs": "^6.9.4",
@@ -42,6 +42,6 @@
     "eslint-plugin-react": "^7.20.6",
     "postcss-nested": "^4.2.3",
     "prettier": "^1.19.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.6.4"
   }
 }
