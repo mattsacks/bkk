@@ -28,6 +28,10 @@ export default function App({ token, setToken }: Props) {
 
   const [filteredSongs, setFilteredSongs] = useState([]);
 
+  if (!token) {
+    return <div className="app-container flex flex-1 flex-col h-full w-full" />;
+  }
+
   return (
     <div className="app-container flex flex-1 flex-col h-full w-full">
       <Nav>

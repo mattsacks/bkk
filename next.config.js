@@ -16,10 +16,6 @@ const webpackConfig = {
     BUGSNAG_API_KEY: process.env.BUGSNAG_API_KEY,
     MATHIS_API: process.env.MATHIS_API,
     GENIUS_API_KEY: process.env.GENIUS_API_KEY
-  },
-  webpack(config) {
-    config.resolve.modules = [path.resolve(__dirname), "node_modules"];
-    return config;
   }
 };
 

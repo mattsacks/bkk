@@ -1,7 +1,3 @@
 .flag {
-  @apply bg-primary text-secondary text-xs px-2 py-01;
-
-  @screen md {
-    @apply px-2;
-  }
+  @apply bg-primary text-secondary text-xs px-2 py-01 md:px-2;
 }

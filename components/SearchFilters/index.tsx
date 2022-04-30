@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import styles from "./styles.scss";
+const styles = {} as Record<string, string>;
 
 export const SongSearchFilters = {
   ALL: "all",

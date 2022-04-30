@@ -1,23 +1,28 @@
 html {
-  font-family: "VT323";
+  @apply font-mono;
   font-size: 20px;
 
-  @screen xs {
+  @media screen(xs) {
     font-size: 24px;
   }
 
-  @screen md {
+  @media screen(md) {
     font-size: 26px;
   }
 }
 
-html, body, #__next {
-  @apply text-primary bg-secondary h-full;
-  line-height: calc(1em + 0.5rem);
+html,
+body,
+#__next {
+  @apply h-full;
+}
+
+body {
+  @apply text-primary bg-secondary transition-[background-color,_color] ease-out duration-[169];
 }
 
 main {
-  @apply text-primary bg-secondary flex flex-col min-h-full;
+  @apply flex flex-col min-h-full;
 }
 
 a,
@@ -27,7 +32,7 @@ button {
 }
 
 input {
-  @apply appearance-none rounded-none;
+  @apply appearance-none rounded-none outline-none;
 }
 
 .h-2px {

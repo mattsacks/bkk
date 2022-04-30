@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=VT323&display=block");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .submit-disabled {
+    @apply opacity-25 pointer-events-none;
+  }
+}
+

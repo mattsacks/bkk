@@ -10,12 +10,6 @@
     transition-opacity;
 }
 
-@variants disabled {
-  .submit-disabled {
-    @apply opacity-25 pointer-events-none;
-  }
-}
-
 .submit-wide {
   @apply px-6;
 }

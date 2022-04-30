@@ -1,49 +1,27 @@
 .themeSwatch {
-  composes:
-    global(border-2)
-    global(p-3)
-    global(w-full);
-
-  composes: global(md:p-4);
+  @apply border-2 p-3 w-full md:p-4;
 }
 
 .default {
-  composes:
-    global(bg-default-secondary)
-    global(border-default-primary)
-    global(text-default-primary);
+  @apply bg-default-secondary border-default-primary text-default-primary;
 }
 
 .blue {
-  composes:
-    global(bg-blue-secondary)
-    global(border-blue-primary)
-    global(text-blue-primary);
+  @apply bg-blue-secondary border-blue-primary text-blue-primary;
 }
 
 .terminal {
-  composes:
-    global(bg-terminal-secondary)
-    global(border-terminal-primary)
-    global(text-terminal-primary);
+  @apply bg-terminal-secondary border-terminal-primary text-terminal-primary;
 }
 
 .miami {
-  composes:
-    global(bg-miami-secondary)
-    global(border-miami-primary)
-    global(text-miami-primary);
+  @apply bg-miami-secondary border-miami-primary text-miami-primary;
 }
 
 .earl-grey {
-  composes:
-    global(bg-earl-grey-secondary)
-    global(border-earl-grey-primary)
-    global(text-earl-grey-primary);
+  @apply bg-earl-grey-secondary border-earl-grey-primary text-earl-grey-primary;
 }
 
 .heading {
-  composes:
-    global(text-lg)
-    global(mb-1);
+  @apply text-lg mb-1;
 }

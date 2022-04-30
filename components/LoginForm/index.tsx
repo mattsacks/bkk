@@ -1,7 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import usePost from "lib/usePost";
 import Loading from "components/Loading";
-import styles from "./styles.module.css";
+import cntl from "cntl";
+
+const formStyles = cntl`
+  flex
+  flex-col
+  justify-center
+  w-full
+  max-w-md
+  mx-auto
+  pt-6
+  px-6
+  text-lg
+  md:flex-2
+  md:pt-6
+  md:text-xl
+`;
 
 interface Response {
   token: string;
@@ -53,7 +68,7 @@ function LoginForm({ setToken }: Props) {
   }, []);
 
   return (
-    <form className={styles.form} onSubmit={submitForm}>
+    <form className={formStyles} onSubmit={submitForm}>
       <label className="text-primary" htmlFor="name">
         ur name
       </label>

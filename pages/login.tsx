@@ -3,7 +3,21 @@ import { useRouter } from "next/router";
 import withToken from "lib/withToken";
 import { TokenState } from "lib/types";
 import LoginForm from "components/LoginForm";
-import styles from "./login.module.css";
+import cntl from "cntl";
+
+const headingStyles = cntl`
+  bg-primary
+  leading-snug
+  p-6
+  text-center
+  text-secondary
+  sm:min-w-max
+  md:flex
+  md:items-center
+  md:h-64
+  lg:h-auto
+  lg:w-1/3
+`;
 
 interface Props {
   token: TokenState;
@@ -21,7 +35,7 @@ function Login({ token, setToken }: Props) {
 
   return (
     <div className="lg:flex lg:flex-1 lg:items-stretch">
-      <div className={styles.heading}>
+      <div className={headingStyles}>
         <h1 className="text-4xl md:text-5xl font-bold mx-auto">
           baby ketten karaoke
         </h1>
