@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "lib/request";
 import { Song } from "lib/types";
@@ -8,6 +8,7 @@ import SongList from "components/SongList";
 import Loading from "components/Loading";
 import SongSearch from "components/SongSearch";
 import styles from "./styles.module.css";
+import { useRouter } from "next/router";
 
 function formatSongs(songs: Song[]): Song[] {
   return songs.map((song: Song) => {
@@ -21,12 +22,22 @@ function formatSongs(songs: Song[]): Song[] {
 type Props = WithTokenProps;
 
 export default function App({ token, setToken }: Props) {
+  const router = useRouter();
   const { data: songs } = useSWR(token && "/songs", async (endpoint) => {
     const songs = (await fetcher(endpoint)) as Song[];
     return formatSongs(songs);
   });
 
   const [filteredSongs, setFilteredSongs] = useState([]);
+
+  useEffect(() => {
+    if (!token && router.isReady) {
+      router.replace({
+        pathname: "/login",
+        query: router.query
+      });
+    }
+  }, [router, token]);
 
   if (!token) {
     return <div className="app-container flex flex-1 flex-col h-full w-full" />;

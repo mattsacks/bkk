@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import usePost from "lib/usePost";
 import Loading from "components/Loading";
 import cntl from "cntl";
+import { useRouter } from "next/router";
 
 const formStyles = cntl`
   flex
@@ -27,6 +28,7 @@ interface Props {
 }
 
 function LoginForm({ setToken }: Props) {
+  const router = useRouter();
   const nameRef = useRef(null);
   const roomRef = useRef(null);
   const [isValid, setIsValid] = useState(false);
@@ -93,6 +95,7 @@ function LoginForm({ setToken }: Props) {
         autoComplete="off"
         autoCorrect="off"
         className="input"
+        defaultValue={router.query.roomCode}
         id="room"
         name="room"
         onChange={onChange}
