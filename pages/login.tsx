@@ -21,7 +21,7 @@ const headingStyles = cntl`
 
 interface Props {
   token: TokenState;
-  setToken: (TokenState) => void;
+  setToken: (token: TokenState) => void;
 }
 
 function Login({ token, setToken }: Props) {

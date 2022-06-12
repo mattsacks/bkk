@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import Head from "next/head";
 import useTheme from "lib/useTheme";
 import withToken, { WithTokenProps } from "lib/withToken";
@@ -9,14 +8,6 @@ interface Props extends WithTokenProps {
 }
 
 function Layout({ children, token, setToken }: Props) {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!token) {
-      router.replace("/login");
-    }
-  }, [token]);
-
   // Add body[data-theme] to every page
   useTheme();
 
