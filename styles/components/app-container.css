@@ -1,3 +1,5 @@
-.app-container {
-  @apply px-3 max-w-full w-full md:max-w-lg md:mx-auto;
+@layer components {
+  .app-container {
+    @apply h-full px-3 max-w-full w-full md:max-w-lg md:mx-auto;
+  }
 }

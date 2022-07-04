@@ -1,6 +1,10 @@
 // Formats all "last, first" to "first last" artist keys in a dataset
 
-export default function formatTracks(tracks: any[]): any[] {
+interface Track {
+  artist: string;
+}
+
+export default function formatTracks<T extends Track>(tracks: T[]): T[] {
   return tracks.map((track) => {
     if (!track) return;
 

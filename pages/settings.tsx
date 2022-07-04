@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Nav, { NavItem } from "components/Nav";
 import { useRouter } from "next/router";
-import useTheme from "lib/useTheme";
-import withToken from "lib/withToken";
-import { THEMES } from "lib/types";
+import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+
+import Nav, { NavItem } from "@/components/Nav";
+import { THEMES } from "@/lib/types";
+import useTheme from "@/lib/useTheme";
+import tokenState from "@/store/atoms/tokenState";
+
 import styles from "./settings.module.css";
 
 type Theme = keyof typeof THEMES;
 
 let cachedRendered = false;
 
-function Settings({ setToken }: { setToken: (value?: string) => void }) {
+export default function Settings() {
   const router = useRouter();
+  const setToken = useSetRecoilState(tokenState);
   const [currentTheme, changeTheme] = useTheme();
   const [hasRendered, setHasRendered] = useState(cachedRendered);
 
@@ -23,9 +27,9 @@ function Settings({ setToken }: { setToken: (value?: string) => void }) {
       cachedRendered = true;
       setHasRendered(true);
     }
-  }, []);
+  }, [hasRendered]);
 
-  const ThemeSwatches = Object.keys(THEMES).map((theme) => {
+  const ThemeSwatches = Object.keys(THEMES).map((theme: Theme) => {
     const name = THEMES[theme];
     const isCurrentTheme = hasRendered && theme === currentTheme;
 
@@ -77,7 +81,7 @@ function Settings({ setToken }: { setToken: (value?: string) => void }) {
         <section className="mb-6">
           <h2 className={styles.heading}>Session:</h2>
           <button
-            className="button"
+            className="outline-button"
             onClick={() => {
               setToken(null);
               router.push("/login");
@@ -90,5 +94,3 @@ function Settings({ setToken }: { setToken: (value?: string) => void }) {
     </div>
   );
 }
-
-export default withToken(Settings);

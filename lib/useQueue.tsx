@@ -1,6 +1,7 @@
 import useSWR from "swr";
-import { QueuedTrack } from "lib/types";
-import { fetcher } from "lib/request";
+
+import { fetcher } from "@/lib/request";
+import { QueuedTrack } from "@/lib/types";
 
 export async function fetchQueue(url: string): Promise<QueuedTrack[]> {
   const data = (await fetcher(url)) as { tracks: QueuedTrack[] };

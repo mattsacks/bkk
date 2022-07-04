@@ -1,13 +1,16 @@
-import React from "react";
+/* eslint-env node */
+import "@/styles/index.css";
+
+import { AppProps } from "next/app";
 import Head from "next/head";
-import useTheme from "lib/useTheme";
-import withToken, { WithTokenProps } from "lib/withToken";
+import React from "react";
+import { RecoilRoot } from "recoil";
+import { SWRConfig } from "swr";
 
-interface Props extends WithTokenProps {
-  children: any;
-}
+import { fetcher } from "@/lib/request";
+import useTheme from "@/lib/useTheme";
 
-function Layout({ children, token, setToken }: Props) {
+function BKK({ Component, pageProps }: AppProps) {
   // Add body[data-theme] to every page
   useTheme();
 
@@ -31,12 +34,15 @@ function Layout({ children, token, setToken }: Props) {
 
         <link rel="shortcut icon" href="/favicon.png" sizes="32x32" />
         <link rel="shortcut icon" href="/favicon-large.png" sizes="180x180" />
-
         <title>Baby Ketten Karaoke</title>
       </Head>
-      <main>{React.cloneElement(children, { token, setToken })}</main>
+      <RecoilRoot>
+        <SWRConfig value={{ fetcher }}>
+          <Component {...pageProps} />
+        </SWRConfig>
+      </RecoilRoot>
     </React.Fragment>
   );
 }
 
-export default withToken(Layout);
+export default BKK;

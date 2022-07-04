@@ -1,6 +1,6 @@
-import React from "react";
 import QueueItem from "components/QueueItem";
 import { QueuedTrack } from "lib/types";
+import React from "react";
 
 interface Props {
   queueData: QueuedTrack[];

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
-import request from "lib/request";
+
+import request from "@/lib/request";
 
 interface UsePost<T> {
   data: T;
@@ -13,27 +14,30 @@ function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
   const [error, setError] = useState(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const postRequest = useCallback((body = defaultBody) => {
-    setIsSubmitting(true);
-    setData(undefined);
-    setError(undefined);
+  const postRequest = useCallback(
+    (body = defaultBody) => {
+      setIsSubmitting(true);
+      setData(undefined);
+      setError(undefined);
 
-    async function post() {
-      try {
-        const response = await request(endpoint, {
-          body,
-          method: "POST"
-        });
-        setIsSubmitting(false);
-        setData(response);
-      } catch (err) {
-        setIsSubmitting(false);
-        setError(err instanceof Error ? err.message : err.toString());
+      async function post() {
+        try {
+          const response = await request(endpoint, {
+            body,
+            method: "POST"
+          });
+          setIsSubmitting(false);
+          setData(response);
+        } catch (err) {
+          setIsSubmitting(false);
+          setError(err instanceof Error ? err.message : err.toString());
+        }
       }
-    }
 
-    return post();
-  }, []);
+      return post();
+    },
+    [defaultBody, endpoint]
+  );
 
   return { data, error, postRequest, isSubmitting };
 }

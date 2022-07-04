@@ -1,0 +1,12 @@
+@import "./tailwind.css";
+@import "./global.css";
+@import "./reset.css";
+@import "./colors.css";
+
+@import "./components/app-container.css";
+@import "./components/button.css";
+@import "./components/flag.css";
+@import "./components/input.css";
+@import "./components/invert.css";
+@import "./components/list-item.css";
+@import "./components/submit.css";

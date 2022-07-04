@@ -1,7 +1,8 @@
+import { Song } from "lib/types";
+import usePost from "lib/usePost";
 import React, { useEffect, useState } from "react";
 import { mutate } from "swr";
-import usePost from "lib/usePost";
-import { Song } from "lib/types";
+
 import styles from "./styles.module.css";
 
 function SongListItem(props: { song: Song }) {

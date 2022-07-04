@@ -1,6 +1,6 @@
-import React from "react";
-import Link from "next/link";
 import { QueuedTrack } from "lib/types";
+import Link from "next/link";
+import React from "react";
 
 interface Props {
   label: string;

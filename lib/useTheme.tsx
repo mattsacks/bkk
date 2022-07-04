@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
 import { random } from "lodash";
+import { useEffect, useState } from "react";
 import store from "store2";
-import { THEMES } from "lib/types";
+
+import { THEMES } from "@/lib/types";
 
 export default function useTheme() {
   const [theme, setTheme] = useState(store("theme"));
@@ -20,7 +21,7 @@ export default function useTheme() {
     } else if (document.body.dataset.theme !== theme) {
       document.body.dataset.theme = theme;
     }
-  }, []);
+  }, [theme]);
 
   return [theme, changeTheme] as const;
 }

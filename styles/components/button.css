@@ -1,15 +1,29 @@
-.button {
-  @apply
-    bg-primary
-    px-4
-    py-2
-    text-secondary;
+@layer components {
+  .button {
+    @apply
+      bg-primary
+      px-4
+      py-2
+      text-secondary;
 
-  &:active {
-    @apply opacity-75;
+    &:active {
+      @apply opacity-75;
+    }
   }
-}
 
-.button-thin {
-  @apply py-1;
+  .button-thin {
+    @apply py-1;
+  }
+
+  .outline-button {
+    @apply
+      border-2
+      border-primary
+      px-4
+      py-2;
+
+    &:active {
+      @apply opacity-75;
+    }
+  }
 }

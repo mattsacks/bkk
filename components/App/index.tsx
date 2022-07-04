@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { fetcher } from "lib/request";
-import { Song } from "lib/types";
-import { WithTokenProps } from "lib/withToken";
-import Nav, { NavItem } from "components/Nav";
-import SongList from "components/SongList";
-import Loading from "components/Loading";
-import SongSearch from "components/SongSearch";
-import styles from "./styles.module.css";
 import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import useSWR from "swr";
+
+import Loading from "@/components/Loading";
+import Nav, { NavItem } from "@/components/Nav";
+import SongList from "@/components/SongList";
+import SongSearch from "@/components/SongSearch";
+import { fetcher } from "@/lib/request";
+import { Song } from "@/lib/types";
+import tokenState from "@/store/atoms/tokenState";
 
 function formatSongs(songs: Song[]): Song[] {
   return songs.map((song: Song) => {
@@ -19,10 +20,10 @@ function formatSongs(songs: Song[]): Song[] {
   });
 }
 
-type Props = WithTokenProps;
-
-export default function App({ token, setToken }: Props) {
+export default function App() {
+  const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
+
   const { data: songs } = useSWR(token && "/songs", async (endpoint) => {
     const songs = (await fetcher(endpoint)) as Song[];
     return formatSongs(songs);
@@ -30,21 +31,20 @@ export default function App({ token, setToken }: Props) {
 
   const [filteredSongs, setFilteredSongs] = useState([]);
 
-  useEffect(() => {
-    if (!token && router.isReady) {
-      router.replace({
-        pathname: "/login",
-        query: router.query
-      });
-    }
-  }, [router, token]);
+  if (!token && router.isReady) {
+    router.replace({
+      pathname: "/login",
+      query: router.query
+    });
+    return null;
+  }
 
   if (!token) {
-    return <div className="app-container flex flex-1 flex-col h-full w-full" />;
+    return <div className="app-container flex flex-1 flex-col w-full" />;
   }
 
   return (
-    <div className="app-container flex flex-1 flex-col h-full w-full">
+    <div className="app-container flex flex-1 flex-col w-full">
       <Nav>
         <NavItem href="/settings" text="&lt; settings" />
         <NavItem href="/queue" text="view queue &gt;" />
@@ -57,7 +57,10 @@ export default function App({ token, setToken }: Props) {
           <div className="flex-1">
             <SongList songs={filteredSongs} />
           </div>
-          <button className={styles.leaveButton} onClick={() => setToken(null)}>
+          <button
+            className="mx-auto mb-3 outline-button"
+            onClick={() => setToken(null)}
+          >
             Leave room
           </button>
         </>
@@ -66,7 +69,10 @@ export default function App({ token, setToken }: Props) {
           <div className="flex-1">
             <Loading />
           </div>
-          <button className={styles.leaveButton} onClick={() => setToken(null)}>
+          <button
+            className="mx-auto mb-3 outline-button"
+            onClick={() => setToken(null)}
+          >
             Leave room
           </button>
         </>

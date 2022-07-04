@@ -2,7 +2,8 @@
 import fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
 import qs from "qs";
-import { USER_COOKIE } from "lib/types";
+
+import { USER_COOKIE } from "@/lib/types";
 
 interface RequestParams {
   body?: object;
@@ -12,7 +13,7 @@ interface RequestParams {
 let API = process.env.MATHIS_API;
 
 // Override API if on the development domain
-if (process.browser) {
+if (typeof window !== "undefined") {
   if (
     /(?:dev\.bkk\.bar|bkk-.*\.now.sh)/.test(location.origin) ||
     process.env.NODE_ENV !== "production"
@@ -34,7 +35,6 @@ async function request(
     body: params.body ? JSON.stringify(params.body) : undefined,
     headers: {
       ...(token && { Authorization: `Bearer ${token}` }),
-      // Accepts: "application/json",
       "Content-Type": "application/json"
     },
     method: params.method

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=VT323&display=block");
+
 html {
   @apply font-mono;
   font-size: 20px;

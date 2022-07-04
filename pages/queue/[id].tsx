@@ -1,14 +1,17 @@
 import Link from "next/link";
-import React from "react";
-import useSWR, { mutate } from "swr";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/router";
-import request from "lib/request";
-import { WithTokenProps } from "lib/withToken";
-import Nav, { NavItem } from "components/Nav";
-import Loading from "components/Loading";
-import styles from "./styles.module.css";
-import formatTracks from "lib/formatTracks";
+import React from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useRecoilValue } from "recoil";
+import useSWR, { mutate } from "swr";
+
+import Loading from "@/components/Loading";
+import Nav, { NavItem } from "@/components/Nav";
+import formatTracks from "@/lib/formatTracks";
+import request from "@/lib/request";
+import { QueuedTrack } from "@/lib/types";
+import tokenState from "@/store/atoms/tokenState";
+
 /* import GeniusAnnotations from "components/GeniusAnnotations"; */
 
 function getLabel(index: number) {
@@ -21,13 +24,16 @@ function getLabel(index: number) {
   }
 }
 
-type Props = WithTokenProps;
-
-export default function QueueItemPage({ token }: Props) {
+export default function QueueItemPage() {
   const router = useRouter();
+  const token = useRecoilValue(tokenState);
   const id = parseInt(router.query.id as string);
 
-  const { data: queue } = useSWR(token && id ? "/playlist" : null);
+  const { data: queue } = useSWR(token && id ? "/playlist" : null) as {
+    data: {
+      tracks: QueuedTrack[];
+    };
+  };
 
   let queueData = queue?.tracks.find((item) => item.id === id);
   [queueData] = formatTracks([queueData]);
@@ -104,14 +110,14 @@ export default function QueueItemPage({ token }: Props) {
       </Nav>
       <div className="text-center flex-1">
         <div className="flex items-center">
-          <div className={`${styles.queueNavLink} text-left`}>
+          <div className="flex-1 text-left">
             {index !== 0 && (
               <Link
                 href="/queue/[id]"
                 as={`/queue/${queue.tracks[index - 1].id}`}
                 replace
               >
-                <a className="underline">
+                <a className="block underline">
                   &lt;{" "}
                   <span className="hidden sm:inline">
                     {getLabel(index - 1)}
@@ -120,15 +126,15 @@ export default function QueueItemPage({ token }: Props) {
               </Link>
             )}
           </div>
-          <h2 className="text-3xl flex-2">{getLabel(index)}</h2>
-          <div className={`${styles.queueNavLink} text-right`}>
+          <h2 className="text-3xl">{getLabel(index)}</h2>
+          <div className="flex-1 text-right">
             {index !== queue.tracks.length - 1 && (
               <Link
                 href="/queue/[id]"
                 as={`/queue/${queue.tracks[index + 1].id}`}
                 replace
               >
-                <a className="underline flex-1 text-right">
+                <a className="block underline text-right">
                   <span className="hidden sm:inline">
                     {getLabel(index + 1)}
                   </span>{" "}
@@ -169,13 +175,12 @@ export default function QueueItemPage({ token }: Props) {
       </div>
       <div className="mb-3 mx-auto">
         <button
-          className="button"
+          className="outline-button"
           onClick={async () => {
             removeFromQueue();
           }}
         >
-          remove <span className="underline">{queueData.song_name}</span> from
-          queue
+          remove from queue
         </button>
       </div>
     </div>

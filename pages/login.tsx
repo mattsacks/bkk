@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import withToken from "lib/withToken";
-import { TokenState } from "lib/types";
-import LoginForm from "components/LoginForm";
 import cntl from "cntl";
+import { useRouter } from "next/router";
+import React from "react";
+import { useRecoilValue } from "recoil";
+
+import LoginForm from "@/components/LoginForm";
+import tokenState from "@/store/atoms/tokenState";
 
 const headingStyles = cntl`
   bg-primary
@@ -11,40 +12,32 @@ const headingStyles = cntl`
   p-6
   text-center
   text-secondary
-  sm:min-w-max
   md:flex
   md:items-center
   md:h-64
   lg:h-auto
-  lg:w-1/3
+  lg:w-1/2
 `;
 
-interface Props {
-  token: TokenState;
-  setToken: (token: TokenState) => void;
-}
-
-function Login({ token, setToken }: Props) {
+export default function Login() {
   const router = useRouter();
+  const token = useRecoilValue(tokenState);
 
-  useEffect(() => {
-    if (token) {
-      router.replace("/");
-    }
-  }, [token]);
+  if (token) {
+    router.replace("/");
+    return null;
+  }
 
   return (
-    <div className="lg:flex lg:flex-1 lg:items-stretch">
+    <div className="lg:flex lg:flex-1 h-full">
       <div className={headingStyles}>
         <h1 className="text-4xl md:text-5xl font-bold mx-auto">
           baby ketten karaoke
         </h1>
       </div>
       <div className="bg-secondary w-full md:flex md:flex-grow md:items-center md:w-auto">
-        <LoginForm setToken={setToken} />
+        <LoginForm />
       </div>
     </div>
   );
 }
-
-export default withToken(Login);

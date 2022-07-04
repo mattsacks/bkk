@@ -1,7 +1,7 @@
 // Input that filters a list of songs
-import React, { useRef } from "react";
+import { Song, SongSearchFilter, SongSearchFilters } from "lib/types";
 import { debounce, orderBy } from "lodash";
-import { Song, SongSearchFilters, SongSearchFilter } from "lib/types";
+import React, { useRef } from "react";
 
 interface SongSearchProps {
   setFilteredSongs: (songs: Song[]) => void;

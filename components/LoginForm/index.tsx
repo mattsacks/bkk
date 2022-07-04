@@ -1,8 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import usePost from "lib/usePost";
-import Loading from "components/Loading";
 import cntl from "cntl";
 import { useRouter } from "next/router";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import tokenState from "store/atoms/tokenState";
+
+import Loading from "@/components/Loading";
+import usePost from "@/lib/usePost";
 
 const formStyles = cntl`
   flex
@@ -23,11 +26,8 @@ interface Response {
   token: string;
 }
 
-interface Props {
-  setToken: (TokenState) => void;
-}
-
-function LoginForm({ setToken }: Props) {
+function LoginForm() {
+  const setToken = useSetRecoilState(tokenState);
   const router = useRouter();
   const nameRef = useRef(null);
   const roomRef = useRef(null);
@@ -38,19 +38,22 @@ function LoginForm({ setToken }: Props) {
     "/user/signin"
   );
 
-  const submitForm = useCallback((e) => {
-    e.preventDefault();
-    postRequest({
-      name: nameRef.current.value,
-      session_key: roomRef.current.value
-    });
-  }, []);
+  const submitForm = useCallback(
+    (e) => {
+      e.preventDefault();
+      postRequest({
+        name: nameRef.current.value,
+        session_key: roomRef.current.value
+      });
+    },
+    [postRequest]
+  );
 
   useEffect(() => {
     if (data) {
       setToken(data.token);
     }
-  }, [data]);
+  }, [data, setToken]);
 
   useEffect(() => {
     if (error) {

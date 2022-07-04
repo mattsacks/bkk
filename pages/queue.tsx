@@ -1,16 +1,20 @@
 // View the current queue
+import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
+import { useRecoilValue } from "recoil";
 import useSWR, { mutate } from "swr";
-import formatTracks from "lib/formatTracks";
-import { WithTokenProps } from "lib/withToken";
-import usePost from "lib/usePost";
-import Nav, { NavItem } from "components/Nav";
-import Loading from "components/Loading";
-import Queue from "components/Queue";
 
-type Props = WithTokenProps;
+import Loading from "@/components/Loading";
+import Nav, { NavItem } from "@/components/Nav";
+import Queue from "@/components/Queue";
+import formatTracks from "@/lib/formatTracks";
+import { QueuedTrack } from "@/lib/types";
+import usePost from "@/lib/usePost";
+import tokenState from "@/store/atoms/tokenState";
 
-function QueuePage({ token }: Props) {
+export default function QueuePage() {
+  const token = useRecoilValue(tokenState);
+  const router = useRouter();
   const { data: queue } = useSWR(token && "/playlist");
   const { data: user } = useSWR(token && "/whoami");
 
@@ -26,14 +30,14 @@ function QueuePage({ token }: Props) {
       return [];
     }
 
-    return formatTracks(queue.tracks);
+    return formatTracks<QueuedTrack>(queue.tracks);
   }, [queue]);
 
   useEffect(() => {
     if (hasQueuedTracks && queue.tracks[0].status === "paused" && !isPaused) {
       setIsPaused(true);
     }
-  }, [queue]);
+  }, [hasQueuedTracks, queue, isPaused]);
 
   async function skipSong() {
     await skipTrack();
@@ -50,6 +54,11 @@ function QueuePage({ token }: Props) {
     await playTrack();
   }
 
+  if (!token && router.isReady) {
+    router.replace("/login");
+    return null;
+  }
+
   if (!queue || !user) {
     return (
       <div className="app-container">
@@ -63,12 +72,12 @@ function QueuePage({ token }: Props) {
   }
 
   return (
-    <div className="app-container mb-8 sm:mb-12">
+    <div className="app-container">
       <Nav>
         <NavItem href="/" text="&lt; search songs" />
         <div></div>
       </Nav>
-      <div className="">
+      <div className="pb-1">
         {hasQueuedTracks ? (
           <React.Fragment>
             <div className="sm:flex block sm:justify-between sm:items-center mb-8">
@@ -92,12 +101,10 @@ function QueuePage({ token }: Props) {
         ) : (
           <React.Fragment>
             <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
-            <h4 className="sm:-mt-6">nothing queued yet!</h4>
+            <h4>nothing queued yet!</h4>
           </React.Fragment>
         )}
       </div>
     </div>
   );
 }
-
-export default QueuePage;
