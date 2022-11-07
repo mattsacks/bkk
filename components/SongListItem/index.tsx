@@ -7,6 +7,7 @@ import { mutate } from "swr";
 
 const songListItemClassName = cntl`
   border-2
+  border-primary
   ease-out
   items-center
   justify-between
@@ -16,6 +17,7 @@ const songListItemClassName = cntl`
 
 const addToQueueButtonClassName = cntl`
   border-t-2
+  border-primary
   disabled:opacity-50
   duration-300
   md:text-xl
