@@ -2,26 +2,19 @@ import SongListItem from "components/SongListItem";
 import { Song } from "lib/types";
 import React from "react";
 
-// function groupSongsByArtist(songs: Song[]) {
-//   return songs.reduce((grouped, song: Song) => {
-//     if (grouped[song.artist] == undefined) {
-//       grouped[song.artist] = [];
-//     }
-
-//     grouped[song.artist].push(song);
-
-//     return grouped;
-//   }, {});
-// }
+import useQueue from "@/lib/useQueue";
 
 function SongList(props: { songs: Song[] }) {
   const { songs } = props;
+  const { queue } = useQueue();
 
-  const ListItems = songs.map((song) => (
-    <SongListItem key={song.id} song={song} />
-  ));
+  const ListItems = songs.map((song) => {
+    const queuedTrack = queue.find((q) => q.song_id === song.id);
 
-  return <>{ListItems}</>;
+    return <SongListItem key={song.id} queuedTrack={queuedTrack} song={song} />;
+  });
+
+  return <div className="flex flex-col gap-8">{ListItems}</div>;
 }
 
 export default SongList;

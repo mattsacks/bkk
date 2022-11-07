@@ -3,15 +3,15 @@ import { useCallback, useState } from "react";
 import request from "@/lib/request";
 
 interface UsePost<T> {
-  data: T;
-  error: string | null;
+  data: T | undefined;
+  error: string | undefined;
   postRequest: (body?: unknown) => Promise<void>;
   isSubmitting: boolean;
 }
 
 function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
-  const [data, setData] = useState(undefined);
-  const [error, setError] = useState(undefined);
+  const [data, setData] = useState<T>();
+  const [error, setError] = useState<string>();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const postRequest = useCallback(
@@ -22,7 +22,7 @@ function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
 
       async function post() {
         try {
-          const response = await request(endpoint, {
+          const response = await request<T>(endpoint, {
             body,
             method: "POST"
           });
@@ -30,7 +30,7 @@ function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
           setData(response);
         } catch (err) {
           setIsSubmitting(false);
-          setError(err instanceof Error ? err.message : err.toString());
+          setError((err as Error).message);
         }
       }
 

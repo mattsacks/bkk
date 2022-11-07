@@ -10,6 +10,10 @@ interface RequestParams {
   method?: string;
 }
 
+interface RequestOptions {
+  token?: string;
+}
+
 let API = process.env.MATHIS_API;
 
 // Override API if on the development domain
@@ -24,11 +28,13 @@ if (typeof window !== "undefined") {
   }
 }
 
-async function request(
+async function request<T>(
   endpoint: string,
-  params: RequestParams = {}
-): Promise<unknown> {
-  const token = Cookies.get(USER_COOKIE);
+  params: RequestParams = {},
+  options: RequestOptions = {}
+): Promise<T> {
+  const token = options.token || Cookies.get(USER_COOKIE);
+
   const apiRequest = `${API}${endpoint}`;
 
   const response = await fetch(apiRequest, {
@@ -47,8 +53,8 @@ async function request(
   return await response.json();
 }
 
-export async function fetcher(endpoint: string): Promise<unknown> {
-  return await request(endpoint);
+export async function fetcher<T>(endpoint: string): Promise<T> {
+  return (await request(endpoint)) as T;
 }
 
 export async function fetchGenius(

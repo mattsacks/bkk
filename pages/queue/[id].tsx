@@ -2,17 +2,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useRecoilValue } from "recoil";
-import useSWR, { mutate } from "swr";
+import { mutate } from "swr";
 
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
-import formatTracks from "@/lib/formatTracks";
 import request from "@/lib/request";
 import { QueuedTrack } from "@/lib/types";
-import tokenState from "@/store/atoms/tokenState";
-
-/* import GeniusAnnotations from "components/GeniusAnnotations"; */
+import useQueue from "@/lib/useQueue";
 
 function getLabel(index: number) {
   if (index === 0) {
@@ -26,45 +22,39 @@ function getLabel(index: number) {
 
 export default function QueueItemPage() {
   const router = useRouter();
-  const token = useRecoilValue(tokenState);
   const id = parseInt(router.query.id as string);
 
-  const { data: queue } = useSWR(token && id ? "/playlist" : null) as {
-    data: {
-      tracks: QueuedTrack[];
-    };
-  };
+  const { queue, isValidating } = useQueue();
 
-  let queueData = queue?.tracks.find((item) => item.id === id);
-  [queueData] = formatTracks([queueData]);
-  const index = queue?.tracks.indexOf(queueData);
+  const queueData = queue.find((item) => item.id === id) ?? ({} as QueuedTrack);
+  const index = queue.indexOf(queueData) ?? -1;
 
   useHotkeys(
     "right",
     () => {
-      if (!queue?.tracks || index === undefined) {
+      if (queue.length === 0 || index === undefined) {
         return;
       }
 
-      if (index !== queue.tracks.length - 1) {
-        router.replace("/queue/[id]", `/queue/${queue.tracks[index + 1].id}`);
+      if (index !== queue.length - 1) {
+        router.replace("/queue/[id]", `/queue/${queue[index + 1].id}`);
       }
     },
-    [index, queue?.tracks]
+    [index, queue]
   );
 
   useHotkeys(
     "left",
     () => {
-      if (!queue?.tracks || index === undefined) {
+      if (queue.length === 0 || index === undefined) {
         return;
       }
 
       if (index !== 0) {
-        router.replace("/queue/[id]", `/queue/${queue.tracks[index - 1].id}`);
+        router.replace("/queue/[id]", `/queue/${queue[index - 1].id}`);
       }
     },
-    [index, queue?.tracks]
+    [index, queue]
   );
 
   async function removeFromQueue() {
@@ -72,7 +62,7 @@ export default function QueueItemPage() {
       method: "DELETE"
     });
 
-    queue.tracks.splice(index, 1);
+    queue.splice(index, 1);
     mutate("/playlist", queue);
 
     router.push("/queue");
@@ -81,16 +71,17 @@ export default function QueueItemPage() {
   async function moveInQueue(dir: "up" | "down") {
     const to = dir === "up" ? index - 1 : index + 1;
 
-    const newTracks = [...queue.tracks];
+    const newTracks = [...queue];
     newTracks.splice(to, 0, newTracks.splice(index, 1)[0]);
-    mutate("/playlist", { ...queue, tracks: newTracks }, false);
+    mutate("/playlist", newTracks, false);
 
     await request(`/tracks/move/${dir}/${queueData.id}`, {
       method: "POST"
     });
   }
 
-  if (!queue) {
+  // TODO: Load the queue on the server
+  if (typeof window === "undefined" || isValidating) {
     return (
       <div className="app-container flex flex-col flex-1">
         <Nav>
@@ -114,7 +105,7 @@ export default function QueueItemPage() {
             {index !== 0 && (
               <Link
                 href="/queue/[id]"
-                as={`/queue/${queue.tracks[index - 1].id}`}
+                as={`/queue/${queue[index - 1]?.id}`}
                 replace
               >
                 <a className="block underline">
@@ -128,10 +119,10 @@ export default function QueueItemPage() {
           </div>
           <h2 className="text-3xl">{getLabel(index)}</h2>
           <div className="flex-1 text-right">
-            {index !== queue.tracks.length - 1 && (
+            {index !== queue.length - 1 && (
               <Link
                 href="/queue/[id]"
-                as={`/queue/${queue.tracks[index + 1].id}`}
+                as={`/queue/${queue[index + 1]?.id}`}
                 replace
               >
                 <a className="block underline text-right">
@@ -144,11 +135,13 @@ export default function QueueItemPage() {
             )}
           </div>
         </div>
-        <div className="my-3">
+        <div className="text-lg">
           <h4>{queueData.user_name}</h4>
         </div>
-        <div className="my-3">
-          <h3 className="text-xl capitalize">{queueData.song_name}</h3>
+        <div className="mt-5">
+          <h3 className="text-xl capitalize leading-none mb-1">
+            {queueData.song_name}
+          </h3>
           <div>
             <span className="capitalize">{queueData.artist}</span>
           </div>
@@ -162,7 +155,7 @@ export default function QueueItemPage() {
             {index === 1 ? "sing now" : "sing sooner"} (#{index + 1 - 1})
           </button>
         )}
-        {index === queue?.tracks.length - 1 ? (
+        {index === queue.length - 1 ? (
           <div />
         ) : (
           <button

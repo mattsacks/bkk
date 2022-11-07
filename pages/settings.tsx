@@ -29,8 +29,8 @@ export default function Settings() {
     }
   }, [hasRendered]);
 
-  const ThemeSwatches = Object.keys(THEMES).map((theme: Theme) => {
-    const name = THEMES[theme];
+  const ThemeSwatches = Object.keys(THEMES).map((theme) => {
+    const name = THEMES[theme as Theme];
     const isCurrentTheme = hasRendered && theme === currentTheme;
 
     return (
@@ -64,16 +64,14 @@ export default function Settings() {
         <section className="mb-6">
           <h2 className={styles.heading}>About:</h2>
           <p className="leading-tight">
-            bkk.bar was made by four best friends.{" "}
-            <br className="hidden md:block" />
-            You can find the source code at{" "}
+            Source code for bkk.bar is available on{" "}
             <a
               className="underline"
               href="https://github.com/mattsacks/bkk"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @mattsacks/bkk
+              Github
             </a>
           </p>
         </section>
@@ -83,7 +81,7 @@ export default function Settings() {
           <button
             className="outline-button"
             onClick={() => {
-              setToken(null);
+              setToken(undefined);
               router.push("/login");
             }}
           >

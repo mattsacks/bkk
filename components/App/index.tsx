@@ -1,35 +1,21 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import useSWR from "swr";
 
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import SongList from "@/components/SongList";
 import SongSearch from "@/components/SongSearch";
-import { fetcher } from "@/lib/request";
 import { Song } from "@/lib/types";
+import useSongs from "@/lib/useSongs";
 import tokenState from "@/store/atoms/tokenState";
-
-function formatSongs(songs: Song[]): Song[] {
-  return songs.map((song: Song) => {
-    const [last, ...rest] = song.artist.split(", ");
-    rest.push(last);
-    song.artist = rest.join(" ");
-    return song;
-  });
-}
 
 export default function App() {
   const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
+  const { songs } = useSongs();
 
-  const { data: songs } = useSWR(token && "/songs", async (endpoint) => {
-    const songs = (await fetcher(endpoint)) as Song[];
-    return formatSongs(songs);
-  });
-
-  const [filteredSongs, setFilteredSongs] = useState([]);
+  const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
 
   if (!token && router.isReady) {
     router.replace({
@@ -52,14 +38,19 @@ export default function App() {
       {songs ? (
         <>
           <div className="mb-4 relative">
-            <SongSearch setFilteredSongs={setFilteredSongs} songs={songs} />
+            <SongSearch
+              onSearch={(filteredSongs) => {
+                setFilteredSongs(filteredSongs);
+              }}
+              songs={songs}
+            />
           </div>
           <div className="flex-1">
             <SongList songs={filteredSongs} />
           </div>
           <button
             className="mx-auto mb-3 outline-button"
-            onClick={() => setToken(null)}
+            onClick={() => setToken(undefined)}
           >
             Leave room
           </button>
@@ -71,7 +62,7 @@ export default function App() {
           </div>
           <button
             className="mx-auto mb-3 outline-button"
-            onClick={() => setToken(null)}
+            onClick={() => setToken(undefined)}
           >
             Leave room
           </button>

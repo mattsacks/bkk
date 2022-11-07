@@ -29,8 +29,8 @@ interface Response {
 function LoginForm() {
   const setToken = useSetRecoilState(tokenState);
   const router = useRouter();
-  const nameRef = useRef(null);
-  const roomRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const roomRef = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -42,8 +42,8 @@ function LoginForm() {
     (e) => {
       e.preventDefault();
       postRequest({
-        name: nameRef.current.value,
-        session_key: roomRef.current.value
+        name: nameRef.current?.value,
+        session_key: roomRef.current?.value
       });
     },
     [postRequest]
@@ -65,7 +65,7 @@ function LoginForm() {
     // Clear the error message
     setErrorMessage("");
 
-    if (nameRef.current.value && roomRef.current.value) {
+    if (nameRef.current?.value && roomRef.current?.value) {
       setIsValid(true);
     } else {
       setIsValid(false);

@@ -1,29 +1,21 @@
 // Input that filters a list of songs
-import { Song, SongSearchFilter, SongSearchFilters } from "lib/types";
+import { Song } from "lib/types";
 import { debounce, orderBy } from "lodash";
 import React, { useRef } from "react";
 
 interface SongSearchProps {
-  setFilteredSongs: (songs: Song[]) => void;
+  onSearch: (filteredSongs: Song[]) => void;
   songs: Song[];
 }
 
-function search(query: string, filter: SongSearchFilter, songs: Song[]) {
+function search(query: string, songs: Song[]) {
   const queryTerms = query
     // .replace(/[\d]/g, "") maybe don't do this?
     .toLowerCase()
     .split(" ");
 
   function matchSong(song: Song) {
-    let songString =
-      filter === SongSearchFilters.ARTIST
-        ? song.artist
-        : filter === SongSearchFilters.SONG
-        ? song.name
-        : `${song.artist} ${song.name}`;
-
-    songString = songString.toLowerCase();
-
+    const songString = `${song.artist} ${song.name}`.toLowerCase();
     return queryTerms.every((term) => songString.includes(term));
   }
 
@@ -32,15 +24,15 @@ function search(query: string, filter: SongSearchFilter, songs: Song[]) {
 
 let persistedQuery: string;
 
-function SongSearch({ setFilteredSongs, songs }: SongSearchProps) {
+function SongSearch({ onSearch, songs }: SongSearchProps) {
   function searchSongs(query: string) {
     if (!query) {
-      setFilteredSongs([]);
+      onSearch([]);
       return;
     }
 
-    const searchResults = search(query, undefined, songs) as Song[];
-    setFilteredSongs(orderBy(searchResults, "artist", "asc"));
+    const searchResults = search(query, songs);
+    onSearch(orderBy(searchResults, "artist", "asc"));
   }
 
   const inputRef = useRef(null);

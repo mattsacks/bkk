@@ -9,7 +9,7 @@ function Nav({ children }: { children: React.ReactNode }) {
 
 export function NavItem({
   href,
-  as = null,
+  as = undefined,
   text
 }: {
   href: string;

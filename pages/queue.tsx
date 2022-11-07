@@ -1,21 +1,20 @@
 // View the current queue
 import { useRouter } from "next/router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import useSWR, { mutate } from "swr";
 
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import Queue from "@/components/Queue";
-import formatTracks from "@/lib/formatTracks";
-import { QueuedTrack } from "@/lib/types";
 import usePost from "@/lib/usePost";
+import useQueue from "@/lib/useQueue";
 import tokenState from "@/store/atoms/tokenState";
 
 export default function QueuePage() {
   const token = useRecoilValue(tokenState);
   const router = useRouter();
-  const { data: queue } = useSWR(token && "/playlist");
+  const { queue } = useQueue();
   const { data: user } = useSWR(token && "/whoami");
 
   const { postRequest: skipTrack } = usePost("/tracks/skip");
@@ -23,25 +22,17 @@ export default function QueuePage() {
   const { postRequest: playTrack } = usePost("/tracks/play");
 
   const [isPaused, setIsPaused] = useState(false);
-  const hasQueuedTracks = queue && queue.tracks.length > 0;
-
-  const formattedTracks = useMemo(() => {
-    if (!queue) {
-      return [];
-    }
-
-    return formatTracks<QueuedTrack>(queue.tracks);
-  }, [queue]);
+  const hasQueuedTracks = queue && queue.length > 0;
 
   useEffect(() => {
-    if (hasQueuedTracks && queue.tracks[0].status === "paused" && !isPaused) {
+    if (hasQueuedTracks && queue[0].status === "paused" && !isPaused) {
       setIsPaused(true);
     }
   }, [hasQueuedTracks, queue, isPaused]);
 
   async function skipSong() {
     await skipTrack();
-    mutate("/playlist", { tracks: queue.tracks.slice(1) }, false);
+    mutate("/playlist", queue.slice(1), false);
   }
 
   async function pause() {
@@ -96,7 +87,7 @@ export default function QueuePage() {
                 </button>
               </div>
             </div>
-            <Queue queueData={formattedTracks} />
+            <Queue queueData={queue} />
           </React.Fragment>
         ) : (
           <React.Fragment>

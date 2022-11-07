@@ -6,8 +6,6 @@ interface Track {
 
 export default function formatTracks<T extends Track>(tracks: T[]): T[] {
   return tracks.map((track) => {
-    if (!track) return;
-
     const [last, ...rest] = track.artist.split(", ");
     rest.push(last);
     track.artist = rest.join(" ");
