@@ -1,5 +1,5 @@
 @layer components {
   .app-container {
-    @apply h-full px-3 max-w-full w-full md:max-w-lg md:mx-auto;
+    @apply min-h-full px-3 max-w-full w-full md:max-w-lg md:mx-auto;
   }
 }

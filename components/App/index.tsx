@@ -49,7 +49,7 @@ export default function App() {
             <SongList songs={filteredSongs} />
           </div>
           <button
-            className="mx-auto mb-3 outline-button"
+            className="mx-auto my-3 outline-button"
             onClick={() => setToken(undefined)}
           >
             Leave room
@@ -61,7 +61,7 @@ export default function App() {
             <Loading />
           </div>
           <button
-            className="mx-auto mb-3 outline-button"
+            className="mx-auto my-3 outline-button"
             onClick={() => setToken(undefined)}
           >
             Leave room
