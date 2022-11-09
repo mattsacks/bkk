@@ -10,7 +10,7 @@ import { fetcher } from "./request";
 export default function useSongs(swrOptions: SWRConfiguration = {}) {
   const [token] = useRecoilState(tokenState);
 
-  const { data, ...rest } = useSWR(
+  const { data, ...rest } = useSWR<Song[]>(
     token ? "/songs" : null,
     async (endpoint: string) => {
       const songs = (await fetcher(endpoint)) as Song[];
@@ -24,6 +24,6 @@ export default function useSongs(swrOptions: SWRConfiguration = {}) {
 
   return {
     ...rest,
-    songs: (data as Song[]) ?? []
+    songs: data ?? []
   };
 }

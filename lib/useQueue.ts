@@ -10,7 +10,7 @@ import { fetcher } from "./request";
 export default function useQueue() {
   const [token] = useRecoilState(tokenState);
 
-  const { data, ...rest } = useSWR(
+  const { data, ...rest } = useSWR<QueuedTrack[]>(
     token ? "/playlist" : null,
     async (endpoint) => {
       const data = await fetcher<{ tracks: QueuedTrack[] }>(endpoint);
