@@ -31,11 +31,12 @@ export default function App() {
 
   const { songs, isValidating } = useSongs({
     onSuccess: (data) => {
+      cachedSongs = data;
+
       // After songs are loaded, update the filtered list of songs if there's a
       // query
       if (searchQuery) {
         setFilteredSongs(songSearch(searchQuery, data));
-        cachedSongs = data;
       }
     }
   });
