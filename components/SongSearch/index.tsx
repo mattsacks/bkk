@@ -1,41 +1,31 @@
 // Input that filters a list of songs
 import { Song } from "lib/types";
 import { debounce, orderBy } from "lodash";
-import React, { useRef } from "react";
+import React from "react";
+import { useRecoilState } from "recoil";
+
+import songSearch from "@/lib/songSearch";
+import searchState from "@/store/atoms/searchState";
 
 interface SongSearchProps {
   onSearch: (filteredSongs: Song[]) => void;
   songs: Song[];
 }
 
-function search(query: string, songs: Song[]) {
-  const queryTerms = query
-    // .replace(/[\d]/g, "") maybe don't do this?
-    .toLowerCase()
-    .split(" ");
-
-  function matchSong(song: Song) {
-    const songString = `${song.artist} ${song.name}`.toLowerCase();
-    return queryTerms.every((term) => songString.includes(term));
-  }
-
-  return songs.filter(matchSong);
-}
-
-let persistedQuery: string;
-
 function SongSearch({ onSearch, songs }: SongSearchProps) {
+  const [searchQuery, setSearchQuery] = useRecoilState(searchState);
+
   function searchSongs(query: string) {
+    setSearchQuery(query);
+
     if (!query) {
       onSearch([]);
       return;
     }
 
-    const searchResults = search(query, songs);
+    const searchResults = songSearch(query, songs);
     onSearch(orderBy(searchResults, "artist", "asc"));
   }
-
-  const inputRef = useRef(null);
 
   const debouncedSearchSongs = debounce(searchSongs, 666);
 
@@ -45,6 +35,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
       autoComplete="off"
       autoCorrect="off"
       className="input w-full"
+      defaultValue={searchQuery}
       onChange={(e) => {
         e.persist();
 
@@ -57,9 +48,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
         }
       }}
       placeholder="search songz"
-      ref={inputRef}
       type="text"
-      value={persistedQuery}
     />
   );
 }

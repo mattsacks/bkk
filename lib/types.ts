@@ -1,6 +1,7 @@
 // -------------------- Local
 
 export const USER_COOKIE = "mathis_user";
+export const SEARCH_KEY = "mathis_search";
 
 export const SongSearchFilters = {
   ALL: "all",
