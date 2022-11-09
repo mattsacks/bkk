@@ -7,13 +7,15 @@ import tokenState from "@/store/atoms/tokenState";
 import formatTracks from "./formatTracks";
 import { fetcher } from "./request";
 
-export default function useSongs(swrOptions: SWRConfiguration = {}) {
+type SongData = Song[];
+
+export default function useSongs(swrOptions: SWRConfiguration<SongData> = {}) {
   const [token] = useRecoilState(tokenState);
 
-  const { data, ...rest } = useSWR<Song[]>(
+  const { data, ...rest } = useSWR<SongData>(
     token ? "/songs" : null,
     async (endpoint: string) => {
-      const songs = (await fetcher(endpoint)) as Song[];
+      const songs = await fetcher<SongData>(endpoint);
       return formatTracks(songs);
     },
     {
