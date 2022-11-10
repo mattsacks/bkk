@@ -14,6 +14,10 @@ function SongList(props: { songs: Song[] }) {
     return <SongListItem key={song.id} queuedTrack={queuedTrack} song={song} />;
   });
 
+  if (songs.length === 0) {
+    return <div className="flex flex-col gap-8">no songs found</div>;
+  }
+
   return <div className="flex flex-col gap-8">{ListItems}</div>;
 }
 

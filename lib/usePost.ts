@@ -30,7 +30,12 @@ function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
           setData(response);
         } catch (err) {
           setIsSubmitting(false);
-          setError((err as Error).message);
+
+          let errorMessage = err as string;
+          if (err instanceof Error) {
+            errorMessage = err.message;
+          }
+          setError(errorMessage);
         }
       }
 

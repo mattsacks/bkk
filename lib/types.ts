@@ -1,15 +1,7 @@
-// -------------------- Local
+// --- Local ---
 
 export const USER_COOKIE = "mathis_user";
 export const SEARCH_KEY = "mathis_search";
-
-export const SongSearchFilters = {
-  ALL: "all",
-  ARTIST: "artist",
-  SONG: "song"
-} as const;
-
-export type SongSearchFilter = typeof SongSearchFilters[keyof typeof SongSearchFilters];
 
 export const THEMES = {
   default: "bkk",
@@ -18,7 +10,7 @@ export const THEMES = {
   miami: "miami"
 };
 
-// -------------------- API
+// --- API ---
 
 export interface Song {
   artist: string;
@@ -43,18 +35,4 @@ export interface QueuedTrack {
   status: string;
   tags: string;
   user_name: string;
-}
-
-// -------------------- State
-
-export type TokenState = string | null;
-
-export interface UserState {
-  name?: string;
-}
-
-export interface GlobalState {
-  songs: Song[];
-  token: TokenState;
-  user: UserState;
 }

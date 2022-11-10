@@ -9,8 +9,8 @@
   --default-primary: var(--default-light);
   --default-secondary: var(--default-dark);
 
-  --blue-light: #E5E9F0;
-  --blue-dark: #2e353f;
+  --blue-light: #d8dee9;
+  --blue-dark: #2e3440;
   --blue-primary: var(--blue-light);
   --blue-secondary: var(--blue-dark);
 

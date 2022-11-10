@@ -32,7 +32,6 @@ function LoginForm() {
   const nameRef = useRef<HTMLInputElement>(null);
   const roomRef = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const { data, error, postRequest, isSubmitting } = usePost<Response>(
     "/user/signin"
@@ -55,16 +54,12 @@ function LoginForm() {
     }
   }, [data, setToken]);
 
-  useEffect(() => {
-    if (error) {
-      setErrorMessage(error === "Bad Request" ? "Invalid Room Code" : error);
-    }
-  }, [error]);
+  let errorMessage = error;
+  if (error === "Bad Request") {
+    errorMessage = "Invalid Room Code";
+  }
 
   const onChange = useCallback(() => {
-    // Clear the error message
-    setErrorMessage("");
-
     if (nameRef.current?.value && roomRef.current?.value) {
       setIsValid(true);
     } else {

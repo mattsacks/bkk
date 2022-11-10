@@ -1,13 +1,13 @@
-.input {
-  @apply
-    bg-secondary
-    border-2
-    border-primary
-    mb-3
-    p-2
-    text-primary;
+@layer components {
+  .input {
+    @apply bg-secondary
+      border-2
+      border-primary
+      p-2
+      text-primary;
 
-  &::placeholder {
-    @apply text-primary opacity-50;
+    &::placeholder {
+      @apply text-primary opacity-50;
+    }
   }
 }
