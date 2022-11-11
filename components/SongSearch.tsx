@@ -1,7 +1,7 @@
 // Input that filters a list of songs
 import classNames from "classnames";
 import { Song } from "lib/types";
-import { debounce, orderBy } from "lodash";
+import { debounce } from "lodash";
 import React, { useRef } from "react";
 import { useRecoilState } from "recoil";
 
@@ -26,7 +26,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
     }
 
     const searchResults = songSearch(query, songs);
-    onSearch(orderBy(searchResults, "artist", "asc"));
+    onSearch(searchResults);
   }
 
   const debouncedSearchSongs = debounce(searchSongs, 666);

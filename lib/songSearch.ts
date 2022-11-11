@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 import { Song } from "./types";
 
 export default function songSearch(query: string, songs: Song[]) {
@@ -8,5 +9,7 @@ export default function songSearch(query: string, songs: Song[]) {
     return queryTerms.every((term) => songString.includes(term));
   }
 
-  return songs.filter(matchSong);
+  const filteredSongs = songs.filter(matchSong);
+
+  return orderBy(filteredSongs, "artist", "asc");
 }
