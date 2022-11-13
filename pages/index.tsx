@@ -15,7 +15,7 @@ import tokenState from "@/store/atoms/tokenState";
 let cachedSongs: Song[] = [];
 
 function Index() {
-  const [searchQuery] = useRecoilState(searchState);
+  const [searchQuery, setSearchQuery] = useRecoilState(searchState);
   const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
 
@@ -86,7 +86,10 @@ function Index() {
           </div>
           <button
             className="mx-auto my-8 outline-button"
-            onClick={() => setToken(undefined)}
+            onClick={() => {
+              setSearchQuery("");
+              setToken(undefined);
+            }}
           >
             Leave room
           </button>

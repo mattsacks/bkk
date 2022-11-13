@@ -5,6 +5,7 @@ import { useSetRecoilState } from "recoil";
 import Nav, { NavItem } from "@/components/Nav";
 import { THEMES } from "@/lib/types";
 import useTheme from "@/lib/useTheme";
+import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
 import styles from "./settings.module.css";
@@ -15,6 +16,7 @@ let cachedRendered = false;
 
 export default function Settings() {
   const router = useRouter();
+  const setSearchQuery = useSetRecoilState(searchState);
   const setToken = useSetRecoilState(tokenState);
   const [currentTheme, changeTheme] = useTheme();
   const [hasRendered, setHasRendered] = useState(cachedRendered);
@@ -81,7 +83,9 @@ export default function Settings() {
           <button
             className="outline-button"
             onClick={() => {
+              setSearchQuery("");
               setToken(undefined);
+
               router.push("/login");
             }}
           >
