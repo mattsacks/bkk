@@ -53,7 +53,7 @@ function SongListItem(props: SongListItemProps) {
     buttonText = queuedTrack ? "- remove from queue" : "+ add to queue";
   }
 
-  const setButtonTimeout = useCallback((setter) => {
+  const setButtonTimeout = useCallback((setter: (set: boolean) => void) => {
     setter(true);
 
     buttonAnimationTimeout = window.setTimeout(() => {
