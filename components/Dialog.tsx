@@ -35,6 +35,8 @@ export default function Dialog(props: DialogProps) {
     dialogRef.current?.close();
   }
 
+  // When the 'show' prop changes, toggle show & hide on the dialog and body
+  // scrolling
   useEffect(() => {
     if (!dialogRef.current) {
       return;
@@ -48,6 +50,21 @@ export default function Dialog(props: DialogProps) {
     } else if (!show && isOpen) {
       dialogRef.current.close();
       document.body.classList.remove("overflow-hidden");
+    }
+  }, [show]);
+
+  // If the browser doesn't support inert, hide the element
+  useEffect(() => {
+    const supportsInert = "inert" in document.createElement("div");
+
+    if (supportsInert || !dialogRef.current) {
+      return;
+    }
+
+    if (!show) {
+      dialogRef.current.classList.add("hidden");
+    } else {
+      dialogRef.current.classList.remove("hidden");
     }
   }, [show]);
 
