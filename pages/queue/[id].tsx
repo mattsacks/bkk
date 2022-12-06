@@ -212,29 +212,17 @@ export default function QueueItemPage() {
           remove from queue
         </button>
       </div>
-      <Dialog
-        cancel={removeSong.cancel}
-        confirm={removeSong.confirm}
-        show={removeSong.show}
-      >
+      <Dialog {...removeSong}>
         <div className="leading-tight text-center w-56">
           remove song from queue?
         </div>
       </Dialog>
-      <Dialog
-        cancel={skipCurrentSong.cancel}
-        confirm={skipCurrentSong.confirm}
-        show={skipCurrentSong.show}
-      >
+      <Dialog {...skipCurrentSong}>
         <div className="leading-tight text-center w-56">
           move the current playing song next?
         </div>
       </Dialog>
-      <Dialog
-        cancel={replaceCurrentSong.cancel}
-        confirm={replaceCurrentSong.confirm}
-        show={replaceCurrentSong.show}
-      >
+      <Dialog {...replaceCurrentSong}>
         <div className="leading-tight text-center w-56">
           sing this song now? this will replace the current song
         </div>
