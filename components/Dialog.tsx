@@ -1,6 +1,13 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
+// TypeScript doesn't have these properties on <dialog> yet
+interface HTMLDialogElement extends HTMLElement {
+  close: () => void;
+  open: boolean;
+  show: () => void;
+}
+
 interface DialogProps {
   children: ReactNode;
   show?: boolean;
@@ -12,13 +19,6 @@ interface DialogProps {
     action: () => void;
     text?: string;
   };
-}
-
-// FIXME
-interface HTMLDialogElement extends HTMLElement {
-  close: () => void;
-  open: boolean;
-  show: () => void;
 }
 
 export default function Dialog(props: DialogProps) {
@@ -68,13 +68,14 @@ export default function Dialog(props: DialogProps) {
     }
   }, [show]);
 
+  // Don't render dialogs on the server
   if (typeof window == "undefined") {
     return null;
   }
 
   return createPortal(
     // @ts-ignore inert isn't available in TypeScript yet
-    <dialog ref={dialogRef} inert={!show ? "" : undefined}>
+    <dialog inert={!show ? "" : undefined} ref={dialogRef}>
       {children}
       <div className="mt-4 flex gap-4 align-center">
         <button className="outline-button" onClick={handleCancel}>
