@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import useSWR, { mutate } from "swr";
 
+import Dialog from "@/components/Dialog";
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import Queue from "@/components/Queue";
+import useDialog from "@/lib/useDialog";
 import usePost from "@/lib/usePost";
 import useQueue from "@/lib/useQueue";
 import tokenState from "@/store/atoms/tokenState";
@@ -15,7 +17,8 @@ export default function QueuePage() {
   const token = useRecoilValue(tokenState);
   const router = useRouter();
   const { queue } = useQueue();
-  const { data: user } = useSWR(token && "/whoami");
+
+  const { data: user = {} } = useSWR(token && "/whoami");
 
   const { postRequest: skipTrack } = usePost("/tracks/skip");
   const { postRequest: pauseTrack } = usePost("/tracks/pause");
@@ -34,6 +37,13 @@ export default function QueuePage() {
     await skipTrack();
     mutate("/playlist", queue.slice(1), false);
   }
+
+  const { show, showDialog, confirm, cancel } = useDialog({
+    confirm: {
+      action: skipSong,
+      text: "skip song"
+    }
+  });
 
   async function pause() {
     setIsPaused(true);
@@ -72,9 +82,7 @@ export default function QueuePage() {
         {hasQueuedTracks ? (
           <React.Fragment>
             <div className="sm:flex block sm:justify-between sm:items-center mb-8">
-              <h1 className="text-3xl sm:flex-1 mb-3">
-                {user?.bookingKey} queue:
-              </h1>
+              <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
               <div className="xs:flex sm:block justify-between">
                 <button
                   className={`mb-2 mr-2 xs:mb-0 sm:mr-6 button button-thin`}
@@ -82,7 +90,7 @@ export default function QueuePage() {
                 >
                   {isPaused ? "play" : "pause"}
                 </button>
-                <button className="button button-thin" onClick={skipSong}>
+                <button className="button button-thin" onClick={showDialog}>
                   {"skip current song"}
                 </button>
               </div>
@@ -96,6 +104,9 @@ export default function QueuePage() {
           </React.Fragment>
         )}
       </div>
+      <Dialog show={show} confirm={confirm} cancel={cancel}>
+        <div>skip the current song?</div>
+      </Dialog>
     </div>
   );
 }

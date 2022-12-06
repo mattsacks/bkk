@@ -1,0 +1,73 @@
+import { ReactNode, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+
+interface DialogProps {
+  children: ReactNode;
+  show?: boolean;
+  confirm?: {
+    action: () => void;
+    text?: string;
+  };
+  cancel?: {
+    action: () => void;
+    text?: string;
+  };
+}
+
+// FIXME
+interface HTMLDialogElement extends HTMLElement {
+  close: () => void;
+  open: boolean;
+  show: () => void;
+}
+
+export default function Dialog(props: DialogProps) {
+  const { children, show, confirm, cancel } = props;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  function handleCancel() {
+    dialogRef.current?.close();
+    cancel?.action();
+  }
+
+  function handleConfirm() {
+    confirm?.action();
+    dialogRef.current?.close();
+  }
+
+  useEffect(() => {
+    if (!dialogRef.current) {
+      return;
+    }
+
+    const isOpen = dialogRef.current?.open;
+
+    if (show && !isOpen) {
+      dialogRef.current.show();
+      document.body.classList.add("overflow-hidden");
+    } else if (!show && isOpen) {
+      dialogRef.current.close();
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [show]);
+
+  if (typeof window == "undefined") {
+    return null;
+  }
+
+  return createPortal(
+    // @ts-ignore inert isn't available in TypeScript yet
+    <dialog ref={dialogRef} inert={!show ? "" : undefined}>
+      {children}
+      <div className="mt-4 flex gap-4 align-center">
+        <button className="outline-button" onClick={handleCancel}>
+          {cancel?.text ?? "nvm"}
+        </button>
+        <button className="button" onClick={handleConfirm}>
+          {confirm?.text ?? "confirm"}
+        </button>
+      </div>
+    </dialog>,
+    document.body
+  );
+}

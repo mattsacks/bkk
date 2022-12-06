@@ -1,0 +1,24 @@
+@layer components {
+  dialog {
+    @apply
+     bg-transparent
+     fixed
+     flex
+     flex-col
+     h-full
+     inset-0
+     items-center
+     justify-center
+     opacity-0
+     text-primary
+     w-full;
+
+    transition: all 0.2s ease-in;
+  }
+
+  dialog[open] {
+    @apply
+     backdrop-blur-lg
+     opacity-100;
+  }
+}

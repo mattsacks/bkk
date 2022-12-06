@@ -4,10 +4,12 @@ import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { mutate } from "swr";
 
+import Dialog from "@/components/Dialog";
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import request from "@/lib/request";
 import { QueuedTrack } from "@/lib/types";
+import useDialog from "@/lib/useDialog";
 import useQueue from "@/lib/useQueue";
 
 function getLabel(index: number) {
@@ -80,6 +82,27 @@ export default function QueueItemPage() {
     });
   }
 
+  const skipCurrentSong = useDialog({
+    confirm: {
+      action: () => moveInQueue("down"),
+      text: "sing next"
+    }
+  });
+
+  const replaceCurrentSong = useDialog({
+    confirm: {
+      action: () => moveInQueue("up"),
+      text: "sing now"
+    }
+  });
+
+  const removeSong = useDialog({
+    confirm: {
+      action: () => removeFromQueue(),
+      text: "remove song"
+    }
+  });
+
   // TODO: Load the queue on the server
   if (typeof window === "undefined" || isValidating) {
     return (
@@ -151,7 +174,16 @@ export default function QueueItemPage() {
         {index === 0 ? (
           <div />
         ) : (
-          <button className="mr-1 underline" onClick={() => moveInQueue("up")}>
+          <button
+            className="mr-1 underline"
+            onClick={() => {
+              if (index === 1) {
+                replaceCurrentSong.showDialog();
+              } else {
+                moveInQueue("up");
+              }
+            }}
+          >
             {index === 1 ? "sing now" : "sing sooner"} (#{index + 1 - 1})
           </button>
         )}
@@ -160,22 +192,53 @@ export default function QueueItemPage() {
         ) : (
           <button
             className="ml-1 underline"
-            onClick={() => moveInQueue("down")}
+            onClick={() => {
+              if (index === 0) {
+                skipCurrentSong.showDialog();
+              } else {
+                moveInQueue("down");
+              }
+            }}
           >
-            sing later (#{index + 2})
+            {index === 0 ? "sing next" : "sing later"} (#{index + 2})
           </button>
         )}
       </div>
       <div className="mb-3 mx-auto">
         <button
           className="outline-button"
-          onClick={async () => {
-            removeFromQueue();
-          }}
+          onClick={async () => removeSong.showDialog()}
         >
           remove from queue
         </button>
       </div>
+      <Dialog
+        cancel={removeSong.cancel}
+        confirm={removeSong.confirm}
+        show={removeSong.show}
+      >
+        <div className="leading-tight text-center w-56">
+          remove song from queue?
+        </div>
+      </Dialog>
+      <Dialog
+        cancel={skipCurrentSong.cancel}
+        confirm={skipCurrentSong.confirm}
+        show={skipCurrentSong.show}
+      >
+        <div className="leading-tight text-center w-56">
+          move the current playing song next?
+        </div>
+      </Dialog>
+      <Dialog
+        cancel={replaceCurrentSong.cancel}
+        confirm={replaceCurrentSong.confirm}
+        show={replaceCurrentSong.show}
+      >
+        <div className="leading-tight text-center w-56">
+          sing this song now? this will replace the current song
+        </div>
+      </Dialog>
     </div>
   );
 }

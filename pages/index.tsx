@@ -22,7 +22,7 @@ function Index() {
   const [filteredSongs, setFilteredSongs] = useState<Song[]>(() => {
     // Initialize filteredSongs with an existing searchQuery on a cached
     // version of songs previously loaded
-    if (searchQuery) {
+    if (searchQuery && cachedSongs.length > 0) {
       return songSearch(searchQuery, cachedSongs);
     }
 

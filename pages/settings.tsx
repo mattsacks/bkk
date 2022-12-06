@@ -21,9 +21,8 @@ export default function Settings() {
   const [currentTheme, changeTheme] = useTheme();
   const [hasRendered, setHasRendered] = useState(cachedRendered);
 
-  // Used to prevent a className mismatch when highlighting the current them
-  // (stored in localStorage). Cached in module space so this is only done on
-  // hydration.
+  // Used to prevent a className mismatch when highlighting the current theme
+  // (stored in localStorage).
   useEffect(() => {
     if (!hasRendered) {
       cachedRendered = true;
@@ -71,7 +70,7 @@ export default function Settings() {
               className="underline"
               href="https://github.com/mattsacks/bkk"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
             >
               Github
             </a>
