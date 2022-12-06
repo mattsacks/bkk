@@ -19,7 +19,7 @@ export default function useDialog(params: UseDialogOptions) {
 
   return {
     show: showDialog,
-    setShow: () => setShowDialog(true),
+    showDialog: () => setShowDialog(true),
     cancel: {
       action: () => {
         cancel?.action?.();

@@ -61,7 +61,7 @@ export default function Dialog(props: DialogProps) {
       {children}
       <div className="mt-4 flex gap-4 align-center">
         <button className="outline-button" onClick={handleCancel}>
-          {cancel?.text ?? "cancel"}
+          {cancel?.text ?? "nvm"}
         </button>
         <button className="button" onClick={handleConfirm}>
           {confirm?.text ?? "confirm"}

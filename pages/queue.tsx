@@ -38,7 +38,7 @@ export default function QueuePage() {
     mutate("/playlist", queue.slice(1), false);
   }
 
-  const { show, setShow, confirm, cancel } = useDialog({
+  const { show, showDialog, confirm, cancel } = useDialog({
     confirm: {
       action: skipSong,
       text: "skip song"
@@ -90,7 +90,7 @@ export default function QueuePage() {
                 >
                   {isPaused ? "play" : "pause"}
                 </button>
-                <button className="button button-thin" onClick={setShow}>
+                <button className="button button-thin" onClick={showDialog}>
                   {"skip current song"}
                 </button>
               </div>
