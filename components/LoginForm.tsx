@@ -1,6 +1,12 @@
 import cntl from "cntl";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { useSetRecoilState } from "recoil";
 import tokenState from "store/atoms/tokenState";
 
@@ -11,12 +17,13 @@ const formStyles = cntl`
   flex
   flex-col
   justify-center
-  w-full
+  gap-3
   max-w-md
   mx-auto
   pt-6
   px-6
   text-lg
+  w-full
   md:flex-2
   md:pt-6
   md:text-xl
@@ -38,7 +45,7 @@ function LoginForm() {
   );
 
   const submitForm = useCallback(
-    (e) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       postRequest({
         name: nameRef.current?.value,
@@ -69,42 +76,46 @@ function LoginForm() {
 
   return (
     <form className={formStyles} onSubmit={submitForm}>
-      <label className="text-primary" htmlFor="name">
-        ur name
-      </label>
-      <input
-        autoCapitalize="none"
-        autoComplete="off"
-        autoCorrect="off"
-        className="input"
-        id="name"
-        name="name"
-        onChange={onChange}
-        placeholder="jaybee"
-        ref={nameRef}
-        required
-        type="text"
-      />
-      <label className="text-primary" htmlFor="room">
-        room code
-      </label>
-      <input
-        autoCapitalize="none"
-        autoComplete="off"
-        autoCorrect="off"
-        className="input"
-        defaultValue={router.query.roomCode}
-        id="room"
-        name="room"
-        onChange={onChange}
-        placeholder="TAC0"
-        required
-        ref={roomRef}
-        type="text"
-      />
+      <fieldset className="flex flex-col">
+        <label className="text-primary" htmlFor="name">
+          ur name
+        </label>
+        <input
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          className="input"
+          id="name"
+          name="name"
+          onChange={onChange}
+          placeholder="jaybee"
+          ref={nameRef}
+          required
+          type="text"
+        />
+      </fieldset>
+      <fieldset className="flex flex-col">
+        <label className="text-primary" htmlFor="room">
+          room code
+        </label>
+        <input
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          className="input"
+          defaultValue={router.query.roomCode}
+          id="room"
+          name="room"
+          onChange={onChange}
+          placeholder="TAC0"
+          required
+          ref={roomRef}
+          type="text"
+        />
+      </fieldset>
       <button
         disabled={!isValid || isSubmitting}
-        className="submit disabled:submit-disabled mt-3 mb-3"
+        className="submit disabled:submit-disabled mt-2"
         type="submit"
       >
         {isSubmitting ? <Loading /> : "sing songz!"}

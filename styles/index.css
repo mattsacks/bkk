@@ -5,6 +5,7 @@
 
 @import "./components/app-container.css";
 @import "./components/button.css";
+@import "./components/dialog.css";
 @import "./components/flag.css";
 @import "./components/input.css";
 @import "./components/invert.css";

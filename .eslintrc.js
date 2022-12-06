@@ -9,6 +9,7 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-var-requires": 0,
     "jsx-a11y/anchor-is-valid": [
       "error",
