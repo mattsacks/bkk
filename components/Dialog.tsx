@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 // TypeScript doesn't have these properties on <dialog> yet
@@ -25,14 +25,19 @@ export default function Dialog(props: DialogProps) {
   const { children, show, confirm, cancel } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  function handleCancel() {
+  const handleClose = useCallback(() => {
     dialogRef.current?.close();
+    document.body.classList.remove("overflow-hidden");
+  }, []);
+
+  function handleCancel() {
     cancel?.action();
+    handleClose();
   }
 
   function handleConfirm() {
     confirm?.action();
-    dialogRef.current?.close();
+    handleClose();
   }
 
   // When the 'show' prop changes, toggle show & hide on the dialog and body
@@ -47,9 +52,6 @@ export default function Dialog(props: DialogProps) {
     if (show && !isOpen) {
       dialogRef.current.show();
       document.body.classList.add("overflow-hidden");
-    } else if (!show && isOpen) {
-      dialogRef.current.close();
-      document.body.classList.remove("overflow-hidden");
     }
   }, [show]);
 
