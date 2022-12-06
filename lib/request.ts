@@ -14,19 +14,8 @@ interface RequestOptions {
   token?: string;
 }
 
-let API = process.env.MATHIS_API;
-
-// Override API if on the development domain
-if (typeof window !== "undefined") {
-  if (
-    /(?:dev\.bkk\.bar|bkk-.*\.now.sh)/.test(location.origin) ||
-    process.env.NODE_ENV !== "production"
-  ) {
-    API = "https://mathis-development.herokuapp.com/api/v1";
-  } else if (!API) {
-    API = "https://mathis-prod.herokuapp.com/api/v1";
-  }
-}
+const API =
+  process.env.MATHIS_API ?? "https://mathis-prod.herokuapp.com/api/v1";
 
 async function request<T>(
   endpoint: string,
