@@ -20,7 +20,7 @@
     "next": "^12.1.5",
     "postcss-easy-import": "^4.0.0",
     "postcss-import": "^14.1.0",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys-hook": "^1.6.1",
