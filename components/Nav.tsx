@@ -7,18 +7,10 @@ function Nav({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function NavItem({
-  href,
-  as = undefined,
-  text
-}: {
-  href: string;
-  as?: string;
-  text: string;
-}) {
+export function NavItem({ href, text }: { href: string; text: string }) {
   return (
-    <Link href={href} as={as}>
-      <a className="underline">{text}</a>
+    <Link className="underline" href={href}>
+      {text}
     </Link>
   );
 }

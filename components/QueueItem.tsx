@@ -9,20 +9,18 @@ interface Props {
 
 function QueueItem({ label, queue }: Props) {
   return (
-    <Link href="/queue/[id]" as={`/queue/${queue.id}`}>
-      <a>
-        <div className="list-item relative -mt-px">
-          <div className="flex flex-col gap-1">
-            <h4 className="text-sm">
-              {label}: {queue.user_name}
-            </h4>
-            <div className="text-lg leading-none capitalize">
-              {queue.song_name}
-            </div>
+    <Link href={`/queue/${queue.id}`}>
+      <div className="list-item relative -mt-px">
+        <div className="flex flex-col gap-1">
+          <h4 className="text-sm">
+            {label}: {queue.user_name}
+          </h4>
+          <div className="text-lg leading-none capitalize">
+            {queue.song_name}
           </div>
-          <div className="w-1/3 text-right">&gt;</div>
         </div>
-      </a>
+        <div className="w-1/3 text-right">&gt;</div>
+      </div>
     </Link>
   );
 }
