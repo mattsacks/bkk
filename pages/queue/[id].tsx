@@ -104,7 +104,7 @@ export default function QueueItemPage() {
   });
 
   // TODO: Load the queue on the server
-  if (typeof window === "undefined" || isValidating) {
+  if (isValidating) {
     return (
       <div className="app-container flex flex-1 flex-col">
         <Nav>

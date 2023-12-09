@@ -71,7 +71,7 @@ export default function Dialog(props: DialogProps) {
   }, [show]);
 
   // Don't render dialogs on the server
-  if (typeof window == "undefined") {
+  if (typeof window === "undefined") {
     return null;
   }
 
@@ -79,11 +79,11 @@ export default function Dialog(props: DialogProps) {
     // @ts-ignore inert isn't available in TypeScript yet
     <dialog inert={!show ? "" : undefined} ref={dialogRef}>
       {children}
-      <div className="mt-4 flex gap-4 align-center">
-        <button className="outline-button" onClick={handleCancel}>
+      <div className="align-center mt-4 flex gap-4">
+        <button className="outline-button" onClick={handleCancel} type="button">
           {cancel?.text ?? "nvm"}
         </button>
-        <button className="button" onClick={handleConfirm}>
+        <button className="button" onClick={handleConfirm} type="button">
           {confirm?.text ?? "confirm"}
         </button>
       </div>
