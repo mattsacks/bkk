@@ -40,9 +40,8 @@ function LoginForm() {
   const roomRef = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState(false);
 
-  const { data, error, postRequest, isSubmitting } = usePost<Response>(
-    "/user/signin"
-  );
+  const { data, error, postRequest, isSubmitting } =
+    usePost<Response>("/user/signin");
 
   const submitForm = useCallback(
     (e: FormEvent<HTMLFormElement>) => {

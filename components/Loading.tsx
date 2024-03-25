@@ -4,6 +4,9 @@ const INITIAL = 0;
 const LIMIT = 3;
 const INTERVAL = 750;
 
+/**
+ * Draws an ellipsis loading indicator as "...".
+ */
 export default function Loading() {
   const [dots, setDots] = useState(INITIAL);
 
@@ -20,9 +23,7 @@ export default function Loading() {
   return (
     <div>
       loading
-      {Array(dots)
-        .fill(".")
-        .join("")}
+      {Array(dots).fill(".").join("")}
     </div>
   );
 }

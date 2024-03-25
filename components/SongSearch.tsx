@@ -56,6 +56,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
       {searchQuery && (
         <div className="border-2 border-primary">
           <button
+            aria-label="clear search"
             className="h-full bg-primary px-3 text-secondary"
             onClick={() => {
               searchSongs("");

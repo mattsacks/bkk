@@ -1,6 +1,5 @@
-import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
@@ -16,8 +15,7 @@ let cachedSongs: Song[] = [];
 
 function Index() {
   const [searchQuery, setSearchQuery] = useRecoilState(searchState);
-  const [token, setToken] = useRecoilState(tokenState);
-  const router = useRouter();
+  const setToken = useSetRecoilState(tokenState);
 
   const [filteredSongs, setFilteredSongs] = useState<Song[]>(() => {
     // Initialize filteredSongs with an existing searchQuery on a cached
@@ -40,15 +38,6 @@ function Index() {
       }
     }
   });
-
-  if (!token && router.isReady) {
-    router.replace({
-      pathname: "/login",
-      query: router.query
-    });
-
-    return null;
-  }
 
   const isServer = typeof window === "undefined";
   const isLoading = isValidating || isServer;
