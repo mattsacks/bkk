@@ -38,7 +38,7 @@ export default function QueuePage() {
     mutate("/playlist", queue.slice(1), false);
   }
 
-  const { show, showDialog, confirm, cancel } = useDialog({
+  const skipSongDialog = useDialog({
     confirm: {
       action: skipSong,
       text: "skip song"
@@ -90,7 +90,10 @@ export default function QueuePage() {
                 >
                   {isPaused ? "play" : "pause"}
                 </button>
-                <button className="button button-thin" onClick={showDialog}>
+                <button
+                  className="button button-thin"
+                  onClick={skipSongDialog.showDialog}
+                >
                   {"skip current song"}
                 </button>
               </div>
@@ -104,7 +107,7 @@ export default function QueuePage() {
           </React.Fragment>
         )}
       </div>
-      <Dialog show={show} confirm={confirm} cancel={cancel}>
+      <Dialog {...skipSongDialog}>
         <div>skip the current song?</div>
       </Dialog>
     </div>

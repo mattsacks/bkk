@@ -5,11 +5,14 @@ import request from "@/lib/request";
 interface UsePost<T> {
   data: T | undefined;
   error: string | undefined;
-  postRequest: (body?: unknown) => Promise<void>;
+  postRequest: (body?: Record<string, unknown>) => Promise<void>;
   isSubmitting: boolean;
 }
 
-function usePost<T>(endpoint: string, defaultBody?: T): UsePost<T> {
+function usePost<T>(
+  endpoint: string,
+  defaultBody?: Record<string, unknown>
+): UsePost<T> {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<string>();
   const [isSubmitting, setIsSubmitting] = useState(false);

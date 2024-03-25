@@ -1,5 +1,12 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+
+// TypeScript doesn't have these properties on <dialog> yet
+interface HTMLDialogElement extends HTMLElement {
+  close: () => void;
+  open: boolean;
+  show: () => void;
+}
 
 interface DialogProps {
   children: ReactNode;
@@ -14,27 +21,27 @@ interface DialogProps {
   };
 }
 
-// FIXME
-interface HTMLDialogElement extends HTMLElement {
-  close: () => void;
-  open: boolean;
-  show: () => void;
-}
-
 export default function Dialog(props: DialogProps) {
   const { children, show, confirm, cancel } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  function handleCancel() {
+  const handleClose = useCallback(() => {
     dialogRef.current?.close();
+    document.body.classList.remove("overflow-hidden");
+  }, []);
+
+  function handleCancel() {
     cancel?.action();
+    handleClose();
   }
 
   function handleConfirm() {
     confirm?.action();
-    dialogRef.current?.close();
+    handleClose();
   }
 
+  // When the 'show' prop changes, toggle show & hide on the dialog and body
+  // scrolling
   useEffect(() => {
     if (!dialogRef.current) {
       return;
@@ -45,25 +52,38 @@ export default function Dialog(props: DialogProps) {
     if (show && !isOpen) {
       dialogRef.current.show();
       document.body.classList.add("overflow-hidden");
-    } else if (!show && isOpen) {
-      dialogRef.current.close();
-      document.body.classList.remove("overflow-hidden");
     }
   }, [show]);
 
-  if (typeof window == "undefined") {
+  // If the browser doesn't support inert, hide the element
+  useEffect(() => {
+    const supportsInert = "inert" in document.createElement("div");
+
+    if (supportsInert || !dialogRef.current) {
+      return;
+    }
+
+    if (!show) {
+      dialogRef.current.classList.add("hidden");
+    } else {
+      dialogRef.current.classList.remove("hidden");
+    }
+  }, [show]);
+
+  // Don't render dialogs on the server
+  if (typeof window === "undefined") {
     return null;
   }
 
   return createPortal(
     // @ts-ignore inert isn't available in TypeScript yet
-    <dialog ref={dialogRef} inert={!show ? "" : undefined}>
+    <dialog inert={!show ? "" : undefined} ref={dialogRef}>
       {children}
-      <div className="mt-4 flex gap-4 align-center">
-        <button className="outline-button" onClick={handleCancel}>
+      <div className="align-center mt-4 flex gap-4">
+        <button className="outline-button" onClick={handleCancel} type="button">
           {cancel?.text ?? "nvm"}
         </button>
-        <button className="button" onClick={handleConfirm}>
+        <button className="button" onClick={handleConfirm} type="button">
           {confirm?.text ?? "confirm"}
         </button>
       </div>

@@ -6,7 +6,7 @@ import qs from "qs";
 import { USER_COOKIE } from "@/lib/types";
 
 interface RequestParams {
-  body?: object;
+  body?: Record<string, unknown>;
   method?: string;
 }
 

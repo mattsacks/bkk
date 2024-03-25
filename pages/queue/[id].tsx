@@ -104,9 +104,9 @@ export default function QueueItemPage() {
   });
 
   // TODO: Load the queue on the server
-  if (typeof window === "undefined" || isValidating) {
+  if (isValidating) {
     return (
-      <div className="app-container flex flex-col flex-1">
+      <div className="app-container flex flex-1 flex-col">
         <Nav>
           <NavItem href="/queue" text="&lt; view queue" />
           <div></div>
@@ -117,26 +117,22 @@ export default function QueueItemPage() {
   }
 
   return (
-    <div className="app-container flex flex-col flex-1">
+    <div className="app-container flex flex-1 flex-col">
       <Nav>
         <NavItem href="/queue" text="&lt; view queue" />
         <div></div>
       </Nav>
-      <div className="text-center flex-1">
+      <div className="flex-1 text-center">
         <div className="flex items-center">
           <div className="flex-1 text-left">
             {index !== 0 && (
               <Link
-                href="/queue/[id]"
-                as={`/queue/${queue[index - 1]?.id}`}
+                className="block underline"
+                href={`/queue/${queue[index - 1]?.id}`}
                 replace
               >
-                <a className="block underline">
-                  &lt;{" "}
-                  <span className="hidden sm:inline">
-                    {getLabel(index - 1)}
-                  </span>
-                </a>
+                &lt;{" "}
+                <span className="hidden sm:inline">{getLabel(index - 1)}</span>
               </Link>
             )}
           </div>
@@ -144,16 +140,12 @@ export default function QueueItemPage() {
           <div className="flex-1 text-right">
             {index !== queue.length - 1 && (
               <Link
-                href="/queue/[id]"
-                as={`/queue/${queue[index + 1]?.id}`}
+                className="block text-right underline"
+                href={`/queue/${queue[index + 1]?.id}`}
                 replace
               >
-                <a className="block underline text-right">
-                  <span className="hidden sm:inline">
-                    {getLabel(index + 1)}
-                  </span>{" "}
-                  &gt;
-                </a>
+                <span className="hidden sm:inline">{getLabel(index + 1)}</span>{" "}
+                &gt;
               </Link>
             )}
           </div>
@@ -162,7 +154,7 @@ export default function QueueItemPage() {
           <h4>{queueData.user_name}</h4>
         </div>
         <div className="mt-5">
-          <h3 className="text-xl capitalize leading-none mb-1">
+          <h3 className="mb-1 text-xl capitalize leading-none">
             {queueData.song_name}
           </h3>
           <div>
@@ -204,7 +196,7 @@ export default function QueueItemPage() {
           </button>
         )}
       </div>
-      <div className="mb-3 mx-auto">
+      <div className="mx-auto mb-3">
         <button
           className="outline-button"
           onClick={async () => removeSong.showDialog()}
@@ -212,30 +204,18 @@ export default function QueueItemPage() {
           remove from queue
         </button>
       </div>
-      <Dialog
-        cancel={removeSong.cancel}
-        confirm={removeSong.confirm}
-        show={removeSong.show}
-      >
-        <div className="leading-tight text-center w-56">
+      <Dialog {...removeSong}>
+        <div className="w-56 text-center leading-tight">
           remove song from queue?
         </div>
       </Dialog>
-      <Dialog
-        cancel={skipCurrentSong.cancel}
-        confirm={skipCurrentSong.confirm}
-        show={skipCurrentSong.show}
-      >
-        <div className="leading-tight text-center w-56">
+      <Dialog {...skipCurrentSong}>
+        <div className="w-56 text-center leading-tight">
           move the current playing song next?
         </div>
       </Dialog>
-      <Dialog
-        cancel={replaceCurrentSong.cancel}
-        confirm={replaceCurrentSong.confirm}
-        show={replaceCurrentSong.show}
-      >
-        <div className="leading-tight text-center w-56">
+      <Dialog {...replaceCurrentSong}>
+        <div className="w-56 text-center leading-tight">
           sing this song now? this will replace the current song
         </div>
       </Dialog>
