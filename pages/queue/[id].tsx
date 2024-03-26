@@ -124,7 +124,7 @@ export default function QueueItemPage() {
     <div className="app-container flex flex-1 flex-col">
       <Nav>
         <NavItem href="/queue" text="&lt; view queue" />
-        <div></div>
+        <NavItem href="/" text="search songs &gt;" />
       </Nav>
       <div className="flex-1 text-center">
         <div className="flex items-center">
