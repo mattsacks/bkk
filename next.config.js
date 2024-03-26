@@ -11,6 +11,17 @@ module.exports = {
         ],
         destination: "/login",
         permanent: false
+      },
+      {
+        source: "/login",
+        has: [
+          {
+            type: "cookie",
+            key: "mathis_user"
+          }
+        ],
+        destination: "/",
+        permanent: false
       }
     ];
   }
