@@ -2,7 +2,7 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/",
+        source: "/((?!login$).*)",
         missing: [
           {
             type: "cookie",

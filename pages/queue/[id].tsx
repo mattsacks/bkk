@@ -1,16 +1,20 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { mutate } from "swr";
 
-import Dialog from "@/components/Dialog";
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import request from "@/lib/request";
 import { QueuedTrack } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
 import useQueue from "@/lib/useQueue";
+
+const Dialog = dynamic(() => import("@/components/Dialog"), {
+  ssr: false
+});
 
 function getLabel(index: number) {
   if (index === 0) {

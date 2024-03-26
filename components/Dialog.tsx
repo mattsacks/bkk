@@ -70,11 +70,6 @@ export default function Dialog(props: DialogProps) {
     }
   }, [show]);
 
-  // Don't render dialogs on the server
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   return createPortal(
     // @ts-ignore inert isn't available in TypeScript yet
     <dialog inert={!show ? "" : undefined} ref={dialogRef}>

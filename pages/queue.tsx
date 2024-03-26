@@ -1,10 +1,10 @@
 // View the current queue
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import useSWR, { mutate } from "swr";
 
-import Dialog from "@/components/Dialog";
 import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import Queue from "@/components/Queue";
@@ -12,6 +12,10 @@ import useDialog from "@/lib/useDialog";
 import usePost from "@/lib/usePost";
 import useQueue from "@/lib/useQueue";
 import tokenState from "@/store/atoms/tokenState";
+
+const Dialog = dynamic(() => import("@/components/Dialog"), {
+  ssr: false
+});
 
 export default function QueuePage() {
   const token = useRecoilValue(tokenState);
