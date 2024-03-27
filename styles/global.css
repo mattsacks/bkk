@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=VT323&display=block");
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/VT323.ttf') format('truetype');
+}
 
 html {
   @apply font-mono;

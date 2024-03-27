@@ -17,7 +17,6 @@ function BKK({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Head>
-        <meta charSet="utf-8" />
         <meta name="author" content="#PDXBROLIFE" />
         <meta
           name="description"
