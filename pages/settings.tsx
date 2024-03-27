@@ -66,7 +66,7 @@ export default function Settings() {
   return (
     <div className="app-container">
       <Nav>
-        <div></div>
+        <NavItem href="/queue" text="&lt; view queue" />
         <NavItem href="/" text="search songs &gt;" />
       </Nav>
       <div className="flex flex-col gap-6">

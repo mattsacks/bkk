@@ -69,7 +69,7 @@ export default function QueuePage() {
       <div className="app-container">
         <Nav>
           <NavItem href="/" text="&lt; search songs" />
-          <div></div>
+          <NavItem href="/settings" text="settings &gt;" />
         </Nav>
         <Loading />
       </div>
@@ -80,7 +80,7 @@ export default function QueuePage() {
     <div className="app-container">
       <Nav>
         <NavItem href="/" text="&lt; search songs" />
-        <div></div>
+        <NavItem href="/settings" text="settings &gt;" />
       </Nav>
       <div className="pb-1">
         {hasQueuedTracks ? (
