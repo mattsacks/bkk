@@ -132,7 +132,7 @@ export default function QueueItemPage() {
             <div className="flex-1 text-left">
               {index !== 0 && (
                 <Link
-                  className="block text-center underline sm:text-left"
+                  className="block text-center sm:text-left"
                   href={`/queue/${queue[index - 1]?.id}`}
                   replace
                 >
@@ -143,11 +143,11 @@ export default function QueueItemPage() {
                 </Link>
               )}
             </div>
-            <div className="px-3 text-3xl">{getLabel(index)}</div>
+            <div className="px-6 text-3xl">{getLabel(index)}</div>
             <div className="flex-1 text-right">
               {index !== queue.length - 1 && (
                 <Link
-                  className="block text-center underline sm:ml-0 sm:text-right"
+                  className="block text-center sm:ml-0 sm:text-right"
                   href={`/queue/${queue[index + 1]?.id}`}
                   replace
                 >
@@ -161,8 +161,9 @@ export default function QueueItemPage() {
           </div>
           <div className="">{queueData.user_name}</div>
         </div>
-        <div className="mt-7 flex-1 text-balance md:mt-9">
-          <div className="mb-1 text-2xl capitalize leading-none">
+        <div className="mt-6 flex-1 md:mt-9">
+          {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
+          <div className="mx-auto mb-1 max-w-[20ch] text-2xl capitalize leading-none md:max-w-none">
             {queueData.song_name}
           </div>
           <div className="capitalize">{queueData.artist}</div>
