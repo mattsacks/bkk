@@ -69,8 +69,8 @@ function SongListItem(props: SongListItemProps) {
 
   return (
     <div className={songListItemClassName}>
-      <div className="text-left capitalize p-3">
-        <h4 className="text-lg md:text-xl leading-none mb-1">{song.name}</h4>
+      <div className="p-3 text-left capitalize">
+        <h4 className="mb-1 text-lg leading-none md:text-xl">{song.name}</h4>
         <h3 className="text-sm">{song.artist}</h3>
       </div>
       <button

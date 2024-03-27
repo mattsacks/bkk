@@ -120,7 +120,7 @@ function LoginForm() {
         {isSubmitting ? <Loading /> : "sing songz!"}
       </button>
       {error && (
-        <div className="text-center text-primary text-lg tracking-widest uppercase">
+        <div className="text-center text-lg uppercase tracking-widest text-primary">
           {errorMessage}
         </div>
       )}

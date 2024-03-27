@@ -1,27 +1,27 @@
 .themeSwatch {
-  @apply border-2 p-3 w-full md:p-4;
+  @apply w-full border-2 p-3 md:p-4;
 }
 
 .default {
-  @apply bg-default-secondary border-default-primary text-default-primary;
+  @apply border-default-primary bg-default-secondary text-default-primary;
 }
 
 .blue {
-  @apply bg-blue-secondary border-blue-primary text-blue-primary;
+  @apply border-blue-primary bg-blue-secondary text-blue-primary;
 }
 
 .terminal {
-  @apply bg-terminal-secondary border-terminal-primary text-terminal-primary;
+  @apply border-terminal-primary bg-terminal-secondary text-terminal-primary;
 }
 
 .miami {
-  @apply bg-miami-secondary border-miami-primary text-miami-primary;
+  @apply border-miami-primary bg-miami-secondary text-miami-primary;
 }
 
 .earl-grey {
-  @apply bg-earl-grey-secondary border-earl-grey-primary text-earl-grey-primary;
+  @apply border-earl-grey-primary bg-earl-grey-secondary text-earl-grey-primary;
 }
 
 .heading {
-  @apply text-lg mb-1;
+  @apply mb-1 text-lg;
 }

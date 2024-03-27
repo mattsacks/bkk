@@ -29,13 +29,13 @@ export default function Login() {
   }
 
   return (
-    <div className="lg:flex lg:flex-1 h-full">
+    <div className="h-full lg:flex lg:flex-1">
       <div className={headingStyles}>
-        <h1 className="text-4xl md:text-5xl font-bold mx-auto">
+        <h1 className="mx-auto text-4xl font-bold md:text-5xl">
           baby ketten karaoke
         </h1>
       </div>
-      <div className="bg-secondary w-full md:flex md:flex-grow md:items-center md:w-auto">
+      <div className="w-full bg-secondary md:flex md:w-auto md:flex-grow md:items-center">
         <LoginForm />
       </div>
     </div>

@@ -54,7 +54,7 @@ function Index() {
   const isLoading = isValidating || isServer;
 
   return (
-    <div className="app-container flex flex-1 flex-col w-full">
+    <div className="app-container flex w-full flex-1 flex-col">
       <Nav>
         <NavItem href="/settings" text="&lt; settings" />
         <NavItem href="/queue" text="view queue &gt;" />
@@ -65,7 +65,7 @@ function Index() {
             <Loading />
           </div>
           <button
-            className="mx-auto my-8 outline-button"
+            className="outline-button mx-auto my-8"
             onClick={() => setToken(undefined)}
           >
             Leave room
@@ -73,7 +73,7 @@ function Index() {
         </>
       ) : (
         <>
-          <div className="mb-4 sticky top-0 bg-secondary z-10">
+          <div className="sticky top-0 z-10 mb-4 bg-secondary">
             <SongSearch
               onSearch={(filteredSongs) => {
                 setFilteredSongs(filteredSongs);
@@ -85,7 +85,7 @@ function Index() {
             {searchQuery && <SongList songs={filteredSongs} />}
           </div>
           <button
-            className="mx-auto my-8 outline-button"
+            className="outline-button mx-auto my-8"
             onClick={() => {
               setSearchQuery("");
               setToken(undefined);

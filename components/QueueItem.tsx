@@ -10,12 +10,12 @@ interface Props {
 function QueueItem({ label, queue }: Props) {
   return (
     <Link href={`/queue/${queue.id}`}>
-      <div className="list-item relative -mt-px">
+      <div className="relative -mt-px list-item">
         <div className="flex flex-col gap-1">
           <h4 className="text-sm">
             {label}: {queue.user_name}
           </h4>
-          <div className="text-lg leading-none capitalize">
+          <div className="text-lg capitalize leading-none">
             {queue.song_name}
           </div>
         </div>
