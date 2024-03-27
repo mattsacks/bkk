@@ -3,14 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 import Nav, { NavItem } from "@/components/Nav";
-import { THEMES } from "@/lib/types";
+import { THEME } from "@/lib/types";
 import useTheme from "@/lib/useTheme";
 import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
 import styles from "./settings.module.css";
-
-type Theme = keyof typeof THEMES;
 
 let cachedRendered = false;
 
@@ -45,9 +43,8 @@ export default function Settings() {
     }
   }, [hasRendered]);
 
-  const ThemeSwatches = Object.keys(THEMES).map((theme) => {
-    const name = THEMES[theme as Theme];
-    const isCurrentTheme = hasRendered && theme === currentTheme;
+  const ThemeSwatches = Object.entries(THEME).map(([theme, themeName]) => {
+    const isCurrentTheme = hasRendered && themeName === currentTheme;
 
     return (
       <div key={theme}>
@@ -55,9 +52,11 @@ export default function Settings() {
           className={`${isCurrentTheme ? "underline" : ""} ${
             styles.themeSwatch
           } ${styles[theme]}`}
-          onClick={() => changeTheme(theme)}
+          onClick={() => {
+            changeTheme(theme as keyof typeof THEME);
+          }}
         >
-          {name}
+          {themeName}
         </button>
       </div>
     );
@@ -84,7 +83,7 @@ export default function Settings() {
               target="_blank"
               rel="noreferrer"
             >
-              Github
+              GitHub
             </a>
           </p>
         </SettingsSection>

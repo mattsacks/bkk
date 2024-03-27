@@ -3,12 +3,12 @@
 export const USER_COOKIE = "mathis_user";
 export const SEARCH_KEY = "mathis_search";
 
-export const THEMES = {
-  default: "bkk",
-  terminal: "term",
-  blue: "nord",
-  miami: "miami"
-};
+export enum THEME {
+  default = "bkk",
+  terminal = "term",
+  rose = "rose",
+  blazers = "blazers"
+}
 
 // --- API ---
 

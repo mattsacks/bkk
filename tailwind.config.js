@@ -16,9 +16,9 @@ module.exports = {
           primary: "var(--default-primary)",
           secondary: "var(--default-secondary)"
         },
-        blue: {
-          primary: "var(--blue-primary)",
-          secondary: "var(--blue-secondary)"
+        rose: {
+          primary: "var(--rose-primary)",
+          secondary: "var(--rose-secondary)"
         },
         terminal: {
           primary: "var(--terminal-primary)",
@@ -28,9 +28,9 @@ module.exports = {
           primary: "var(--miami-primary)",
           secondary: "var(--miami-secondary)"
         },
-        "earl-grey": {
-          primary: "var(--earl-grey-primary)",
-          secondary: "var(--earl-grey-secondary)"
+        blazers: {
+          primary: "var(--blazers-primary)",
+          secondary: "var(--blazers-secondary)"
         }
       },
       screens: {

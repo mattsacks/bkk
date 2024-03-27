@@ -6,8 +6,8 @@
   @apply border-default-primary bg-default-secondary text-default-primary;
 }
 
-.blue {
-  @apply border-blue-primary bg-blue-secondary text-blue-primary;
+.rose {
+  @apply border-rose-primary bg-rose-secondary text-rose-primary;
 }
 
 .terminal {
@@ -18,8 +18,8 @@
   @apply border-miami-primary bg-miami-secondary text-miami-primary;
 }
 
-.earl-grey {
-  @apply border-earl-grey-primary bg-earl-grey-secondary text-earl-grey-primary;
+.blazers {
+  @apply border-blazers-primary bg-blazers-secondary text-blazers-primary;
 }
 
 .heading {
