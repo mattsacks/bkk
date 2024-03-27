@@ -2,8 +2,7 @@ module.exports = {
   headers() {
     return [
       {
-        // TODO: Move public assets under a folder for easier wildcard
-        source: "/VT323.ttf",
+        source: "/assets/VT323.ttf",
         headers: [
           {
             key: "Cache-Control",
@@ -16,7 +15,7 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/((?!login$).*)",
+        source: "/((?!login$|assets/).*)",
         missing: [
           {
             type: "cookie",

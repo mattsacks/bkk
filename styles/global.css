@@ -2,7 +2,7 @@
   font-family: 'VT323';
   font-style: normal;
   font-weight: normal;
-  src: url('/VT323.ttf') format('truetype');
+  src: url('/assets/VT323.ttf') format('truetype');
 }
 
 html {
