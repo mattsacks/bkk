@@ -40,11 +40,11 @@ module.exports = {
         transparent: "transparent"
       },
       inset: {
-        "0": 0,
+        0: 0,
         full: "100%"
       },
       flex: {
-        "2": "2 2 0%"
+        2: "2 2 0%"
       },
       spacing: {
         "-2px": "-2px",
