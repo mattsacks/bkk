@@ -16,7 +16,7 @@ function QueueItem({ label, queue }: Props) {
             {label}: {queue.user_name}
           </div>
           {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
-          <div className="max-w-[20ch] text-lg capitalize leading-none sm:mt-0.5 sm:max-w-none">
+          <div className="mt-0.5 max-w-[20ch] text-lg capitalize leading-none sm:max-w-none">
             {queue.song_name}
           </div>
         </div>
