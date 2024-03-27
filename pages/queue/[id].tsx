@@ -113,7 +113,7 @@ export default function QueueItemPage() {
       <div className="app-container flex flex-1 flex-col">
         <Nav>
           <NavItem href="/queue" text="&lt; view queue" />
-          <div></div>
+          <NavItem href="/" text="search songs &gt;" />
         </Nav>
         <Loading />
       </div>
@@ -126,44 +126,46 @@ export default function QueueItemPage() {
         <NavItem href="/queue" text="&lt; view queue" />
         <NavItem href="/" text="search songs &gt;" />
       </Nav>
-      <div className="flex-1 text-center">
-        <div className="flex items-center">
-          <div className="flex-1 text-left">
-            {index !== 0 && (
-              <Link
-                className="block underline"
-                href={`/queue/${queue[index - 1]?.id}`}
-                replace
-              >
-                &lt;{" "}
-                <span className="hidden sm:inline">{getLabel(index - 1)}</span>
-              </Link>
-            )}
+      <div className="flex flex-1 flex-col text-center">
+        <div className="">
+          <div className="flex items-center">
+            <div className="flex-1 text-left">
+              {index !== 0 && (
+                <Link
+                  className="block text-center underline sm:text-left"
+                  href={`/queue/${queue[index - 1]?.id}`}
+                  replace
+                >
+                  &lt;{" "}
+                  <span className="hidden sm:inline">
+                    {getLabel(index - 1)}
+                  </span>
+                </Link>
+              )}
+            </div>
+            <div className="px-3 text-3xl">{getLabel(index)}</div>
+            <div className="flex-1 text-right">
+              {index !== queue.length - 1 && (
+                <Link
+                  className="block text-center underline sm:ml-0 sm:text-right"
+                  href={`/queue/${queue[index + 1]?.id}`}
+                  replace
+                >
+                  <span className="hidden sm:inline">
+                    {getLabel(index + 1)}
+                  </span>{" "}
+                  &gt;
+                </Link>
+              )}
+            </div>
           </div>
-          <h2 className="text-3xl">{getLabel(index)}</h2>
-          <div className="flex-1 text-right">
-            {index !== queue.length - 1 && (
-              <Link
-                className="block text-right underline"
-                href={`/queue/${queue[index + 1]?.id}`}
-                replace
-              >
-                <span className="hidden sm:inline">{getLabel(index + 1)}</span>{" "}
-                &gt;
-              </Link>
-            )}
-          </div>
+          <div className="">{queueData.user_name}</div>
         </div>
-        <div className="text-lg">
-          <h4>{queueData.user_name}</h4>
-        </div>
-        <div className="mt-5">
-          <h3 className="mb-1 text-xl capitalize leading-none">
+        <div className="mt-9 flex-1">
+          <div className="mb-1 text-xl capitalize leading-none">
             {queueData.song_name}
-          </h3>
-          <div>
-            <span className="capitalize">{queueData.artist}</span>
           </div>
+          <div className="capitalize">{queueData.artist}</div>
         </div>
       </div>
       <div className="mb-3 flex justify-between">

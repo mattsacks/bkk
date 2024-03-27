@@ -14,6 +14,21 @@ type Theme = keyof typeof THEMES;
 
 let cachedRendered = false;
 
+interface SettingsSectionProps extends React.PropsWithChildren {
+  heading: string;
+}
+
+function SettingsSection(props: SettingsSectionProps) {
+  const { children, heading } = props;
+
+  return (
+    <section>
+      <div className="mb-1">{heading}:</div>
+      {children}
+    </section>
+  );
+}
+
 export default function Settings() {
   const router = useRouter();
   const setSearchQuery = useSetRecoilState(searchState);
@@ -54,16 +69,13 @@ export default function Settings() {
         <div></div>
         <NavItem href="/" text="search songs &gt;" />
       </Nav>
-      <div>
-        <section className="mb-6">
-          <h2 className={styles.heading}>Theme:</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <div className="flex flex-col gap-6">
+        <SettingsSection heading="Theme">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {ThemeSwatches}
           </div>
-        </section>
-
-        <section className="mb-6">
-          <h2 className={styles.heading}>About:</h2>
+        </SettingsSection>
+        <SettingsSection heading="About">
           <p className="leading-tight">
             Source code for bkk.bar is available on{" "}
             <a
@@ -75,10 +87,8 @@ export default function Settings() {
               Github
             </a>
           </p>
-        </section>
-
-        <section className="mb-6">
-          <h2 className={styles.heading}>Session:</h2>
+        </SettingsSection>
+        <SettingsSection heading="Session">
           <button
             className="outline-button"
             onClick={() => {
@@ -90,7 +100,7 @@ export default function Settings() {
           >
             Leave room
           </button>
-        </section>
+        </SettingsSection>
       </div>
     </div>
   );
