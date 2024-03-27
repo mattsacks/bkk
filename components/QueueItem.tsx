@@ -11,15 +11,16 @@ function QueueItem({ label, queue }: Props) {
   return (
     <Link href={`/queue/${queue.id}`}>
       <div className="relative -mt-px list-item">
-        <div className="flex flex-col gap-1">
-          <h4 className="text-sm">
+        <div className="mr-6 flex flex-col">
+          <div className="text-sm">
             {label}: {queue.user_name}
-          </h4>
-          <div className="text-lg capitalize leading-none">
+          </div>
+          {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
+          <div className="max-w-[20ch] text-lg capitalize leading-none sm:mt-0.5 sm:max-w-none">
             {queue.song_name}
           </div>
         </div>
-        <div className="w-1/3 text-right">&gt;</div>
+        <div className="text-right">&gt;</div>
       </div>
     </Link>
   );

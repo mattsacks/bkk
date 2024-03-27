@@ -163,7 +163,7 @@ export default function QueueItemPage() {
         </div>
         <div className="mt-6 flex-1 md:mt-9">
           {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
-          <div className="mx-auto mb-1 max-w-[20ch] text-2xl capitalize leading-none md:max-w-none">
+          <div className="mx-auto mb-0.5 max-w-[20ch] text-2xl capitalize leading-none md:max-w-none">
             {queueData.song_name}
           </div>
           <div className="capitalize">{queueData.artist}</div>
