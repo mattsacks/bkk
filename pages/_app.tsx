@@ -27,12 +27,16 @@ function BKK({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
 
-        <meta property="og:image" content="/bkk-logo.png" />
+        <meta property="og:image" content="/assets/bkk-logo.png" />
         <meta property="og:description" content="BKK's app to sing songz" />
         <meta property="og:title" content="Baby Ketten Karaoke" />
 
-        <link rel="shortcut icon" href="/favicon.png" sizes="32x32" />
-        <link rel="shortcut icon" href="/favicon-large.png" sizes="180x180" />
+        <link rel="shortcut icon" href="/assets/favicon.png" sizes="32x32" />
+        <link
+          rel="shortcut icon"
+          href="/assets/favicon-large.png"
+          sizes="180x180"
+        />
         <title>Baby Ketten Karaoke</title>
       </Head>
       <RecoilRoot>
