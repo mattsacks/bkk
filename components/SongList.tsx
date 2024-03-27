@@ -18,7 +18,7 @@ function SongList(props: { songs: Song[] }) {
     return <div className="flex flex-col gap-8">no songs found</div>;
   }
 
-  return <div className="flex flex-col gap-8">{ListItems}</div>;
+  return <div className="flex flex-col gap-4 sm:gap-6">{ListItems}</div>;
 }
 
 export default SongList;

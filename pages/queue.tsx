@@ -87,7 +87,7 @@ export default function QueuePage() {
           <React.Fragment>
             <div className="mb-6 block sm:flex sm:items-center sm:justify-between">
               <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
-              <div className="gap-3 xs:flex sm:block">
+              <div className="gap-4 xs:flex sm:block">
                 <button
                   className={`button button-thin mb-2 xs:mb-0 sm:mr-3`}
                   onClick={isPaused ? play : pause}

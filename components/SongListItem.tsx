@@ -16,16 +16,17 @@ const songListItemClassName = cntl`
 `;
 
 const addToQueueButtonClassName = cntl`
-  border-t-2
   border-primary
+  border-t-2
   disabled:opacity-50
   duration-300
-  md:text-xl
   py-1
   shrink-0
   text-center
+  text-sm
   transition-opacity
   w-full
+  md:text-md
 `;
 
 let buttonAnimationTimeout: number;
@@ -70,7 +71,9 @@ function SongListItem(props: SongListItemProps) {
   return (
     <div className={songListItemClassName}>
       <div className="p-3 text-left capitalize">
-        <h4 className="mb-1 text-lg leading-none md:text-xl">{song.name}</h4>
+        <h4 className="mb-0.5 text-balance text-lg leading-none md:mb-0 md:text-xl">
+          {song.name}
+        </h4>
         <h3 className="text-sm">{song.artist}</h3>
       </div>
       <button

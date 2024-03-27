@@ -161,7 +161,7 @@ export default function QueueItemPage() {
           </div>
           <div className="">{queueData.user_name}</div>
         </div>
-        <div className="mt-9 flex-1 text-balance">
+        <div className="mt-7 flex-1 text-balance md:mt-9">
           <div className="mb-1 text-2xl capitalize leading-none">
             {queueData.song_name}
           </div>
