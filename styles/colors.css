@@ -24,8 +24,9 @@
   --miami-primary: var(--miami-light);
   --miami-secondary: var(--miami-dark);
 
-  --blazers-red: rgb(192, 43, 46);
   --blazers-black:rgb(0, 0, 2);
+  --blazers-red: rgb(192, 43, 46);
+  --blazers-white: rgb(255, 255, 255);
   --blazers-primary: var(--blazers-black);
   --blazers-secondary: var(--blazers-red);
 }
@@ -43,9 +44,6 @@
 
     --terminal-primary: var(--terminal-dark);
     --terminal-secondary: var(--terminal-light);
-
-    --miami-primary: var(--miami-dark);
-    --miami-secondary: var(--miami-light);
   }
 }
 
