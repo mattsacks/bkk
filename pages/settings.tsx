@@ -43,17 +43,17 @@ export default function Settings() {
     }
   }, [hasRendered]);
 
-  const ThemeSwatches = Object.entries(THEME).map(([theme, themeName]) => {
-    const isCurrentTheme = hasRendered && themeName === currentTheme;
+  const ThemeSwatches = Object.entries(THEME).map(([themeKey, themeName]) => {
+    const isCurrentTheme = hasRendered && themeKey === currentTheme;
 
     return (
-      <div key={theme}>
+      <div key={themeKey}>
         <button
           className={`${isCurrentTheme ? "underline" : ""} ${
             styles.themeSwatch
-          } ${styles[theme]}`}
+          } ${styles[themeKey]}`}
           onClick={() => {
-            changeTheme(theme as keyof typeof THEME);
+            changeTheme(themeKey as keyof typeof THEME);
           }}
         >
           {themeName}
