@@ -76,7 +76,7 @@ export default function Settings() {
         </SettingsSection>
         <SettingsSection heading="About">
           <p className="leading-tight">
-            Source code for bkk.bar is available on{" "}
+            Code for bkk.bar is available on{" "}
             <a
               className="underline"
               href="https://github.com/mattsacks/bkk"
