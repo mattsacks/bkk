@@ -8,11 +8,7 @@ function Nav({ children }: { children: React.ReactNode }) {
 }
 
 export function NavItem({ href, text }: { href: string; text: string }) {
-  return (
-    <Link className="underline" href={href}>
-      {text}
-    </Link>
-  );
+  return <Link href={href}>{text}</Link>;
 }
 
 export default Nav;
