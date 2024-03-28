@@ -106,7 +106,7 @@ function LoginForm() {
           id="room"
           name="room"
           onChange={onChange}
-          placeholder="TAC0"
+          placeholder="pardee"
           required
           ref={roomRef}
           type="text"
