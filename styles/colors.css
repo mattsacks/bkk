@@ -68,3 +68,7 @@
   --color-primary: var(--blazers-primary);
   --color-secondary: var(--blazers-secondary);
 }
+
+[data-page="login"] {
+  background-color: var(--color-primary);
+}

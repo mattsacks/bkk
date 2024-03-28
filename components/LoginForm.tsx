@@ -16,7 +16,6 @@ import usePost from "@/lib/usePost";
 const formStyles = cntl`
   flex
   flex-col
-  justify-center
   gap-3
   max-w-md
   mx-auto
@@ -27,6 +26,7 @@ const formStyles = cntl`
   md:flex-2
   md:pt-6
   md:text-xl
+  lg:justify-center
 `;
 
 interface Response {
