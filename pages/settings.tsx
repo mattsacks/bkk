@@ -1,19 +1,14 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSetRecoilState } from "recoil";
 
 import Nav, { NavItem } from "@/components/Nav";
-import { THEME } from "@/lib/types";
-import useTheme from "@/lib/useTheme";
+import ThemeSettingsSection from "@/components/ThemeSettingsSection";
 import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
-import styles from "./settings.module.css";
-
-let cachedRendered = false;
-
 interface SettingsSectionProps extends React.PropsWithChildren {
-  heading: string;
+  heading: React.ReactNode;
 }
 
 function SettingsSection(props: SettingsSectionProps) {
@@ -21,7 +16,11 @@ function SettingsSection(props: SettingsSectionProps) {
 
   return (
     <section>
-      <div className="mb-1">{heading}:</div>
+      {typeof heading === "string" ? (
+        <div className="mb-1">{heading}:</div>
+      ) : (
+        heading
+      )}
       {children}
     </section>
   );
@@ -31,36 +30,6 @@ export default function Settings() {
   const router = useRouter();
   const setSearchQuery = useSetRecoilState(searchState);
   const setToken = useSetRecoilState(tokenState);
-  const [currentTheme, changeTheme] = useTheme();
-  const [hasRendered, setHasRendered] = useState(cachedRendered);
-
-  // Used to prevent a className mismatch when highlighting the current theme
-  // (stored in localStorage).
-  useEffect(() => {
-    if (!hasRendered) {
-      cachedRendered = true;
-      setHasRendered(true);
-    }
-  }, [hasRendered]);
-
-  const ThemeSwatches = Object.entries(THEME).map(([themeKey, themeName]) => {
-    const isCurrentTheme = hasRendered && themeKey === currentTheme;
-
-    return (
-      <div key={themeKey}>
-        <button
-          className={`${isCurrentTheme ? "underline" : ""} ${
-            styles.themeSwatch
-          } ${styles[themeKey]}`}
-          onClick={() => {
-            changeTheme(themeKey as keyof typeof THEME);
-          }}
-        >
-          {themeName}
-        </button>
-      </div>
-    );
-  });
 
   return (
     <div className="app-container">
@@ -69,11 +38,7 @@ export default function Settings() {
         <NavItem href="/" text="search songs &gt;" />
       </Nav>
       <div className="flex flex-col gap-6">
-        <SettingsSection heading="Theme">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-            {ThemeSwatches}
-          </div>
-        </SettingsSection>
+        <ThemeSettingsSection />
         <SettingsSection heading="About">
           <p className="leading-tight">
             Code for bkk.bar is available on{" "}

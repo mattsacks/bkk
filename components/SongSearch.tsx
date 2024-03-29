@@ -51,6 +51,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
           }
         }}
         placeholder="search songz"
+        type="search"
         ref={inputRef}
       />
       {searchQuery && (

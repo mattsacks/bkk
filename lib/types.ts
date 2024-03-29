@@ -1,7 +1,8 @@
 // --- Local ---
 
-export const USER_COOKIE = "mathis_user";
 export const SEARCH_KEY = "mathis_search";
+export const THEME_COOKIE = "bkk_theme";
+export const USER_COOKIE = "mathis_user";
 
 export enum THEME {
   default = "bkk",
