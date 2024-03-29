@@ -4,6 +4,8 @@ export const SEARCH_KEY = "mathis_search";
 export const THEME_COOKIE = "bkk_theme";
 export const USER_COOKIE = "mathis_user";
 
+export const COLOR_SCHEME_KEY = "color-scheme";
+
 export enum THEME {
   default = "bkk",
   terminal = "term",

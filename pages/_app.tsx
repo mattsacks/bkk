@@ -7,8 +7,16 @@ import React from "react";
 import { RecoilRoot } from "recoil";
 import { SWRConfig } from "swr";
 
+import NoSSR from "@/components/NoSSR";
 import { fetcher } from "@/lib/request";
+import useColorScheme from "@/lib/useColorScheme";
 import useTheme from "@/lib/useTheme";
+
+// Add color-scheme handling to all pages on the client
+function AppColorScheme() {
+  useColorScheme();
+  return null;
+}
 
 function BKK({ Component, pageProps }: AppProps) {
   // Add body[data-theme] to every page
@@ -41,6 +49,9 @@ function BKK({ Component, pageProps }: AppProps) {
       </Head>
       <RecoilRoot>
         <SWRConfig value={{ fetcher }}>
+          <NoSSR>
+            <AppColorScheme />
+          </NoSSR>
           <Component {...pageProps} />
         </SWRConfig>
       </RecoilRoot>

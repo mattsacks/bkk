@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
+import store from "store2";
 
-import { THEME } from "@/lib/types";
+import NoSSR from "@/components/NoSSR";
+import { COLOR_SCHEME_KEY, THEME } from "@/lib/types";
+import useColorScheme from "@/lib/useColorScheme";
 import useTheme from "@/lib/useTheme";
 
 import styles from "./ThemeSettingsSection.module.css";
 
 let cachedRendered = false;
 
-const colorSchemeMediaQuery =
-  typeof window === "undefined"
-    ? null
-    : window.matchMedia("(prefers-color-scheme: dark)");
-
 /**
  * Displays available themes for the user to choose from in the Settings page.
+ *
+ * NOTE: Default export is wrapped with <NoSSR />
  */
-export default function ThemeSettingsSection() {
+function ThemeSettingsSection() {
   const [currentTheme, changeTheme] = useTheme();
   const [hasRendered, setHasRendered] = useState(cachedRendered);
-
-  const [colorScheme, setColorScheme] = useState<"light" | "dark">(() => {
-    if (!colorSchemeMediaQuery) {
-      return "dark";
-    }
-
-    // TODO: Check localStorage for custom color scheme
-
-    const isDarkMode = colorSchemeMediaQuery.matches;
-    return isDarkMode ? "dark" : "light";
-  });
+  const [colorScheme, setColorScheme] = useColorScheme();
 
   // Used to prevent a className mismatch when highlighting the current theme
   // (stored in localStorage).
@@ -38,25 +28,6 @@ export default function ThemeSettingsSection() {
       setHasRendered(true);
     }
   }, [hasRendered]);
-
-  useEffect(() => {
-    if (!colorSchemeMediaQuery) {
-      return;
-    }
-
-    function onColorSchemeChange(e: MediaQueryListEvent) {
-      const isDarkMode = e.matches;
-
-      // TODO: Remove colorScheme from localStorage if this is the same value
-      setColorScheme(isDarkMode ? "dark" : "light");
-    }
-
-    colorSchemeMediaQuery.addEventListener("change", onColorSchemeChange);
-
-    return () => {
-      colorSchemeMediaQuery.removeEventListener("change", onColorSchemeChange);
-    };
-  }, []);
 
   const ThemeSwatches = Object.entries(THEME).map(([themeKey, themeName]) => {
     const isCurrentTheme = hasRendered && themeKey === currentTheme;
@@ -82,10 +53,15 @@ export default function ThemeSettingsSection() {
       <div className="mb-1 flex justify-between">
         <div>Theme:</div>
         {currentTheme !== "blazers" && (
-          <div className="flex gap-4">
+          <div
+            aria-label="Buttons for changing the preferred color-scheme"
+            className="flex gap-4"
+            role="group"
+          >
             <button
               className={colorScheme === "light" ? "underline" : ""}
               onClick={() => {
+                store.set(COLOR_SCHEME_KEY, "light");
                 setColorScheme("light");
               }}
             >
@@ -94,6 +70,7 @@ export default function ThemeSettingsSection() {
             <button
               className={colorScheme === "dark" ? "underline" : ""}
               onClick={() => {
+                store.set(COLOR_SCHEME_KEY, "dark");
                 setColorScheme("dark");
               }}
             >
@@ -106,5 +83,13 @@ export default function ThemeSettingsSection() {
         {ThemeSwatches}
       </div>
     </section>
+  );
+}
+
+export default function ClientThemeSettingsSection() {
+  return (
+    <NoSSR>
+      <ThemeSettingsSection />
+    </NoSSR>
   );
 }

@@ -31,20 +31,18 @@
   --blazers-secondary: var(--blazers-red);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-primary: var(--default-dark);
-    --color-secondary: var(--default-light);
+[data-color-scheme="light"] {
+  --color-primary: var(--default-dark);
+  --color-secondary: var(--default-light);
 
-    --default-primary: var(--default-dark);
-    --default-secondary: var(--default-light);
+  --default-primary: var(--default-dark);
+  --default-secondary: var(--default-light);
 
-    --rose-primary: var(--rose-dark);
-    --rose-secondary: var(--rose-light);
+  --rose-primary: var(--rose-dark);
+  --rose-secondary: var(--rose-light);
 
-    --terminal-primary: var(--terminal-dark);
-    --terminal-secondary: var(--terminal-light);
-  }
+  --terminal-primary: var(--terminal-dark);
+  --terminal-secondary: var(--terminal-light);
 }
 
 [data-theme="rose"] {
