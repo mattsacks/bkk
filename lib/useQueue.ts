@@ -12,7 +12,7 @@ export default function useQueue() {
 
   const { data, ...rest } = useSWR<QueuedTrack[]>(
     token ? "/playlist" : null,
-    async (endpoint) => {
+    async (endpoint: string) => {
       const data = await fetcher<{ tracks: QueuedTrack[] }>(endpoint);
 
       return formatTracks(data.tracks);
