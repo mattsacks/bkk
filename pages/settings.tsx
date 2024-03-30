@@ -2,29 +2,13 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useSetRecoilState } from "recoil";
 
+import { HeartIcon } from "@/components/Heart";
 import Nav, { NavItem } from "@/components/Nav";
 import ThemeSettingsSection from "@/components/ThemeSettingsSection";
 import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
-interface SettingsSectionProps extends React.PropsWithChildren {
-  heading: React.ReactNode;
-}
-
-function SettingsSection(props: SettingsSectionProps) {
-  const { children, heading } = props;
-
-  return (
-    <section>
-      {typeof heading === "string" ? (
-        <div className="mb-1">{heading}:</div>
-      ) : (
-        heading
-      )}
-      {children}
-    </section>
-  );
-}
+import styles from "./settings.module.css";
 
 export default function Settings() {
   const router = useRouter();
@@ -32,16 +16,20 @@ export default function Settings() {
   const setToken = useSetRecoilState(tokenState);
 
   return (
-    <div className="app-container">
+    <div className="app-container flex w-full flex-1 flex-col">
       <Nav>
         <NavItem href="/queue" text="&lt; view queue" />
         <NavItem href="/" text="search songs &gt;" />
       </Nav>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-1 flex-col gap-6">
         <ThemeSettingsSection />
-        <SettingsSection heading="About">
-          <p className="leading-tight">
-            Code for bkk.bar is available on{" "}
+        <section className="flex flex-1 flex-col justify-end text-center text-sm">
+          <p>
+            Made with <HeartIcon className={styles["heart-icon"]} /> in
+            Portland, Oregon
+          </p>
+          <p>
+            Code available on{" "}
             <a
               className="underline"
               href="https://github.com/mattsacks/bkk"
@@ -51,10 +39,10 @@ export default function Settings() {
               GitHub
             </a>
           </p>
-        </SettingsSection>
-        <SettingsSection heading="Session">
+        </section>
+        <section className="mb-8 flex flex-col justify-end">
           <button
-            className="outline-button"
+            className="outline-button mx-auto"
             onClick={() => {
               setSearchQuery("");
               setToken(undefined);
@@ -64,7 +52,7 @@ export default function Settings() {
           >
             Leave room
           </button>
-        </SettingsSection>
+        </section>
       </div>
     </div>
   );

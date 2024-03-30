@@ -51,7 +51,7 @@ function ThemeSettingsSection() {
   return (
     <section>
       <div className="mb-1 flex justify-between">
-        <div>Theme:</div>
+        <div>Theme</div>
         {currentTheme !== "blazers" && (
           <div
             aria-label="Buttons for changing the preferred color-scheme"
