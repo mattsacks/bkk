@@ -1,9 +1,17 @@
-import { random } from "lodash";
+import random from "lodash/random";
 import { useEffect, useState } from "react";
 import store from "store2";
 
 import { THEME } from "@/lib/types";
 type THEME_NAME = keyof typeof THEME;
+
+/**
+ * Chooses a random theme.
+ */
+function randomTheme(): THEME_NAME {
+  const themeNames = Object.keys(THEME) as THEME_NAME[];
+  return themeNames[random(0, themeNames.length - 1)];
+}
 
 export default function useTheme() {
   const [theme, setTheme] = useState<THEME_NAME>(store("theme"));
@@ -14,12 +22,18 @@ export default function useTheme() {
     setTheme(theme);
   }
 
-  // Choose a random theme
+  // Chooses a random theme for new users or set the theme style on
+  // document.body when changed
   useEffect(() => {
     if (!theme || !THEME[theme]) {
-      const themeNames = Object.keys(THEME) as THEME_NAME[];
-      const randomTheme = themeNames[random(0, themeNames.length - 1)];
-      changeTheme(randomTheme);
+      let initialTheme = randomTheme();
+
+      // Prevent harsher themes from being the first one chosen for new users
+      while (initialTheme === "blazers") {
+        initialTheme = randomTheme();
+      }
+
+      changeTheme(initialTheme);
     } else if (document.body.dataset.theme !== theme) {
       document.body.dataset.theme = theme;
     }
