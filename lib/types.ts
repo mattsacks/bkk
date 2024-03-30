@@ -8,9 +8,9 @@ export const COLOR_SCHEME_KEY = "color-scheme";
 
 export enum THEME {
   default = "bkk",
-  terminal = "term",
+  terminal = "terminal",
   rose = "rose",
-  blazers = "blazers"
+  blazers = "rip city"
 }
 
 // --- API ---
