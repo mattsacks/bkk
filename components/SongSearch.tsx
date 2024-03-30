@@ -44,7 +44,13 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
         onChange={(e) => {
           e.persist();
 
-          const query = e.target.value;
+          // Replace any smart quotes with regular ones
+          const query = e.target.value
+            .replace(/[\u2018\u2019]/g, "'")
+            .replace(/[\u201C\u201D]/g, '"');
+
+          // Update the typed query
+          e.target.value = query;
 
           if (query.length > 1 || query.length === 0) {
             debouncedSearchSongs(query);
