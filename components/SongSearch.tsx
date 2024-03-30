@@ -1,7 +1,7 @@
 // Input that filters a list of songs
 import classNames from "classnames";
 import { Song } from "lib/types";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import React, { useRef } from "react";
 import { useRecoilState } from "recoil";
 
@@ -17,6 +17,8 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
   const [searchQuery, setSearchQuery] = useRecoilState(searchState);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Updates the latest query stored and filters the list of songs, calling the
+  // onSearch callback as a result
   function searchSongs(query: string) {
     setSearchQuery(query);
 
@@ -29,58 +31,78 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
     onSearch(searchResults);
   }
 
+  // Debounced search function to be used while typing in the song search input
   const debouncedSearchSongs = debounce(searchSongs, 666);
 
   return (
     <div className="flex justify-center">
-      <input
-        autoCapitalize="none"
-        autoComplete="off"
-        autoCorrect="off"
-        className={classNames("input w-full", {
-          "border-r-0": Boolean(searchQuery)
-        })}
-        defaultValue={searchQuery}
-        onChange={(e) => {
-          e.persist();
+      <form
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
 
-          // Replace any smart quotes with regular ones
-          const query = e.target.value
-            .replace(/[\u2018\u2019]/g, "'")
-            .replace(/[\u201C\u201D]/g, '"');
+          const query = inputRef.current?.value;
+          inputRef.current?.blur();
 
-          // Update the typed query
-          e.target.value = query;
-
-          if (query.length > 1 || query.length === 0) {
-            debouncedSearchSongs(query);
+          if (query) {
+            searchSongs(query.toString());
           }
         }}
-        placeholder="search songz"
-        ref={inputRef}
-      />
-      {searchQuery && (
-        <div className="border-2 border-primary">
-          <button
-            aria-label="clear search"
-            className="h-full bg-primary px-3 text-secondary"
-            onClick={() => {
-              searchSongs("");
+        className="flex w-full"
+      >
+        <input
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect="off"
+          className={classNames("input w-full", {
+            "border-r-0": Boolean(searchQuery)
+          })}
+          defaultValue={searchQuery}
+          enterKeyHint="search"
+          name="search"
+          onChange={(e) => {
+            e.persist();
 
-              if (inputRef.current) {
-                inputRef.current.value = "";
-                inputRef.current.focus();
+            // Replace any smart quotes with regular ones
+            const query = e.target.value
+              .replace(/[\u2018\u2019]/g, "'")
+              .replace(/[\u201C\u201D]/g, '"');
 
-                setTimeout(() => {
-                  window.scrollTo(0, 0);
-                }, 100);
-              }
-            }}
-          >
-            x
-          </button>
-        </div>
-      )}
+            // Update the typed query
+            e.target.value = query;
+
+            if (query.length > 1 || query.length === 0) {
+              debouncedSearchSongs(query);
+            }
+          }}
+          placeholder="search songz"
+          ref={inputRef}
+          type="search"
+        />
+        {searchQuery && (
+          <div className="border-2 border-primary">
+            <button
+              aria-label="clear search"
+              className="h-full bg-primary px-3 text-secondary"
+              onClick={() => {
+                searchSongs("");
+
+                if (inputRef.current) {
+                  inputRef.current.value = "";
+                  inputRef.current.focus();
+
+                  setTimeout(() => {
+                    window.scrollTo(0, 0);
+                  }, 100);
+                }
+              }}
+              type="button"
+            >
+              x
+            </button>
+          </div>
+        )}
+      </form>
     </div>
   );
 }
