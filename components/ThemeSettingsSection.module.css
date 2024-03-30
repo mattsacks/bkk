@@ -1,5 +1,5 @@
 .themeSwatch {
-  @apply w-full border-2 p-3 md:p-4;
+  @apply w-full border-2 p-3 md:p-4 transition-[background-color,_color] ease-out duration-[169ms];
 }
 
 .default {
