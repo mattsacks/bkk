@@ -28,9 +28,9 @@ module.exports = {
           primary: "var(--miami-primary)",
           secondary: "var(--miami-secondary)"
         },
-        blazers: {
-          primary: "var(--blazers-primary)",
-          secondary: "var(--blazers-secondary)"
+        sky: {
+          primary: "var(--sky-primary)",
+          secondary: "var(--sky-secondary)"
         }
       },
       screens: {

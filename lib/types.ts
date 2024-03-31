@@ -10,7 +10,7 @@ export enum THEME {
   default = "bkk",
   terminal = "terminal",
   rose = "rose",
-  blazers = "rip city"
+  sky = "sky"
 }
 
 // --- API ---

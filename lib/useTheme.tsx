@@ -26,13 +26,7 @@ export default function useTheme() {
   // document.body when changed
   useEffect(() => {
     if (!theme || !THEME[theme]) {
-      let initialTheme = randomTheme();
-
-      // Prevent harsher themes from being the first one chosen for new users
-      while (initialTheme === "blazers") {
-        initialTheme = randomTheme();
-      }
-
+      const initialTheme = randomTheme();
       changeTheme(initialTheme);
     } else if (document.body.dataset.theme !== theme) {
       document.body.dataset.theme = theme;

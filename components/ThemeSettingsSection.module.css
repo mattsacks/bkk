@@ -18,8 +18,8 @@
   @apply border-miami-primary bg-miami-secondary text-miami-primary;
 }
 
-.blazers {
-  @apply border-blazers-primary bg-blazers-secondary text-blazers-primary;
+.sky {
+  @apply border-sky-primary bg-sky-secondary text-sky-primary;
 }
 
 .heading {

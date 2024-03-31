@@ -52,32 +52,30 @@ function ThemeSettingsSection() {
     <section>
       <div className="mb-1 flex justify-between">
         <div>Theme</div>
-        {currentTheme !== "blazers" && (
-          <div
-            aria-label="Buttons for changing the preferred color-scheme"
-            className="flex gap-4"
-            role="group"
+        <div
+          aria-label="Buttons for changing the preferred color-scheme"
+          className="flex gap-4"
+          role="group"
+        >
+          <button
+            className={colorScheme === "light" ? "underline" : ""}
+            onClick={() => {
+              store.set(COLOR_SCHEME_KEY, "light");
+              setColorScheme("light");
+            }}
           >
-            <button
-              className={colorScheme === "light" ? "underline" : ""}
-              onClick={() => {
-                store.set(COLOR_SCHEME_KEY, "light");
-                setColorScheme("light");
-              }}
-            >
-              Light
-            </button>
-            <button
-              className={colorScheme === "dark" ? "underline" : ""}
-              onClick={() => {
-                store.set(COLOR_SCHEME_KEY, "dark");
-                setColorScheme("dark");
-              }}
-            >
-              Dark
-            </button>
-          </div>
-        )}
+            Light
+          </button>
+          <button
+            className={colorScheme === "dark" ? "underline" : ""}
+            onClick={() => {
+              store.set(COLOR_SCHEME_KEY, "dark");
+              setColorScheme("dark");
+            }}
+          >
+            Dark
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {ThemeSwatches}
