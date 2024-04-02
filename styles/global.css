@@ -21,25 +21,39 @@ html {
 html,
 body,
 #__next {
-  @apply h-full;
+  height: 100%;
 }
 
 body {
-  @apply text-primary bg-secondary transition-[background-color,_color] ease-out duration-[169];
+  color: theme('colors.primary');
+  background-color: theme('colors.secondary');
+  transition:
+    background-color theme('transitionTimingFunction.out') 169ms,
+    color theme('transitionTimingFunction.out') 169ms;
+
+  *::selection {
+    color: theme('colors.secondary');
+    background-color: theme('colors.primary');
+  }
 }
 
 main {
-  @apply flex flex-col min-h-full;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 a,
 button {
-  /* Prevent text-selection on links and buttons */
-  @apply appearance-none outline-none select-none;
+  appearance: unset;
+  outline: none;
 }
 
 input {
-  @apply appearance-none rounded-none outline-none;
+  appearance: unset;
+  border-radius: 0;
+  caret-color: theme('colors.primary');
+  outline: none;
 }
 
 .h-2px {
@@ -54,5 +68,5 @@ input[type=search]::-webkit-search-decoration {
 }
 
 input[type=search] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
