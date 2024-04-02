@@ -19,11 +19,10 @@
   --terminal-primary: var(--terminal-light);
   --terminal-secondary: var(--terminal-dark);
 
-  --sky-green: rgb(209, 223, 243);
-  --sky-brown: rgb(87, 126, 197);
-  --sky-primary: var(--sky-green);
-  --sky-secondary: var(--sky-brown);
-
+  --sky-white: rgb(209, 223, 243);
+  --sky-blue: rgb(87, 126, 197);
+  --sky-primary: var(--sky-white);
+  --sky-secondary: var(--sky-blue);
   /**
    * Unused themes
    *
@@ -53,8 +52,8 @@
   --terminal-primary: var(--terminal-dark);
   --terminal-secondary: var(--terminal-light);
 
-  --sky-primary: var(--sky-brown);
-  --sky-secondary: var(--sky-green);
+  --sky-primary: var(--sky-blue);
+  --sky-secondary: var(--sky-white);
 }
 
 [data-theme="rose"] {
