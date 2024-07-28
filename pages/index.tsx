@@ -29,7 +29,7 @@ function Index() {
     return [];
   });
 
-  const { songs, isValidating } = useSongs({
+  const { songs, isLoading } = useSongs({
     onSuccess: (data) => {
       cachedSongs = data;
 
@@ -51,7 +51,7 @@ function Index() {
   }
 
   const isServer = typeof window === "undefined";
-  const isLoading = isValidating || isServer;
+  const showLoading = isLoading || isServer;
 
   return (
     <div className="app-container flex w-full flex-1 flex-col">
@@ -59,7 +59,7 @@ function Index() {
         <NavItem href="/settings" text="&lt; settings" />
         <NavItem href="/queue" text="view queue &gt;" />
       </Nav>
-      {isLoading ? (
+      {showLoading ? (
         <>
           <div className="flex-1">
             <Loading />
