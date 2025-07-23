@@ -27,6 +27,7 @@ export default function QueuePage() {
   const { postRequest: skipTrack } = usePost("/tracks/skip");
   const { postRequest: pauseTrack } = usePost("/tracks/pause");
   const { postRequest: playTrack } = usePost("/tracks/play");
+  const { postRequest: restartTrack } = usePost("/tracks/restart");
 
   const [isPaused, setIsPaused] = useState(false);
   const hasQueuedTracks = queue && queue.length > 0;
@@ -46,6 +47,18 @@ export default function QueuePage() {
     confirm: {
       action: skipSong,
       text: "skip song"
+    }
+  });
+
+  async function restart() {
+    setIsPaused(false);
+    await restartTrack();
+  }
+
+  const restartSongDialog = useDialog({
+    confirm: {
+      action: restart,
+      text: "restart song"
     }
   });
 
@@ -86,21 +99,25 @@ export default function QueuePage() {
         {hasQueuedTracks ? (
           <React.Fragment>
             <div className="mb-6 block sm:flex sm:items-center sm:justify-between">
-              <h1 className="mb-1 text-3xl sm:flex-1 md:mb-0">
-                {user?.bookingKey} queue:
-              </h1>
-              <div className="gap-4 xs:flex sm:block">
+              <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
+              <div className="mt-2 flex gap-2 sm:ml-4 sm:mt-0">
                 <button
-                  className={`button button-thin mb-2 xs:mb-0 sm:mr-3`}
+                  className={`button button-thin w-16 px-2 py-1`}
                   onClick={isPaused ? play : pause}
                 >
                   {isPaused ? "play" : "pause"}
                 </button>
                 <button
-                  className="button button-thin"
+                  className="button button-thin w-16 px-2 py-1"
+                  onClick={restartSongDialog.showDialog}
+                >
+                  {"restart"}
+                </button>
+                <button
+                  className="button button-thin w-16 px-2 py-1"
                   onClick={skipSongDialog.showDialog}
                 >
-                  {"skip current song"}
+                  {"skip"}
                 </button>
               </div>
             </div>
@@ -115,6 +132,9 @@ export default function QueuePage() {
       </div>
       <Dialog {...skipSongDialog}>
         <div>skip the current song?</div>
+      </Dialog>
+      <Dialog {...restartSongDialog}>
+        <div>restart the current song?</div>
       </Dialog>
     </div>
   );
