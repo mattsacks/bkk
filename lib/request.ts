@@ -15,7 +15,8 @@ interface RequestOptions {
 }
 
 const API =
-  process.env.MATHIS_API ?? "https://mathis-prod.herokuapp.com/api/v1";
+  process.env.NEXT_PUBLIC_MATHIS_API ??
+  "https://mathis-prod.herokuapp.com/api/v1";
 
 async function request<T>(
   endpoint: string,
