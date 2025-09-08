@@ -60,7 +60,7 @@
   "browserslist": [
     "defaults",
     ">0.5%",
-    "last 2 years",
+    "last 2.5 years",
     "not dead"
   ]
 }
