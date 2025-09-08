@@ -1,11 +1,10 @@
 .list-item {
-  @apply
-    border-2
-    border-primary
-    flex
-    items-center
-    justify-between
-    mb-4
-    p-3
-    md:p-4;
+  @apply md:p-4;
+  border: var(--border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
 }

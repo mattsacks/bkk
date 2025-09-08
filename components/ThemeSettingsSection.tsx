@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import store from "store2";
 
@@ -5,8 +6,6 @@ import NoSSR from "@/components/NoSSR";
 import { COLOR_SCHEME_KEY, THEME } from "@/lib/types";
 import useColorScheme from "@/lib/useColorScheme";
 import useTheme from "@/lib/useTheme";
-
-import styles from "./ThemeSettingsSection.module.css";
 
 let cachedRendered = false;
 
@@ -35,9 +34,10 @@ function ThemeSettingsSection() {
     return (
       <div key={themeKey}>
         <button
-          className={`${isCurrentTheme ? "underline" : ""} ${
-            styles.themeSwatch
-          } ${styles[themeKey]}`}
+          className={classNames("theme-swatch", {
+            underline: isCurrentTheme
+          })}
+          data-theme={themeKey}
           onClick={() => {
             changeTheme(themeKey as keyof typeof THEME);
           }}
@@ -50,7 +50,7 @@ function ThemeSettingsSection() {
 
   return (
     <section>
-      <div className="mb-1 flex justify-between">
+      <div className="mb-2 flex justify-between">
         <div>Theme</div>
         <div
           aria-label="Buttons for changing the preferred color-scheme"

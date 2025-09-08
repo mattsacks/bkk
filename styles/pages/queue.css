@@ -1,0 +1,22 @@
+@layer components {
+  .queue-actions {
+    --action-background-color: var(--color-primary);
+    --action-text-color: var(--color-secondary);
+  }
+
+  .queue-action {
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius);
+    color: var(--color-secondary);
+    display: flex;
+    gap: 0.25em;
+    padding: 0.5em 0.5em;
+  }
+
+  /* Icons within actions that modify the queue from the queue list. */
+  .queue-action-icon {
+    --size: 16px;
+    height: var(--size);
+    width: var(--size);
+  }
+}

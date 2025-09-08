@@ -1,29 +1,62 @@
 @layer components {
   .button {
-    @apply
-      bg-primary
-      px-4
-      py-2
-      text-secondary;
+    background-color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    color: var(--color-secondary);
 
     &:active {
-      @apply opacity-75;
+      opacity: 0.75;
     }
   }
 
+  .primary-action {
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-secondary);
+  }
+
+  .secondary-action {
+    border-radius: var(--border-radius-sm);
+    border: var(--border-radius) solid var(--color-primary);
+    color: var(--color-primary);
+  }
+
   .button-thin {
-    @apply py-1;
+    padding: 0.25rem;
   }
 
   .outline-button {
-    @apply
-      border-2
-      border-primary
-      px-4
-      py-2;
+    border: var(--border-width) solid var(--color-primary);
+    padding: 0.5rem 1rem;
 
     &:active {
-      @apply opacity-75;
+      opacity: 0.75;
+    }
+  }
+
+  .icon-button-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .button-icon {
+    --size: 16px;
+    height: var(--size);
+    width: var(--size);
+  }
+
+  .button-label {
+    .button-icon + & {
+      margin-left: 0.25rem;
+
+      @supports not (text-box-edge: cap alphabetic) {
+        line-height: 0;
+      }
+    }
+
+    @supports(text-box-edge: cap alphabetic) {
+      text-box-edge: cap alphabetic;
+      text-box-trim: trim-both;
     }
   }
 }

@@ -1,72 +1,79 @@
-@font-face {
-  font-family: 'VT323';
-  font-style: normal;
-  font-weight: normal;
-  src: url('/assets/VT323.ttf') format('truetype');
-}
-
-html {
-  @apply font-mono;
-  font-size: 20px;
-
-  @media screen(xs) {
-    font-size: 24px;
+@layer base {
+  @font-face {
+    font-family: 'VT323';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/assets/VT323.ttf') format('truetype');
   }
 
-  @media screen(md) {
-    font-size: 26px;
+  :root {
+    --border-radius: 1px;
+    --border-width: 2px;
   }
-}
 
-html,
-body,
-#__next {
-  height: 100%;
-}
+  html {
+    @apply font-mono;
+    font-size: 20px;
 
-body {
-  color: theme('colors.primary');
-  background-color: theme('colors.secondary');
-  transition:
-    background-color theme('transitionTimingFunction.out') 169ms,
-    color theme('transitionTimingFunction.out') 169ms;
+    @media screen(xs) {
+      font-size: 24px;
+    }
 
-  *::selection {
-    color: theme('colors.secondary');
-    background-color: theme('colors.primary');
+    @media screen(md) {
+      font-size: 26px;
+    }
   }
-}
 
-main {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
+  html,
+  body,
+  #__next {
+    height: 100%;
+  }
 
-a,
-button {
-  appearance: unset;
-  outline: none;
-}
+  body {
+    color: theme('colors.primary');
+    background-color: theme('colors.secondary');
+    transition:
+      background-color theme('transitionTimingFunction.out') 169ms,
+      color theme('transitionTimingFunction.out') 169ms;
 
-input {
-  appearance: unset;
-  border-radius: 0;
-  caret-color: theme('colors.primary');
-  outline: none;
-}
+    *::selection {
+      color: theme('colors.secondary');
+      background-color: theme('colors.primary');
+    }
+  }
 
-.h-2px {
-  height: 2px;
-}
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  a,
+  button {
+    appearance: unset;
+    outline: none;
+  }
+
+  input {
+    appearance: unset;
+    border-radius: 0;
+    caret-color: theme('colors.primary');
+    outline: none;
+  }
+
+  .h-2px {
+    height: 2px;
+  }
 
 
-input[type=search]::-webkit-search-cancel-button,
-input[type=search]::-webkit-search-decoration {
-  -webkit-appearance: none;
-  appearance: none;
-}
+  input[type=search]::-webkit-search-cancel-button,
+  input[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 
-input[type=search] {
-  appearance: textfield;
+  input[type=search] {
+    appearance: textfield;
+  }
 }

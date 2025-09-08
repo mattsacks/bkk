@@ -59,6 +59,7 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
           })}
           defaultValue={searchQuery}
           enterKeyHint="search"
+          id="song-search-input"
           name="search"
           onChange={(e) => {
             e.persist();
@@ -80,27 +81,26 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
           type="search"
         />
         {searchQuery && (
-          <div className="border-2 border-primary">
-            <button
-              aria-label="clear search"
-              className="h-full bg-primary px-3 text-secondary"
-              onClick={() => {
-                searchSongs("");
+          <button
+            aria-label="clear search"
+            aria-controls="song-search-input"
+            className="search-clear action-label h-full bg-primary px-3 text-secondary"
+            onClick={() => {
+              searchSongs("");
 
-                if (inputRef.current) {
-                  inputRef.current.value = "";
-                  inputRef.current.focus();
+              if (inputRef.current) {
+                inputRef.current.value = "";
+                inputRef.current.focus();
 
-                  setTimeout(() => {
-                    window.scrollTo(0, 0);
-                  }, 100);
-                }
-              }}
-              type="button"
-            >
-              x
-            </button>
-          </div>
+                setTimeout(() => {
+                  window.scrollTo(0, 0);
+                }, 100);
+              }
+            }}
+            type="button"
+          >
+            x
+          </button>
         )}
       </form>
     </div>

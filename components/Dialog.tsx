@@ -1,16 +1,16 @@
-import { ReactNode, useCallback, useEffect, useRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef
+} from "react";
 import { createPortal } from "react-dom";
 
-// TypeScript doesn't have these properties on <dialog> yet
-interface HTMLDialogElement extends HTMLElement {
-  close: () => void;
-  open: boolean;
-  show: () => void;
-}
-
 interface DialogProps {
+  dialogProps?: ComponentPropsWithoutRef<"dialog">;
   children: ReactNode;
-  show?: boolean;
+  isShowing?: boolean;
   confirm?: {
     action: () => void;
     text?: string;
@@ -22,7 +22,7 @@ interface DialogProps {
 }
 
 export default function Dialog(props: DialogProps) {
-  const { children, show, confirm, cancel } = props;
+  const { children, dialogProps, isShowing, confirm, cancel } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const handleClose = useCallback(() => {
@@ -49,11 +49,11 @@ export default function Dialog(props: DialogProps) {
 
     const isOpen = dialogRef.current?.open;
 
-    if (show && !isOpen) {
+    if (isShowing && !isOpen) {
       dialogRef.current.show();
       document.body.classList.add("overflow-hidden");
     }
-  }, [show]);
+  }, [isShowing]);
 
   // If the browser doesn't support inert, hide the element
   useEffect(() => {
@@ -63,16 +63,21 @@ export default function Dialog(props: DialogProps) {
       return;
     }
 
-    if (!show) {
+    if (!isShowing) {
       dialogRef.current.classList.add("hidden");
     } else {
       dialogRef.current.classList.remove("hidden");
     }
-  }, [show]);
+  }, [isShowing]);
 
   return createPortal(
-    // @ts-ignore inert isn't available in TypeScript yet
-    <dialog inert={!show ? "" : undefined} ref={dialogRef}>
+    <dialog
+      {...{
+        ...dialogProps,
+        inert: !isShowing ? "" : undefined
+      }}
+      ref={dialogRef}
+    >
       {children}
       <div className="align-center mt-4 flex gap-4">
         <button className="outline-button" onClick={handleCancel} type="button">

@@ -6,7 +6,7 @@ interface Props {
   queueData: QueuedTrack[];
 }
 
-function Queue({ queueData }: Props) {
+function QueueList({ queueData }: Props) {
   const NowSinging = <QueueItem queue={queueData[0]} label="Now Singing" />;
 
   const UpNext = queueData[1] ? (
@@ -28,4 +28,4 @@ function Queue({ queueData }: Props) {
   );
 }
 
-export default Queue;
+export default QueueList;

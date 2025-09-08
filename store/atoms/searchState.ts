@@ -1,9 +1,10 @@
 import { atom } from "recoil";
 
+import { isServer } from "@/lib/isServer";
 import { SEARCH_KEY } from "@/lib/types";
 
 function initialSearch() {
-  if (typeof window !== "undefined") {
+  if (!isServer) {
     return window.sessionStorage.getItem(SEARCH_KEY);
   }
 

@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
@@ -6,12 +7,19 @@ import Loading from "@/components/Loading";
 import Nav, { NavItem } from "@/components/Nav";
 import SongList from "@/components/SongList";
 import SongSearch from "@/components/SongSearch";
+import { isServer } from "@/lib/isServer";
 import songSearch from "@/lib/songSearch";
 import { Song } from "@/lib/types";
+import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
 import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
+const Dialog = dynamic(() => import("@/components/Dialog"), {
+  ssr: false
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let cachedSongs: Song[] = [];
 
 function Index() {
@@ -22,10 +30,6 @@ function Index() {
   const [filteredSongs, setFilteredSongs] = useState<Song[]>(() => {
     // Initialize filteredSongs with an existing searchQuery on a cached
     // version of songs previously loaded
-    if (searchQuery && cachedSongs.length > 0) {
-      return songSearch(searchQuery, cachedSongs);
-    }
-
     return [];
   });
 
@@ -41,6 +45,18 @@ function Index() {
     }
   });
 
+  function leaveRoom() {
+    setSearchQuery("");
+    setToken(undefined);
+  }
+
+  const leaveRoomDialog = useDialog({
+    confirm: {
+      action: leaveRoom,
+      text: "see ya l8r"
+    }
+  });
+
   if (!token && router.isReady) {
     router.replace({
       pathname: "/login",
@@ -50,7 +66,6 @@ function Index() {
     return null;
   }
 
-  const isServer = typeof window === "undefined";
   const showLoading = isLoading || isServer;
 
   return (
@@ -66,7 +81,11 @@ function Index() {
           </div>
           <button
             className="outline-button mx-auto my-8"
-            onClick={() => setToken(undefined)}
+            onClick={() => {
+              leaveRoomDialog.showDialog();
+            }}
+            aria-haspopup="dialog"
+            aria-controls="leave-room-dialog"
           >
             Leave room
           </button>
@@ -87,12 +106,22 @@ function Index() {
           <button
             className="outline-button mx-auto my-8"
             onClick={() => {
-              setSearchQuery("");
-              setToken(undefined);
+              leaveRoomDialog.showDialog();
             }}
+            aria-haspopup="dialog"
+            aria-controls="leave-room-dialog"
           >
             Leave room
           </button>
+          <Dialog
+            {...leaveRoomDialog}
+            dialogProps={{
+              "aria-labelledby": "leave-room-dialog-label",
+              id: "leave-room-dialog"
+            }}
+          >
+            <h2 id="leave-room-dialog-label">leave the room?</h2>
+          </Dialog>
         </>
       )}
     </div>

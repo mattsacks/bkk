@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 
 import LoginForm from "@/components/LoginForm";
+import { isServer } from "@/lib/isServer";
 import tokenState from "@/store/atoms/tokenState";
 
 const headingStyles = cntl`
@@ -27,7 +28,7 @@ export default function Login() {
 
   // Adds data-page="login" to the document body for styling
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (isServer) {
       return;
     }
 

@@ -15,22 +15,22 @@ interface UseDialogOptions {
 
 export default function useDialog(params: UseDialogOptions) {
   const { cancel, confirm } = params;
-  const [showDialog, setShowDialog] = useState(false);
+  const [isShowing, setIsShowing] = useState(false);
 
   return {
-    show: showDialog,
-    showDialog: () => setShowDialog(true),
+    isShowing,
+    showDialog: () => setIsShowing(true),
     cancel: {
       action: () => {
         cancel?.action?.();
-        setShowDialog(false);
+        setIsShowing(false);
       },
       text: cancel?.text
     },
     confirm: {
       action: () => {
         confirm.action();
-        setShowDialog(false);
+        setIsShowing(false);
       },
       text: confirm.text
     }

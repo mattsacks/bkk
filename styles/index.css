@@ -1,9 +1,12 @@
+@layer base, component, page, utility;
+
 @import "./tailwind.css";
 @import "./global.css";
 @import "./reset.css";
 @import "./colors.css";
 
 @import "./components/app-container.css";
+@import "./components/action.css";
 @import "./components/button.css";
 @import "./components/dialog.css";
 @import "./components/flag.css";
@@ -11,3 +14,6 @@
 @import "./components/invert.css";
 @import "./components/list-item.css";
 @import "./components/submit.css";
+
+@import "./pages/queue.css";
+@import "./pages/settings.css";

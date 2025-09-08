@@ -1,13 +1,25 @@
 @layer components {
   .input {
-    @apply bg-secondary
-      border-2
-      border-primary
-      p-2
-      text-primary;
+    background-color: var(--color-secondary);
+    border-color: var(--color-primary);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    color: var(--color-primary);
+    padding: 0.5rem;
 
     &::placeholder {
-      @apply text-primary opacity-50;
+      color: var(--color-primary);
+      opacity: 0.5;
     }
+
+    &[type='search']:not(:placeholder-shown) {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+  }
+
+  .search-clear {
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
   }
 }

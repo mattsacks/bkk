@@ -1,0 +1,15 @@
+import React from "react";
+
+export function PauseIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      {...props}
+    >
+      <path fill="currentColor" d="M2 9h2V1H2zM6 9h2V1H6z" />
+    </svg>
+  );
+}

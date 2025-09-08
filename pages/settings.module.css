@@ -1,7 +1,0 @@
-.heart-icon {
-  --size: 0.65rem;
-  display: inline;
-  height: var(--size);
-  margin-top: -2px;
-  width: var(--size);
-}
