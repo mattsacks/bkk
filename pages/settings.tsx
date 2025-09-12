@@ -58,7 +58,7 @@ export default function Settings() {
         </section>
         <section className="mb-8 flex flex-col justify-end">
           <button
-            className="outline-button mx-auto my-8"
+            className="outline-button mx-auto"
             onClick={() => {
               leaveRoomDialog.showDialog();
             }}
