@@ -18,3 +18,16 @@
   height: var(--size);
   width: var(--size);
 }
+
+.queue-heading {
+  font-size: var(--text-4xl);
+
+  @supports(text-box-edge: text) {
+    text-box-edge: text;
+    text-box-trim: trim-both;
+  }
+
+  @supports not (text-box-edge: text) {
+    line-height: 0;
+  }
+}

@@ -1,33 +1,8 @@
-import cntl from "cntl";
 import request from "lib/request";
 import { QueuedTrack, Song } from "lib/types";
 import usePost from "lib/usePost";
 import React, { useCallback, useEffect, useState } from "react";
 import { mutate } from "swr";
-
-const songListItemClassName = cntl`
-  border-2
-  border-primary
-  ease-out
-  items-center
-  justify-between
-  relative
-  w-full
-`;
-
-const addToQueueButtonClassName = cntl`
-  border-primary
-  border-t-2
-  disabled:opacity-50
-  duration-300
-  py-1
-  shrink-0
-  text-center
-  text-sm
-  transition-opacity
-  w-full
-  md:text-md
-`;
 
 let buttonAnimationTimeout: number;
 
@@ -69,7 +44,7 @@ function SongListItem(props: SongListItemProps) {
   }, []);
 
   return (
-    <div className={songListItemClassName}>
+    <div className="song-list-item">
       <div className="p-3 text-left capitalize">
         <h4 className="mb-0.5 text-balance text-lg leading-none md:mb-0 md:text-xl">
           {song.name}
@@ -77,7 +52,7 @@ function SongListItem(props: SongListItemProps) {
         <h3 className="text-sm">{song.artist}</h3>
       </div>
       <button
-        className={addToQueueButtonClassName}
+        className="add-to-queue-button remove-line-height"
         disabled={songWasAdded || songWasRemoved}
         onClick={async () => {
           if (queuedTrack) {

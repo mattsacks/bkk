@@ -1,7 +1,7 @@
 .submit {
   cursor: pointer;
-  transition: opacity 200 ease-in-out;
   padding: var(--gutter);
+  transition: opacity 125ms ease-in-out;
 
   &:disabled {
     cursor: initial;

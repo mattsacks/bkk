@@ -41,9 +41,7 @@ export default function QueuePage() {
       <AppNav />
       <div className="app-container flex flex-col gap-gutter-2">
         <div className="flex flex-col gap-[8px]">
-          <h1 className="remove-line-height text-4xl sm:flex-1">
-            {user?.bookingKey} queue:
-          </h1>
+          <h1 className="queue-heading">{user?.bookingKey} queue:</h1>
           <QueueActions />
         </div>
         {hasQueuedTracks ? (

@@ -9,18 +9,6 @@
   }
 }
 
-.primary-action {
-  background-color: var(--color-accent);
-  border-radius: var(--border-radius-sm);
-  color: var(--color-background);
-}
-
-.secondary-action {
-  border-radius: var(--border-radius-sm);
-  border: var(--border-radius) solid var(--color-primary);
-  color: var(--color-primary);
-}
-
 .button-thin {
   padding: 0.25rem;
 }

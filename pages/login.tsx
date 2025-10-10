@@ -16,10 +16,10 @@ export default function Login() {
       return;
     }
 
-    document.body.dataset.page = "login";
+    document.documentElement.dataset.page = "login";
 
     return () => {
-      delete document.body.dataset.page;
+      delete document.documentElement.dataset.page;
     };
   }, []);
 

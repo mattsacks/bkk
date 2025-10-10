@@ -28,3 +28,30 @@
 .list-item-icon {
   grid-area: icon;
 }
+
+.song-list-item {
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--border-radius);
+  align-items: center;
+  justify-content: between;
+  position: relative;
+  width: 100%;
+}
+
+.add-to-queue-button {
+  border-top: var(--border-width) solid var(--color-accent);
+  transition: opacity 300ms ease-in-out;
+  padding-block: calc(var(--spacing) * 2);
+  flex-shrink: 0;
+  text-align: center;
+  font-size: var(--text-sm);
+  width: 100%;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  @variant md {
+    font-size: var(--text-sm);
+  }
+}

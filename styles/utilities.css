@@ -1,6 +1,6 @@
 .remove-line-height {
   @supports(text-box-edge: cap alphabetic) {
-    text-box-edge: text;
+    text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
   }
 

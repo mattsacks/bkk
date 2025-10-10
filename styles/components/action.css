@@ -1,7 +1,7 @@
 .action {
   background-color: var(--action-background-color, var(--color-accent));
   color: var(--action-text-color, var(--color-background));
-  border-radius: var(--action-border-radius, var(--border-radius));
+  border-radius: var(--border-radius);
   padding: var(--action-padding, 0.5em);
 }
 
@@ -18,15 +18,15 @@
 }
 
 .primary-action {
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
   border-radius: var(--border-radius);
-  color: var(--color-secondary);
+  color: var(--color-background);
 }
 
 .secondary-action {
   border-radius: var(--border-radius);
-  border: 2px solid var(--color-primary);
-  color: var(--color-primary);
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
 }
 
 .action-label {
