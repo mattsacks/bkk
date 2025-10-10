@@ -1,63 +1,37 @@
 // Input that filters a list of songs
-import classNames from "classnames";
-import { Song } from "lib/types";
 import debounce from "lodash/debounce";
-import React, { useRef } from "react";
-import { useRecoilState } from "recoil";
-
-import songSearch from "@/lib/songSearch";
-import searchState from "@/store/atoms/searchState";
+import { useMemo, useRef } from "react";
 
 interface SongSearchProps {
-  onSearch: (filteredSongs: Song[]) => void;
-  songs: Song[];
+  onSearch: (query?: string) => void;
 }
 
-function SongSearch({ onSearch, songs }: SongSearchProps) {
-  const [searchQuery, setSearchQuery] = useRecoilState(searchState);
+function SongSearch({ onSearch }: SongSearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchQuery = inputRef.current?.value;
 
-  // Updates the latest query stored and filters the list of songs, calling the
-  // onSearch callback as a result
-  function searchSongs(query: string) {
-    setSearchQuery(query);
-
-    if (!query) {
-      onSearch([]);
-      return;
-    }
-
-    const searchResults = songSearch(query, songs);
-    onSearch(searchResults);
-  }
-
-  // Debounced search function to be used while typing in the song search input
-  const debouncedSearchSongs = debounce(searchSongs, 666);
+  const debouncedSearchSongs = useMemo(() => {
+    return debounce(onSearch, 333);
+  }, [onSearch]);
 
   return (
-    <div className="flex justify-center">
-      <form
-        role="search"
-        onSubmit={(e) => {
-          e.preventDefault();
+    <form
+      role="search"
+      onSubmit={(e) => {
+        e.preventDefault();
 
-          const query = inputRef.current?.value;
-          inputRef.current?.blur();
+        const query = inputRef.current?.value;
+        inputRef.current?.blur();
 
-          if (query) {
-            searchSongs(query.toString());
-          }
-        }}
-        className="flex w-full"
-      >
+        onSearch(query);
+      }}
+    >
+      <div className="outlined-input flex w-full">
         <input
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          className={classNames("input w-full", {
-            "border-r-0": Boolean(searchQuery)
-          })}
-          defaultValue={searchQuery}
+          className="input w-full"
           enterKeyHint="search"
           id="song-search-input"
           name="search"
@@ -69,12 +43,9 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
               .replace(/[\u2018\u2019]/g, "'")
               .replace(/[\u201C\u201D]/g, '"');
 
-            // Update the typed query
             e.target.value = query;
 
-            if (query.length > 1 || query.length === 0) {
-              debouncedSearchSongs(query);
-            }
+            debouncedSearchSongs(query);
           }}
           placeholder="search songz"
           ref={inputRef}
@@ -84,9 +55,9 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
           <button
             aria-label="clear search"
             aria-controls="song-search-input"
-            className="search-clear action-label h-full bg-primary px-3 text-secondary"
+            className="search-clear remove-line-height"
             onClick={() => {
-              searchSongs("");
+              onSearch();
 
               if (inputRef.current) {
                 inputRef.current.value = "";
@@ -102,8 +73,8 @@ function SongSearch({ onSearch, songs }: SongSearchProps) {
             x
           </button>
         )}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 

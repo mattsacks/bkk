@@ -4,8 +4,8 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import useSWR from "swr";
 
+import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
-import Nav, { NavItem } from "@/components/Nav";
 import { QueueActions } from "@/components/QueueActions";
 import QueueList from "@/components/QueueList";
 import { isServer } from "@/lib/isServer";
@@ -27,40 +27,33 @@ export default function QueuePage() {
 
   if (isServer || isLoading) {
     return (
-      <div className="app-container">
-        <Nav>
-          <NavItem href="/" text="&lt; search songs" />
-          <NavItem href="/settings" text="settings &gt;" />
-        </Nav>
-        <Loading />
-      </div>
+      <>
+        <AppNav />
+        <div className="app-container">
+          <Loading />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="app-container">
-      <Nav>
-        <NavItem href="/" text="&lt; search songs" />
-        <NavItem href="/settings" text="settings &gt;" />
-      </Nav>
-      <div className="pb-1">
+    <>
+      <AppNav />
+      <div className="app-container flex flex-col gap-gutter-2">
+        <div className="flex flex-col gap-[8px]">
+          <h1 className="remove-line-height text-4xl sm:flex-1">
+            {user?.bookingKey} queue:
+          </h1>
+          <QueueActions />
+        </div>
         {hasQueuedTracks ? (
           <React.Fragment>
-            <div className="mb-6 block sm:flex sm:items-center">
-              <h1 className="text-3xl sm:flex-1">{user?.bookingKey} queue:</h1>
-              <QueueActions />
-            </div>
             <QueueList queueData={queue} />
           </React.Fragment>
         ) : (
-          <React.Fragment>
-            <h1 className="text-3xl sm:flex-1">
-              {user?.bookingKey ? `${user?.bookingKey} queue` : ""}:
-            </h1>
-            <h4>nothing queued yet!</h4>
-          </React.Fragment>
+          <h4>nothing queued yet!</h4>
         )}
       </div>
-    </div>
+    </>
   );
 }

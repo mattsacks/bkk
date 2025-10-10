@@ -20,11 +20,11 @@ function QueueList({ queueData }: Props) {
     ));
 
   return (
-    <div className="mb-6 h-full">
+    <ul className="mb-6 h-full">
       {NowSinging}
       {UpNext}
       {QueueRest}
-    </div>
+    </ul>
   );
 }
 

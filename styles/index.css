@@ -1,19 +1,25 @@
-@layer base, component, page, utility;
+@layer theme, base, components, utilities;
 
-@import "./tailwind.css";
-@import "./global.css";
-@import "./reset.css";
-@import "./colors.css";
+@import "tailwindcss";
+@import "./reset.css" layer(base);
+/* @import "tailwindcss/components" layer(components); */
+/* @import "tailwindcss/utilities" layer(utilities); */
+@import "./global.css" layer(base);
+@import "./colors.css" layer(base);
 
-@import "./components/app-container.css";
-@import "./components/action.css";
-@import "./components/button.css";
-@import "./components/dialog.css";
-@import "./components/flag.css";
-@import "./components/input.css";
-@import "./components/invert.css";
-@import "./components/list-item.css";
-@import "./components/submit.css";
+@import "./components/action.css" layer(components);
+@import "./components/app-container.css" layer(components);
+@import "./components/app-nav.css" layer(components);
+@import "./components/button.css" layer(components);
+@import "./components/dialog.css" layer(components);
+@import "./components/flag.css" layer(components);
+@import "./components/input.css" layer(components);
+@import "./components/invert.css" layer(components);
+@import "./components/list-item.css" layer(components);
+@import "./components/submit.css" layer(components);
 
-@import "./pages/queue.css";
-@import "./pages/settings.css";
+@import "./pages/login.css" layer(components);
+@import "./pages/queue.css" layer(components);
+@import "./pages/settings.css" layer(components);
+
+@import "./utilities.css" layer(utilities);

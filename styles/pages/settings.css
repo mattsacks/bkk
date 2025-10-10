@@ -1,43 +1,19 @@
-@layer components {
-  .theme-swatch {
-    border: 2px solid transparent;
-    border-radius: 2px;
-    padding: 1em;
-    transition-duration: 0.169s;
-    transition-property: background-color, color;
-    transition-timing-function: ease-out;
-    width: 100%;
-  }
+.theme-swatch {
+  background-color: var(--color-background);
+  color: var(--color-accent);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--border-radius);
+  padding: 1em;
+  transition-duration: 0.169s;
+  transition-property: background-color, color;
+  transition-timing-function: ease-out;
+  width: 100%;
+}
 
-  .theme-swatch[data-theme="default"] {
-    background-color: var(--default-secondary);
-    border-color: var(--default-primary);
-    color: var(--default-primary);
-  }
-
-  .theme-swatch[data-theme="rose"] {
-    background-color: var(--rose-secondary);
-    border-color: var(--rose-primary);
-    color: var(--rose-primary);
-  }
-
-  .theme-swatch[data-theme="terminal"] {
-    background-color: var(--terminal-secondary);
-    border-color: var(--terminal-primary);
-    color: var(--terminal-primary);
-  }
-
-  .theme-swatch[data-theme="sky"] {
-    background-color: var(--sky-secondary);
-    border-color: var(--sky-primary);
-    color: var(--sky-primary);
-  }
-
-  .heart-icon {
-    --size: 0.65rem;
-    display: inline;
-    height: var(--size);
-    margin-top: -2px;
-    width: var(--size);
-  }
+.heart-icon {
+  --size: 0.65rem;
+  display: inline;
+  height: var(--size);
+  margin-top: -2px;
+  width: var(--size);
 }

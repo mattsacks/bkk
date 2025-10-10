@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { ComponentPropsWithoutRef, useEffect, useState } from "react";
 
 const INITIAL = 0;
 const LIMIT = 3;
 const INTERVAL = 750;
 
+type LoadingProps = ComponentPropsWithoutRef<"div">;
+
 /**
  * Draws an ellipsis loading indicator as "...".
  */
-export default function Loading() {
+export default function Loading(props: LoadingProps) {
   const [dots, setDots] = useState(INITIAL);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function Loading() {
   }, []);
 
   return (
-    <div>
+    <div {...props}>
       loading
       {Array(dots).fill(".").join("")}
     </div>

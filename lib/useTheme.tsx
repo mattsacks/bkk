@@ -1,37 +1,47 @@
-import random from "lodash/random";
-import { useEffect, useState } from "react";
-import store from "store2";
+import Cookies from "js-cookie";
+import { useCallback, useEffect, useState } from "react";
 
-import { THEME } from "@/lib/types";
-type THEME_NAME = keyof typeof THEME;
+import { SECONDS_IN_DAY, Theme, THEME_COOKIE, Themes } from "@/lib/types";
+
+import { isServer } from "./isServer";
 
 /**
  * Chooses a random theme.
  */
-function randomTheme(): THEME_NAME {
-  const themeNames = Object.keys(THEME) as THEME_NAME[];
-  return themeNames[random(0, themeNames.length - 1)];
+export function randomTheme(): Theme {
+  return Themes[Math.floor(Math.random() * Themes.length)];
 }
 
+/**
+ * Retrieves the theme from the document element, initialized in the
+ * document script.
+ */
+function getTheme(): Theme | undefined {
+  return !isServer
+    ? (document.documentElement.dataset.theme as Theme)
+    : undefined;
+}
+
+/**
+ * Gets and sets the user's preferred theme.
+ */
 export default function useTheme() {
-  const [theme, setTheme] = useState<THEME_NAME>(store("theme"));
+  const [theme, setTheme] = useState<Theme | undefined>(getTheme);
 
-  function changeTheme(theme: THEME_NAME) {
-    store("theme", theme);
-    document.body.dataset.theme = theme;
+  const updateTheme = useCallback((theme: Theme) => {
+    document.documentElement.dataset.theme = theme;
     setTheme(theme);
-  }
 
-  // Chooses a random theme for new users or set the theme style on
-  // document.body when changed
+    Cookies.set(THEME_COOKIE, theme, {
+      expires: SECONDS_IN_DAY * 7
+    });
+  }, []);
+
   useEffect(() => {
-    if (!theme || !THEME[theme]) {
-      const initialTheme = randomTheme();
-      changeTheme(initialTheme);
-    } else if (document.body.dataset.theme !== theme) {
-      document.body.dataset.theme = theme;
+    if (!theme) {
+      setTheme(getTheme());
     }
   }, [theme]);
 
-  return [theme, changeTheme] as const;
+  return [theme, updateTheme] as const;
 }

@@ -1,43 +1,41 @@
-@layer components {
-  .action {
-    background-color: var(--action-background-color, var(--color-primary));
-    color: var(--action-text-color, var(--color-primary));
-    border-radius: var(--action-border-radius, var(--border-radius));
-    padding: var(--action-padding, 0.5em);
+.action {
+  background-color: var(--action-background-color, var(--color-accent));
+  color: var(--action-text-color, var(--color-background));
+  border-radius: var(--action-border-radius, var(--border-radius));
+  padding: var(--action-padding, 0.5em);
+}
+
+.action[data-with-icon="true"] {
+  align-items: center;
+  display: flex;
+  gap: 0.25em;
+}
+
+.action-icon {
+  --default-size: 0.6em;
+  height: var(--action-icon-size, var(--default-size));
+  width: var(--action-icon-size, var(--default-size));
+}
+
+.primary-action {
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius);
+  color: var(--color-secondary);
+}
+
+.secondary-action {
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.action-label {
+  @supports(text-box-edge: cap alphabetic) {
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
   }
 
-  .action[data-with-icon="true"] {
-    align-items: center;
-    display: flex;
-    gap: 0.25em;
-  }
-
-  .action-icon {
-    --default-size: 0.6em;
-    height: var(--action-icon-size, var(--default-size));
-    width: var(--action-icon-size, var(--default-size));
-  }
-
-  .primary-action {
-    background-color: var(--color-primary);
-    border-radius: var(--border-radius);
-    color: var(--color-secondary);
-  }
-
-  .secondary-action {
-    border-radius: var(--border-radius);
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  .action-label {
-    @supports(text-box-edge: cap alphabetic) {
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
-    }
-
-    @supports not (text-box-edge: cap alphabetic) {
-      line-height: 0;
-    }
+  @supports not (text-box-edge: cap alphabetic) {
+    line-height: 0;
   }
 }

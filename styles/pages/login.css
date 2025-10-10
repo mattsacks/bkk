@@ -1,0 +1,90 @@
+[data-page="login"] {
+  background-color: var(--color-background);
+}
+
+.login-heading {
+  background-color: var(--color-accent);
+  border-radius: var(--border-radius);
+  color: var(--color-background);
+  margin: var(--gutter);
+  padding-block: calc(var(--gutter) * 2);
+  text-align: center;
+
+  @variant sm {
+    padding-block: calc(var(--gutter) * 4);
+  }
+}
+
+.login-form {
+  border-top: var(--border-width)  var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-lg);
+  gap: calc(var(--spacing) * 3);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  margin-block: var(--gutter);
+  margin-inline: auto;
+  max-width: var(--container-md);
+  padding-inline: var(--gutter);
+}
+
+/* Karaoke-style heading: inner background ring creates a gap,
+   outer accent ring ~4px away forms the outline, plus a soft glow. */
+.login-heading h1 {
+  --text: var(--color-background);
+  --background: var(--color-accent);
+
+  color: var(--text);
+  font-size: var(--text-4xl);
+  text-shadow:
+    /* text-stroke */
+    0 1px 0 var(--background),
+    1px 0 0 var(--background),
+    0 -1px 0 var(--background),
+    -1px 0 0 var(--background),
+    1px 1px 0 var(--background),
+    -1px 1px 0 var(--background),
+    1px -1px 0 var(--background),
+    -1px -1px 0 var(--background),
+    0 2px 0 var(--background),
+    2px 0 0 var(--background),
+    0 -2px 0 var(--background),
+    -2px 0 0 var(--background),
+    2px 1px 0 var(--background),
+    1px 2px 0 var(--background),
+    -1px 2px 0 var(--background),
+    -2px 1px 0 var(--background),
+    2px -1px 0 var(--background),
+    1px -2px 0 var(--background),
+    -1px -2px 0 var(--background),
+    -2px -1px 0 var(--background),
+    /* outline */
+    0 4px 0 var(--text),
+    4px 0 0 var(--text),
+    0 -4px 0 var(--text),
+    -4px 0 0 var(--text),
+    3px 3px 0 var(--text),
+    -3px 3px 0 var(--text),
+    3px -3px 0 var(--text),
+    -3px -3px 0 var(--text),
+    0 5px 0 var(--text),
+    5px 0 0 var(--text),
+    0 -5px 0 var(--text),
+    -5px 0 0 var(--text),
+    4px 3px 0 var(--text),
+    -4px 3px 0 var(--text),
+    4px -3px 0 var(--text),
+    -4px -3px 0 var(--text),
+    3px 4px 0 var(--text),
+    -3px 4px 0 var(--text),
+    3px -4px 0 var(--text),
+    -3px -4px 0 var(--text);
+
+  @variant sm {
+    font-size: var(--text-5xl);
+  }
+
+  @variant lg {
+    font-size: var(--text-6xl);
+  }
+}

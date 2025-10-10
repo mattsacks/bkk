@@ -1,10 +1,10 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
-import Nav, { NavItem } from "@/components/Nav";
 import SongList from "@/components/SongList";
 import SongSearch from "@/components/SongSearch";
 import { isServer } from "@/lib/isServer";
@@ -12,41 +12,36 @@ import songSearch from "@/lib/songSearch";
 import { Song } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
-import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
 
 const Dialog = dynamic(() => import("@/components/Dialog"), {
   ssr: false
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let cachedSongs: Song[] = [];
-
 function Index() {
-  const [searchQuery, setSearchQuery] = useRecoilState(searchState);
+  const [searchQuery, setSearchQuery] = useState<string | undefined>();
   const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
 
-  const [filteredSongs, setFilteredSongs] = useState<Song[]>(() => {
-    // Initialize filteredSongs with an existing searchQuery on a cached
-    // version of songs previously loaded
-    return [];
-  });
+  const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
 
-  const { songs, isLoading } = useSongs({
-    onSuccess: (data) => {
-      cachedSongs = data;
+  const { songs, isLoading } = useSongs();
 
-      // After songs are loaded, update the filtered list of songs if there's a
-      // query
-      if (searchQuery) {
-        setFilteredSongs(songSearch(searchQuery, data));
+  // Cached so debounced handler can persist between updates
+  const onSearch = useCallback(
+    (query?: string) => {
+      setSearchQuery(query);
+
+      if (typeof query === "string") {
+        setFilteredSongs(songSearch(query, songs));
+      } else {
+        setFilteredSongs([]);
       }
-    }
-  });
+    },
+    [songs]
+  );
 
   function leaveRoom() {
-    setSearchQuery("");
     setToken(undefined);
   }
 
@@ -57,7 +52,7 @@ function Index() {
     }
   });
 
-  if (!token && router.isReady) {
+  if (typeof window !== "undefined" && !token && router.isReady) {
     router.replace({
       pathname: "/login",
       query: router.query
@@ -69,50 +64,44 @@ function Index() {
   const showLoading = isLoading || isServer;
 
   return (
-    <div className="app-container flex w-full flex-1 flex-col">
-      <Nav>
-        <NavItem href="/settings" text="&lt; settings" />
-        <NavItem href="/queue" text="view queue &gt;" />
-      </Nav>
+    <>
+      <AppNav />
       {showLoading ? (
         <>
-          <div className="flex-1">
-            <Loading />
+          <div className="app-container flex flex-1 flex-col gap-gutter">
+            <Loading className="flex-1" />
+            <button
+              className="outline-button mx-auto"
+              onClick={() => {
+                leaveRoomDialog.showDialog();
+              }}
+              aria-haspopup="dialog"
+              aria-controls="leave-room-dialog"
+            >
+              Leave room
+            </button>
           </div>
-          <button
-            className="outline-button mx-auto my-8"
-            onClick={() => {
-              leaveRoomDialog.showDialog();
-            }}
-            aria-haspopup="dialog"
-            aria-controls="leave-room-dialog"
-          >
-            Leave room
-          </button>
         </>
       ) : (
-        <>
-          <div className="sticky top-0 z-10 mb-4 bg-secondary">
-            <SongSearch
-              onSearch={(filteredSongs) => {
-                setFilteredSongs(filteredSongs);
-              }}
-              songs={songs}
-            />
+        <div className="app-container flex flex-1 flex-col items-center gap-gutter">
+          <div className="bg-background sticky top-0 z-10 w-full">
+            <SongSearch onSearch={onSearch} />
           </div>
-          <div className="flex-1">
+          <div className="mt-gutter w-full flex-1">
             {searchQuery && <SongList songs={filteredSongs} />}
           </div>
-          <button
-            className="outline-button mx-auto my-8"
-            onClick={() => {
-              leaveRoomDialog.showDialog();
-            }}
-            aria-haspopup="dialog"
-            aria-controls="leave-room-dialog"
-          >
-            Leave room
-          </button>
+          {!searchQuery && (
+            <button
+              className="outline-button mx-auto"
+              onClick={() => {
+                leaveRoomDialog.showDialog();
+              }}
+              aria-haspopup="dialog"
+              aria-controls="leave-room-dialog"
+            >
+              Leave room
+            </button>
+          )}
           <Dialog
             {...leaveRoomDialog}
             dialogProps={{
@@ -122,9 +111,9 @@ function Index() {
           >
             <h2 id="leave-room-dialog-label">leave the room?</h2>
           </Dialog>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -49,17 +49,13 @@ module.exports = {
       spacing: {
         "-2px": "-2px",
         "2px": "2px",
-        "01": "0.1rem"
+        "01": "0.1rem",
+        gutter: "var(--gutter)",
+        "gutter-2": "var(--gutter-2)"
       },
       fontFamily: {
         mono: ["VT323", ...defaultTheme.fontFamily.mono]
       }
     }
-  },
-  variants: {
-    opacity: ["responsive", "hover", "focus", "disabled", "active"],
-    pointerEvents: ["responsive", "hover", "focus", "disabled"],
-    borderWidth: ["responsive", "hover", "focus", "last"],
-    margin: ["responsive", "hover", "focus", "last"]
   }
 };

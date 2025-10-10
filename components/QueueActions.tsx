@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { mutate } from "swr";
 
-import { PauseIcon } from "@/components/PauseIcon";
-import { PlayIcon } from "@/components/PlayIcon";
-import { RepeatIcon } from "@/components/RepeatIcon";
-import { SkipIcon } from "@/components/SkipIcon";
+import { PauseIcon } from "@/components/icons/PauseIcon";
+import { PlayIcon } from "@/components/icons/PlayIcon";
+import { RepeatIcon } from "@/components/icons/RepeatIcon";
+import { SkipIcon } from "@/components/icons/SkipIcon";
 import useDialog from "@/lib/useDialog";
 import usePost from "@/lib/usePost";
 import useQueue from "@/lib/useQueue";
@@ -75,7 +75,7 @@ export function QueueActions() {
 
   return (
     <>
-      <ul className="queue-actions mt-2 flex gap-3 sm:ml-4 sm:mt-0">
+      <ul className="queue-actions flex gap-3">
         <li>
           <button
             type="button"

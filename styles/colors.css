@@ -1,28 +1,19 @@
 /* Classes generated from [theme]-primary in tailwind config */
 :root {
+  color-scheme: light dark;
+
   --default-light: #FAFAFA;
   --default-dark: #0A0A0A;
 
-  --color-primary: var(--default-light);
-  --color-secondary: var(--default-dark);
-
-  --default-primary: var(--default-light);
-  --default-secondary: var(--default-dark);
-
   --rose-light: rgb(250, 175, 190);
   --rose-dark: rgb(138, 73, 85);
-  --rose-primary: var(--rose-light);
-  --rose-secondary: var(--rose-dark);
 
   --terminal-light: #00FF84;
   --terminal-dark: #001C15;
-  --terminal-primary: var(--terminal-light);
-  --terminal-secondary: var(--terminal-dark);
 
   --sky-white: rgb(209, 223, 243);
   --sky-blue: rgb(87, 126, 197);
-  --sky-primary: var(--sky-white);
-  --sky-secondary: var(--sky-blue);
+
   /**
    * Unused themes
    *
@@ -39,38 +30,64 @@
    */
 }
 
-[data-color-scheme="light"] {
-  --color-primary: var(--default-dark);
-  --color-secondary: var(--default-light);
-
-  --default-primary: var(--default-dark);
-  --default-secondary: var(--default-light);
-
-  --rose-primary: var(--rose-dark);
-  --rose-secondary: var(--rose-light);
-
-  --terminal-primary: var(--terminal-dark);
-  --terminal-secondary: var(--terminal-light);
-
-  --sky-primary: var(--sky-blue);
-  --sky-secondary: var(--sky-white);
+[data-theme="bkk"] {
+  --color-light: var(--default-light);
+  --color-dark: var(--default-dark);
 }
 
 [data-theme="rose"] {
-  --color-primary: var(--rose-primary);
-  --color-secondary: var(--rose-secondary);
+  --color-light: var(--rose-light);
+  --color-dark: var(--rose-dark);
 }
 
 [data-theme="terminal"] {
-  --color-primary: var(--terminal-primary);
-  --color-secondary: var(--terminal-secondary);
+  --color-light: var(--terminal-light);
+  --color-dark: var(--terminal-dark);
 }
 
 [data-theme="sky"] {
-  --color-primary: var(--sky-primary);
-  --color-secondary: var(--sky-secondary);
+  --color-light: var(--sky-white);
+  --color-dark: var(--sky-blue);
 }
 
-[data-page="login"] {
-  background-color: var(--color-primary);
+[data-color-scheme="light"] {
+  --color-accent: var(--color-dark);
+  --color-background: var(--color-light);
+
+  [data-color-scheme="invert"] {
+    --color-accent: var(--color-light);
+    --color-background: var(--color-dark);
+  }
 }
+
+[data-color-scheme="dark"] {
+  --color-accent: var(--color-light);
+  --color-background: var(--color-dark);
+
+  [data-color-scheme="invert"] {
+    --color-accent: var(--color-dark);
+    --color-background: var(--color-light);
+  }
+  
+  /** WIP */
+ /* @supports (color: light-dark(var(--color-light), var(--dark))) { */
+ /*   --color-accent: light-dark(var(--color-dark), var(--color-light)); */
+ /*   --color-background: light-dark(var(--color-light), var(--color-dark)); */
+ /* } */
+}
+
+
+/**
+ * Waiting for baseline.
+ *
+ * @scope ([data-color-scheme="light"]) {
+ *   :scope {
+ *     color-scheme: light;
+ *   }
+ * }
+ * @scope ([data-color-scheme="dark"]) {
+ *   :scope {
+ *     color-scheme: dark;
+ *   }
+ * }
+ */

@@ -1,17 +1,21 @@
 // --- Local ---
 
+export const SECONDS_IN_DAY = 86_400;
 export const SEARCH_KEY = "mathis_search";
-export const THEME_COOKIE = "bkk_theme";
 export const USER_COOKIE = "mathis_user";
+export const THEME_COOKIE = "bkk_theme";
+export const COLOR_SCHEME_COOKIE = "bkk_color_scheme";
 
-export const COLOR_SCHEME_KEY = "color-scheme";
+export type CookieKeys =
+  | typeof USER_COOKIE
+  | typeof THEME_COOKIE
+  | typeof COLOR_SCHEME_COOKIE;
 
-export enum THEME {
-  default = "bkk",
-  terminal = "terminal",
-  rose = "rose",
-  sky = "sky"
-}
+export type CookieStore = Record<CookieKeys, string>;
+
+export const Themes = ["bkk", "terminal", "rose", "sky"] as const;
+export type Theme = (typeof Themes)[number];
+export type ColorScheme = "light" | "dark";
 
 // --- API ---
 

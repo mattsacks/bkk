@@ -9,20 +9,19 @@ interface Props {
 
 function QueueItem({ label, queue }: Props) {
   return (
-    <Link href={`/queue/${queue.id}`}>
-      <div className="relative -mt-px list-item">
-        <div className="mr-6 flex flex-col">
+    <li>
+      <Link className="list-item" href={`/queue/${queue.id}`}>
+        <div className="list-item-content">
           <div className="text-sm">
             {label}: {queue.user_name}
           </div>
-          {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
-          <div className="mt-0.5 max-w-[20ch] text-lg capitalize leading-none sm:max-w-none">
+          <div className="mt-0.5 text-lg capitalize leading-none sm:max-w-none">
             {queue.song_name}
           </div>
         </div>
-        <div className="text-right">&gt;</div>
-      </div>
-    </Link>
+        <div className="list-item-icon">&gt;</div>
+      </Link>
+    </li>
   );
 }
 

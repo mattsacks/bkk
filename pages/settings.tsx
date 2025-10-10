@@ -1,11 +1,10 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React from "react";
 import { useSetRecoilState } from "recoil";
 
+import AppNav from "@/components/AppNav";
 import { HeartIcon } from "@/components/Heart";
-import Nav, { NavItem } from "@/components/Nav";
-import ThemeSettingsSection from "@/components/ThemeSettingsSection";
+import { ThemeSettingsSection } from "@/components/ThemeSettingsSection";
 import useDialog from "@/lib/useDialog";
 import searchState from "@/store/atoms/searchState";
 import tokenState from "@/store/atoms/tokenState";
@@ -33,12 +32,9 @@ export default function Settings() {
   });
 
   return (
-    <div className="app-container flex w-full flex-1 flex-col">
-      <Nav>
-        <NavItem href="/queue" text="&lt; view queue" />
-        <NavItem href="/" text="search songs &gt;" />
-      </Nav>
-      <div className="flex flex-1 flex-col gap-6">
+    <>
+      <AppNav />
+      <div className="app-container flex flex-1 flex-col gap-6">
         <ThemeSettingsSection />
         <section className="flex flex-1 flex-col justify-end text-center text-sm">
           <p>
@@ -56,7 +52,7 @@ export default function Settings() {
             </a>
           </p>
         </section>
-        <section className="mb-8 flex flex-col justify-end">
+        <section className="flex flex-col justify-end">
           <button
             className="outline-button mx-auto"
             onClick={() => {
@@ -78,6 +74,6 @@ export default function Settings() {
           </Dialog>
         </section>
       </div>
-    </div>
+    </>
   );
 }

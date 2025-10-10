@@ -1,59 +1,77 @@
-import { useEffect, useState } from "react";
-import store from "store2";
+import Cookies from "js-cookie";
+import { useCallback, useEffect, useState } from "react";
 
-import { COLOR_SCHEME_KEY } from "@/lib/types";
+import { COLOR_SCHEME_COOKIE, ColorScheme, SECONDS_IN_DAY } from "@/lib/types";
 
+import { isServer } from "./isServer";
+
+function getColorScheme(): ColorScheme | undefined {
+  return !isServer
+    ? (document.documentElement.dataset.colorScheme as ColorScheme)
+    : undefined;
+}
+
+/**
+ * Gets and sets the user's preferred color-scheme.
+ */
 export default function useColorScheme() {
-  const colorSchemeMediaQuery = window.matchMedia(
-    "(prefers-color-scheme: dark)"
+  const [colorScheme, setColorScheme] = useState<ColorScheme | undefined>(
+    getColorScheme
   );
-  const isDarkMode = colorSchemeMediaQuery.matches;
-  const preferredColorScheme = store(COLOR_SCHEME_KEY);
 
-  const [colorScheme, setColorScheme] = useState<"light" | "dark">(() => {
-    if (preferredColorScheme) {
-      return preferredColorScheme;
-    }
+  const updateColorScheme = useCallback(
+    (newColorScheme: ColorScheme) => {
+      setColorScheme(newColorScheme);
+      document.documentElement.dataset.colorScheme = newColorScheme;
 
-    return isDarkMode ? "dark" : "light";
-  });
+      // Store if the color scheme doesn't match the current value matched by the
+      // system.
+      if (newColorScheme !== colorScheme) {
+        Cookies.set(COLOR_SCHEME_COOKIE, newColorScheme, {
+          expires: SECONDS_IN_DAY * 7
+        });
+      }
+    },
+    [colorScheme]
+  );
 
   useEffect(() => {
-    function onColorSchemeChange(e: MediaQueryListEvent) {
-      const isDarkMode = e.matches;
+    if (!colorScheme) {
+      setColorScheme(getColorScheme());
+    }
+  }, [colorScheme]);
+
+  /**
+   * Add event handler for changes to the system colorscheme when the user
+   * doesn't have a preference set.
+   */
+  useEffect(() => {
+    function matchColorSchemeChange(event: MediaQueryListEvent) {
+      const preferredColorScheme = Cookies.get(COLOR_SCHEME_COOKIE);
 
       if (!preferredColorScheme) {
-        setColorScheme(isDarkMode ? "dark" : "light");
-      }
-
-      // When the user changes the color scheme and it matches the stored
-      // preferred color scheme, remove the stored preference
-      if (preferredColorScheme === (isDarkMode ? "dark" : "light")) {
-        store.remove(COLOR_SCHEME_KEY);
+        const newColorScheme = event.matches ? "dark" : "light";
+        setColorScheme(newColorScheme);
+        document.documentElement.dataset.colorScheme = newColorScheme;
       }
     }
 
-    colorSchemeMediaQuery.addEventListener("change", onColorSchemeChange);
+    let matchesDarkColorScheme: MediaQueryList | undefined;
+
+    if (!isServer) {
+      matchesDarkColorScheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+      matchesDarkColorScheme.addEventListener("change", matchColorSchemeChange);
+    }
 
     return () => {
-      colorSchemeMediaQuery.removeEventListener("change", onColorSchemeChange);
+      matchesDarkColorScheme?.removeEventListener(
+        "change",
+        matchColorSchemeChange
+      );
     };
-  }, [colorSchemeMediaQuery, preferredColorScheme]);
+  }, []);
 
-  // Something in Next.js inadvertently changes colorScheme state value when
-  // routing to the login page. If preferredColorScheme is set and the
-  // colorScheme state somehow doesn't match, manually update state.
-  useEffect(() => {
-    if (preferredColorScheme && colorScheme !== preferredColorScheme) {
-      setColorScheme(preferredColorScheme);
-    }
-  }, [preferredColorScheme, colorScheme]);
-
-  if (colorScheme === "light") {
-    document.body.dataset.colorScheme = "light";
-  } else {
-    delete document.body.dataset.colorScheme;
-  }
-
-  return [colorScheme, setColorScheme] as const;
+  return [colorScheme, updateColorScheme] as const;
 }

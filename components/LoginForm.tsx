@@ -1,4 +1,3 @@
-import cntl from "cntl";
 import { useRouter } from "next/router";
 import React, {
   FormEvent,
@@ -12,22 +11,6 @@ import tokenState from "store/atoms/tokenState";
 
 import Loading from "@/components/Loading";
 import usePost from "@/lib/usePost";
-
-const formStyles = cntl`
-  flex
-  flex-col
-  gap-3
-  max-w-md
-  mx-auto
-  pt-6
-  px-6
-  text-lg
-  w-full
-  md:flex-2
-  md:pt-6
-  md:text-xl
-  lg:justify-center
-`;
 
 interface Response {
   token: string;
@@ -74,16 +57,16 @@ function LoginForm() {
   }, []);
 
   return (
-    <form className={formStyles} onSubmit={submitForm}>
+    <form className="app-container login-form" onSubmit={submitForm}>
       <fieldset className="flex flex-col">
-        <label className="text-primary" htmlFor="name">
+        <label className="text-accent" htmlFor="name">
           ur name
         </label>
         <input
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          className="input"
+          className="outlined-input input"
           id="name"
           name="name"
           onChange={onChange}
@@ -94,14 +77,14 @@ function LoginForm() {
         />
       </fieldset>
       <fieldset className="flex flex-col">
-        <label className="text-primary" htmlFor="room">
+        <label className="text-accent" htmlFor="room">
           room code
         </label>
         <input
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          className="input"
+          className="outlined-input input"
           defaultValue={router.query.roomCode}
           id="room"
           name="room"
@@ -114,13 +97,13 @@ function LoginForm() {
       </fieldset>
       <button
         disabled={!isValid || isSubmitting}
-        className="submit disabled:submit-disabled mt-2"
+        className="submit primary-action mt-2"
         type="submit"
       >
         {isSubmitting ? <Loading /> : "sing songz!"}
       </button>
       {error && (
-        <div className="text-center text-lg uppercase tracking-widest text-primary">
+        <div className="text-accent text-center text-lg uppercase tracking-widest">
           {errorMessage}
         </div>
       )}

@@ -1,79 +1,101 @@
-@layer base {
-  @font-face {
-    font-family: 'VT323';
-    font-style: normal;
-    font-weight: normal;
-    src: url('/assets/VT323.ttf') format('truetype');
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/assets/VT323.ttf') format('truetype');
+}
+
+:root {
+  --gutter: 16px;
+  --gutter-2: calc(var(--gutter) * 2);
+  --gutter-3: calc(var(--gutter) * 3);
+  --gutter-4: calc(var(--gutter) * 4);
+}
+
+@theme {
+  --border-radius: 2px;
+  --border-width: 2px;
+  --breakpoint-xs: 360px;
+  --flex-2: 2 2 0%;
+  --font-mono: "VT323";
+  --inset-0: 0;
+  --inset-full: 100%;
+  --spacing--2px: -2px;
+  --spacing-01: 0.1rem;
+  --spacing-2px: 2px;
+
+  --color-accent: var(--color-accent);
+  --color-background: var(--color-background);
+  --spacing-gutter-2: calc(var(--gutter) * 2);
+  --spacing-gutter: var(--gutter);
+  --terminal-primary: var(--terminal-primary);
+  --terminal-secondary: var(--terminal-secondary);
+}
+
+html {
+  @apply font-mono;
+  font-size: 20px;
+
+  @variant xs {
+    font-size: 24px;
   }
 
-  :root {
-    --border-radius: 1px;
-    --border-width: 2px;
+  @variant md {
+    font-size: 26px;
   }
+}
 
-  html {
-    @apply font-mono;
-    font-size: 20px;
+html,
+body,
+#__next {
+  height: 100%;
+}
 
-    @media screen(xs) {
-      font-size: 24px;
-    }
+body {
+  color: var(--color-accent);
+  background-color: var(--color-background);
+  transition:
+    background-color theme('transitionTimingFunction.out') 169ms,
+    color theme('transitionTimingFunction.out') 169ms;
 
-    @media screen(md) {
-      font-size: 26px;
-    }
+  *::selection {
+    color: var(--color-background);
+    background-color: var(--color-accent);
   }
+}
 
-  html,
-  body,
-  #__next {
-    height: 100%;
-  }
+main {
+  container-name: main;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 
-  body {
-    color: theme('colors.primary');
-    background-color: theme('colors.secondary');
-    transition:
-      background-color theme('transitionTimingFunction.out') 169ms,
-      color theme('transitionTimingFunction.out') 169ms;
+a,
+button {
+  appearance: unset;
+  outline: none;
+}
 
-    *::selection {
-      color: theme('colors.secondary');
-      background-color: theme('colors.primary');
-    }
-  }
+input {
+  appearance: unset;
+  border-radius: 0;
+  caret-color: var(--color-accent);
+  outline: none;
+}
 
-  main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-  }
-
-  a,
-  button {
-    appearance: unset;
-    outline: none;
-  }
-
-  input {
-    appearance: unset;
-    border-radius: 0;
-    caret-color: theme('colors.primary');
-    outline: none;
-  }
-
-  .h-2px {
-    height: 2px;
-  }
+.h-2px {
+  height: 2px;
+}
 
 
-  input[type=search]::-webkit-search-cancel-button,
-  input[type=search]::-webkit-search-decoration {
-    -webkit-appearance: none;
-    appearance: none;
-  }
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
 
-  input[type=search] {
-    appearance: textfield;
-  }
+input[type=search] {
+  appearance: textfield;
 }

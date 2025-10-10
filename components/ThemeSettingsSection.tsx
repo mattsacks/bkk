@@ -1,52 +1,54 @@
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
-import store from "store2";
+import { useEffect, useState } from "react";
 
-import NoSSR from "@/components/NoSSR";
-import { COLOR_SCHEME_KEY, THEME } from "@/lib/types";
+import { isServer } from "@/lib/isServer";
+import { Themes } from "@/lib/types";
 import useColorScheme from "@/lib/useColorScheme";
 import useTheme from "@/lib/useTheme";
 
-let cachedRendered = false;
-
 /**
  * Displays available themes for the user to choose from in the Settings page.
- *
- * NOTE: Default export is wrapped with <NoSSR />
  */
-function ThemeSettingsSection() {
-  const [currentTheme, changeTheme] = useTheme();
-  const [hasRendered, setHasRendered] = useState(cachedRendered);
-  const [colorScheme, setColorScheme] = useColorScheme();
+export function ThemeSettingsSection() {
+  const [hasRendered, setHasRendered] = useState(false);
+  const [userTheme, setUserTheme] = useTheme();
+  const [userColorScheme, setUserColorScheme] = useColorScheme();
 
-  // Used to prevent a className mismatch when highlighting the current theme
-  // (stored in localStorage).
   useEffect(() => {
-    if (!hasRendered) {
-      cachedRendered = true;
+    if (!isServer) {
       setHasRendered(true);
     }
   }, [hasRendered]);
 
-  const ThemeSwatches = Object.entries(THEME).map(([themeKey, themeName]) => {
-    const isCurrentTheme = hasRendered && themeKey === currentTheme;
+  const ThemeSwatches = Themes.map((theme) => {
+    const isCurrentTheme = theme === userTheme;
 
     return (
-      <div key={themeKey}>
+      <div key={theme}>
         <button
           className={classNames("theme-swatch", {
             underline: isCurrentTheme
           })}
-          data-theme={themeKey}
+          data-theme={theme}
+          /*
+           * NOTE: Only necessary until light-dark() or container style queries
+           * are baseline supported. CSS variables will be able to inherit from
+           * the context.
+           */
+          data-color-scheme={userColorScheme}
           onClick={() => {
-            changeTheme(themeKey as keyof typeof THEME);
+            setUserTheme(theme);
           }}
         >
-          {themeName}
+          {theme}
         </button>
       </div>
     );
   });
+
+  if (!hasRendered) {
+    return <section></section>;
+  }
 
   return (
     <section>
@@ -58,36 +60,26 @@ function ThemeSettingsSection() {
           role="group"
         >
           <button
-            className={colorScheme === "light" ? "underline" : ""}
+            className={userColorScheme === "light" ? "underline" : ""}
             onClick={() => {
-              store.set(COLOR_SCHEME_KEY, "light");
-              setColorScheme("light");
+              setUserColorScheme("light");
             }}
           >
             Light
           </button>
           <button
-            className={colorScheme === "dark" ? "underline" : ""}
+            className={userColorScheme === "dark" ? "underline" : ""}
             onClick={() => {
-              store.set(COLOR_SCHEME_KEY, "dark");
-              setColorScheme("dark");
+              setUserColorScheme("dark");
             }}
           >
             Dark
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-gutter md:grid-cols-3">
         {ThemeSwatches}
       </div>
     </section>
-  );
-}
-
-export default function ClientThemeSettingsSection() {
-  return (
-    <NoSSR>
-      <ThemeSettingsSection />
-    </NoSSR>
   );
 }

@@ -5,8 +5,9 @@ import React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { mutate } from "swr";
 
+import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
-import Nav, { NavItem } from "@/components/Nav";
+import { isServer } from "@/lib/isServer";
 import request from "@/lib/request";
 import { QueuedTrack } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
@@ -107,125 +108,122 @@ export default function QueueItemPage() {
     }
   });
 
-  // TODO: Load the queue on the server
-  if (isValidating) {
+  if (isServer || isValidating) {
     return (
-      <div className="app-container flex flex-1 flex-col">
-        <Nav>
-          <NavItem href="/queue" text="&lt; view queue" />
-          <NavItem href="/" text="search songs &gt;" />
-        </Nav>
-        <Loading />
-      </div>
+      <>
+        <AppNav />
+        <div className="app-container flex flex-1 flex-col">
+          <Loading />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="app-container flex flex-1 flex-col">
-      <Nav>
-        <NavItem href="/queue" text="&lt; view queue" />
-        <NavItem href="/" text="search songs &gt;" />
-      </Nav>
-      <div className="flex flex-1 flex-col text-center">
-        <div className="">
-          <div className="flex items-center">
-            <div className="flex-1 text-left">
-              {index !== 0 && (
-                <Link
-                  className="block text-center sm:text-left"
-                  href={`/queue/${queue[index - 1]?.id}`}
-                  replace
-                >
-                  &lt;{" "}
-                  <span className="hidden sm:inline">
-                    {getLabel(index - 1)}
-                  </span>
-                </Link>
-              )}
+    <>
+      <AppNav />
+      <div className="app-container flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col text-center">
+          <div className="">
+            <div className="flex items-center">
+              <div className="flex-1 text-left">
+                {index !== 0 && (
+                  <Link
+                    className="block text-center sm:text-left"
+                    href={`/queue/${queue[index - 1]?.id}`}
+                    replace
+                  >
+                    &lt;{" "}
+                    <span className="hidden sm:inline">
+                      {getLabel(index - 1)}
+                    </span>
+                  </Link>
+                )}
+              </div>
+              <div className="px-6 text-3xl">{getLabel(index)}</div>
+              <div className="flex-1 text-right">
+                {index !== queue.length - 1 && (
+                  <Link
+                    className="block text-center sm:ml-0 sm:text-right"
+                    href={`/queue/${queue[index + 1]?.id}`}
+                    replace
+                  >
+                    <span className="hidden sm:inline">
+                      {getLabel(index + 1)}
+                    </span>{" "}
+                    &gt;
+                  </Link>
+                )}
+              </div>
             </div>
-            <div className="px-6 text-3xl">{getLabel(index)}</div>
-            <div className="flex-1 text-right">
-              {index !== queue.length - 1 && (
-                <Link
-                  className="block text-center sm:ml-0 sm:text-right"
-                  href={`/queue/${queue[index + 1]?.id}`}
-                  replace
-                >
-                  <span className="hidden sm:inline">
-                    {getLabel(index + 1)}
-                  </span>{" "}
-                  &gt;
-                </Link>
-              )}
+            <div className="">{queueData.user_name}</div>
+          </div>
+          <div className="mt-6 flex-1 md:mt-9">
+            {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
+            <div className="mx-auto mb-0.5 max-w-[20ch] text-2xl capitalize leading-none md:max-w-none">
+              {queueData.song_name}
             </div>
+            <div className="capitalize">{queueData.artist}</div>
           </div>
-          <div className="">{queueData.user_name}</div>
         </div>
-        <div className="mt-6 flex-1 md:mt-9">
-          {/* TODO: Use text-balance instead of max-width when supported in Safari. */}
-          <div className="mx-auto mb-0.5 max-w-[20ch] text-2xl capitalize leading-none md:max-w-none">
-            {queueData.song_name}
+        <div className="mb-3 flex justify-between">
+          {index === 0 ? (
+            <div />
+          ) : (
+            <button
+              className="mr-1 underline"
+              onClick={() => {
+                if (index === 1) {
+                  replaceCurrentSong.showDialog();
+                } else {
+                  moveInQueue("up");
+                }
+              }}
+            >
+              {index === 1 ? "sing now" : "sing sooner"} (#{index + 1 - 1})
+            </button>
+          )}
+          {index === queue.length - 1 ? (
+            <div />
+          ) : (
+            <button
+              className="ml-1 underline"
+              onClick={() => {
+                if (index === 0) {
+                  skipCurrentSong.showDialog();
+                } else {
+                  moveInQueue("down");
+                }
+              }}
+            >
+              {index === 0 ? "sing next" : "sing later"} (#{index + 2})
+            </button>
+          )}
+        </div>
+        <div className="mx-auto mb-3">
+          <button
+            className="outline-button"
+            onClick={async () => removeSong.showDialog()}
+          >
+            remove from queue
+          </button>
+        </div>
+        <Dialog {...removeSong}>
+          <div className="w-56 text-center leading-tight">
+            remove song from queue?
           </div>
-          <div className="capitalize">{queueData.artist}</div>
-        </div>
+        </Dialog>
+        <Dialog {...skipCurrentSong}>
+          <div className="w-56 text-center leading-tight">
+            move the current playing song next?
+          </div>
+        </Dialog>
+        <Dialog {...replaceCurrentSong}>
+          <div className="w-56 text-center leading-tight">
+            sing this song now? this will replace the current song
+          </div>
+        </Dialog>
       </div>
-      <div className="mb-3 flex justify-between">
-        {index === 0 ? (
-          <div />
-        ) : (
-          <button
-            className="mr-1 underline"
-            onClick={() => {
-              if (index === 1) {
-                replaceCurrentSong.showDialog();
-              } else {
-                moveInQueue("up");
-              }
-            }}
-          >
-            {index === 1 ? "sing now" : "sing sooner"} (#{index + 1 - 1})
-          </button>
-        )}
-        {index === queue.length - 1 ? (
-          <div />
-        ) : (
-          <button
-            className="ml-1 underline"
-            onClick={() => {
-              if (index === 0) {
-                skipCurrentSong.showDialog();
-              } else {
-                moveInQueue("down");
-              }
-            }}
-          >
-            {index === 0 ? "sing next" : "sing later"} (#{index + 2})
-          </button>
-        )}
-      </div>
-      <div className="mx-auto mb-3">
-        <button
-          className="outline-button"
-          onClick={async () => removeSong.showDialog()}
-        >
-          remove from queue
-        </button>
-      </div>
-      <Dialog {...removeSong}>
-        <div className="w-56 text-center leading-tight">
-          remove song from queue?
-        </div>
-      </Dialog>
-      <Dialog {...skipCurrentSong}>
-        <div className="w-56 text-center leading-tight">
-          move the current playing song next?
-        </div>
-      </Dialog>
-      <Dialog {...replaceCurrentSong}>
-        <div className="w-56 text-center leading-tight">
-          sing this song now? this will replace the current song
-        </div>
-      </Dialog>
-    </div>
+    </>
   );
 }

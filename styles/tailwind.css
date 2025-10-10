@@ -1,10 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer utilities {
-  .submit-disabled {
-    @apply opacity-25 pointer-events-none;
-  }
-}
-
+@import "tailwindcss";

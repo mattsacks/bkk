@@ -1,3 +1,3 @@
 .invert {
-  @apply bg-primary text-secondary;
+  @apply bg-accent text-background;
 }

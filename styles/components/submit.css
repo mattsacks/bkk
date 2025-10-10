@@ -1,12 +1,12 @@
 .submit {
-  @apply
-    bg-primary
-    cursor-pointer
-    duration-200
-    ease-in-out
-    p-2
-    text-secondary
-    transition-opacity;
+  cursor: pointer;
+  transition: opacity 200 ease-in-out;
+  padding: var(--gutter);
+
+  &:disabled {
+    cursor: initial;
+    opacity: 0.5;
+  }
 }
 
 .submit-wide {

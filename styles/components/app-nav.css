@@ -1,0 +1,70 @@
+.app-nav {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius);
+  color: var(--color-accent);
+  margin-inline: var(--gutter);
+  margin-top: var(--gutter);
+
+  @container main (width > 30rem) {
+    margin-inline: auto;
+    max-width: 30rem;
+    width: stretch;
+  }
+}
+
+.app-nav-list {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+
+.app-nav-item {
+  /* Prevent margin collapse. */
+  display: flex;
+}
+
+.app-nav-link {
+  border-radius: max(calc(var(--border-radius) - var(--border-width)), 1px);
+  display: inline-block;
+  margin: calc(var(--border-width) * 2);
+  padding-block: var(--gutter);
+  text-align: center;
+  transition: all 0.15s ease-in-out;
+  width: 100%;
+
+  &.active-nav-link {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.app-nav-icon {
+  --size: var(--app-nav-icon-size, 0.75em);
+  height: var(--size);
+  margin-inline: auto;
+  width: var(--size);
+
+  &+.app-nav-label {
+    margin-block-start: 8px;
+    display: block;
+  }
+}
+
+.app-nav-label {
+  font-size: 0.875rem;
+
+  @supports(text-box-edge: cap alphabetic) {
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
+  @supports not (text-box-edge: cap alphabetic) {
+    line-height: 0;
+  }
+}

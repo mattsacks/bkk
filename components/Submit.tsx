@@ -1,13 +1,13 @@
 import cntl from "cntl";
 
 export const submit = cntl`
-  bg-primary
+  bg-accent
   cursor-pointer
   duration-200
   ease-in-out
   mt-6
   p-2
-  text-secondary
+  text-background
   transition-opacity;
 `;
 

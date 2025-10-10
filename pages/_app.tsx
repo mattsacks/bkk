@@ -7,38 +7,31 @@ import React from "react";
 import { RecoilRoot } from "recoil";
 import { SWRConfig } from "swr";
 
-import NoSSR from "@/components/NoSSR";
 import { fetcher } from "@/lib/request";
 import useColorScheme from "@/lib/useColorScheme";
-import useTheme from "@/lib/useTheme";
-
-// Add color-scheme handling to all pages on the client
-function AppColorScheme() {
-  useColorScheme();
-  return null;
-}
 
 function BKK({ Component, pageProps }: AppProps) {
-  // Add body[data-theme] to every page
-  useTheme();
+  // Attaches event handler for system colorscheme changes
+  useColorScheme();
 
   return (
     <React.Fragment>
       <Head>
-        <meta name="author" content="#PDXBROLIFE" />
+        <meta name="author" content="Matt Sacks" />
         <meta
           name="description"
-          content="Baby Ketten Karaoke private room app"
+          content="Sing songz in ur private karaokee roomz"
         />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
-
         <meta property="og:image" content="/assets/bkk-logo.png" />
-        <meta property="og:description" content="BKK's app to sing songz" />
+        <meta
+          property="og:description"
+          content="Sing songz in ur private karaokee roomz"
+        />
         <meta property="og:title" content="Baby Ketten Karaoke" />
-
         <link rel="shortcut icon" href="/assets/favicon.png" sizes="32x32" />
         <link
           rel="shortcut icon"
@@ -49,10 +42,9 @@ function BKK({ Component, pageProps }: AppProps) {
       </Head>
       <RecoilRoot>
         <SWRConfig value={{ fetcher }}>
-          <NoSSR>
-            <AppColorScheme />
-          </NoSSR>
-          <Component {...pageProps} />
+          <main>
+            <Component {...pageProps} />
+          </main>
         </SWRConfig>
       </RecoilRoot>
     </React.Fragment>

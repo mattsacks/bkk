@@ -1,5 +1,10 @@
-@layer components {
-  .app-container {
-    @apply min-h-full px-3 max-w-full w-full md:max-w-lg md:mx-auto;
+.app-container {
+  margin-block: var(--gutter-2);
+  margin-inline: var(--gutter);
+  width: stretch;
+
+  @container main (width > 30rem) {
+    margin-inline: auto;
+    max-width: 30rem;
   }
 }

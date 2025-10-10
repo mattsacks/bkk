@@ -1,12 +1,10 @@
-@layer utilities {
-  .remove-line-height {
-    @supports(text-box-edge: cap alphabetic) {
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
-    }
+.remove-line-height {
+  @supports(text-box-edge: cap alphabetic) {
+    text-box-edge: text;
+    text-box-trim: trim-both;
+  }
 
-    @supports not (text-box-edge: cap alphabetic) {
-      line-height: 0;
-    }
+  @supports not (text-box-edge: cap alphabetic) {
+    line-height: 0;
   }
 }
