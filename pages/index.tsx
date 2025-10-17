@@ -1,18 +1,16 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { useRecoilState } from "recoil";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import SongList from "@/components/SongList";
 import SongSearch from "@/components/SongSearch";
-import { isServer } from "@/lib/isServer";
 import songSearch from "@/lib/songSearch";
 import { Song } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
-import tokenState from "@/store/atoms/tokenState";
+import { useToken } from "@/lib/useToken";
 
 const Dialog = dynamic(() => import("@/components/Dialog"), {
   ssr: false
@@ -20,7 +18,7 @@ const Dialog = dynamic(() => import("@/components/Dialog"), {
 
 function Index() {
   const [searchQuery, setSearchQuery] = useState<string | undefined>();
-  const [token, setToken] = useRecoilState(tokenState);
+  const [_, setToken] = useToken();
   const router = useRouter();
 
   const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
@@ -43,6 +41,7 @@ function Index() {
 
   function leaveRoom() {
     setToken(undefined);
+    router.push("/login");
   }
 
   const leaveRoomDialog = useDialog({
@@ -52,16 +51,7 @@ function Index() {
     }
   });
 
-  if (typeof window !== "undefined" && !token && router.isReady) {
-    router.replace({
-      pathname: "/login",
-      query: router.query
-    });
-
-    return null;
-  }
-
-  const showLoading = isLoading || isServer;
+  const showLoading = isLoading;
 
   return (
     <>

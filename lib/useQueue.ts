@@ -1,14 +1,13 @@
-import { useRecoilState } from "recoil";
 import useSWR from "swr";
 
 import { QueuedTrack } from "@/lib/types";
-import tokenState from "@/store/atoms/tokenState";
 
 import formatTracks from "./formatTracks";
 import { fetcher } from "./request";
+import { useToken } from "./useToken";
 
 export default function useQueue() {
-  const [token] = useRecoilState(tokenState);
+  const [token] = useToken();
 
   const { data, ...rest } = useSWR<QueuedTrack[]>(
     token ? "/playlist" : null,

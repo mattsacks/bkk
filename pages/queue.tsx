@@ -1,7 +1,5 @@
 // View the current queue
-import { useRouter } from "next/router";
 import React from "react";
-import { useRecoilValue } from "recoil";
 import useSWR from "swr";
 
 import AppNav from "@/components/AppNav";
@@ -10,20 +8,14 @@ import { QueueActions } from "@/components/QueueActions";
 import QueueList from "@/components/QueueList";
 import { isServer } from "@/lib/isServer";
 import useQueue from "@/lib/useQueue";
-import tokenState from "@/store/atoms/tokenState";
+import { useToken } from "@/lib/useToken";
 
 export default function QueuePage() {
-  const token = useRecoilValue(tokenState);
-  const router = useRouter();
+  const token = useToken();
   const { queue } = useQueue();
   const hasQueuedTracks = queue && queue.length > 0;
 
   const { data: user = {}, isLoading } = useSWR(token && "/whoami");
-
-  if (!token && router.isReady) {
-    router.replace("/login");
-    return null;
-  }
 
   if (isServer || isLoading) {
     return (

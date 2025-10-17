@@ -6,18 +6,17 @@ import React, {
   useRef,
   useState
 } from "react";
-import { useSetRecoilState } from "recoil";
-import tokenState from "store/atoms/tokenState";
 
 import Loading from "@/components/Loading";
 import usePost from "@/lib/usePost";
+import { useToken } from "@/lib/useToken";
 
 interface Response {
   token: string;
 }
 
 function LoginForm() {
-  const setToken = useSetRecoilState(tokenState);
+  const [_, setToken] = useToken();
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
   const roomRef = useRef<HTMLInputElement>(null);
@@ -40,8 +39,9 @@ function LoginForm() {
   useEffect(() => {
     if (data) {
       setToken(data.token);
+      router.push("/");
     }
-  }, [data, setToken]);
+  }, [data, router, setToken]);
 
   let errorMessage = error;
   if (error === "Bad Request") {

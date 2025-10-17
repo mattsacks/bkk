@@ -4,15 +4,17 @@ import "@/styles/index.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
-import { RecoilRoot } from "recoil";
 import { SWRConfig } from "swr";
 
+import { DataContext, useInitializeToken } from "@/components/DataContext";
 import { fetcher } from "@/lib/request";
 import useColorScheme from "@/lib/useColorScheme";
 
 function BKK({ Component, pageProps }: AppProps) {
   // Attaches event handler for system colorscheme changes
   useColorScheme();
+
+  const [token, setToken] = useInitializeToken();
 
   return (
     <React.Fragment>
@@ -40,13 +42,13 @@ function BKK({ Component, pageProps }: AppProps) {
         />
         <title>Baby Ketten Karaoke</title>
       </Head>
-      <RecoilRoot>
+      <DataContext value={{ token, setToken }}>
         <SWRConfig value={{ fetcher }}>
           <main>
             <Component {...pageProps} />
           </main>
         </SWRConfig>
-      </RecoilRoot>
+      </DataContext>
     </React.Fragment>
   );
 }

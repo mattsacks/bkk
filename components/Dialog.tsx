@@ -74,7 +74,7 @@ export default function Dialog(props: DialogProps) {
     <dialog
       {...{
         ...dialogProps,
-        inert: !isShowing ? "" : undefined
+        inert: !isShowing ? true : undefined
       }}
       ref={dialogRef}
     >
