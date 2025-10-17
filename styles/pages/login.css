@@ -33,7 +33,6 @@
 .login-heading h1 {
   --text: var(--color-background);
   --background: var(--color-accent);
-
   color: var(--text);
   font-size: var(--text-4xl);
   text-shadow:

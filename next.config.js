@@ -11,31 +11,6 @@ module.exports = {
         ]
       }
     ];
-  },
-  async redirects() {
-    return [
-      {
-        source: "/((?!login$|assets/).*)",
-        missing: [
-          {
-            type: "cookie",
-            key: "mathis_user"
-          }
-        ],
-        destination: "/login",
-        permanent: false
-      },
-      {
-        source: "/login",
-        has: [
-          {
-            type: "cookie",
-            key: "mathis_user"
-          }
-        ],
-        destination: "/",
-        permanent: false
-      }
-    ];
   }
+  // Redirects handled in middleware to avoid hydration mismatch
 };

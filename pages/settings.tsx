@@ -1,13 +1,11 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
 
 import AppNav from "@/components/AppNav";
 import { HeartIcon } from "@/components/Heart";
 import { ThemeSettingsSection } from "@/components/ThemeSettingsSection";
 import useDialog from "@/lib/useDialog";
-import searchState from "@/store/atoms/searchState";
-import tokenState from "@/store/atoms/tokenState";
+import { useToken } from "@/lib/useToken";
 
 const Dialog = dynamic(() => import("@/components/Dialog"), {
   ssr: false
@@ -15,11 +13,9 @@ const Dialog = dynamic(() => import("@/components/Dialog"), {
 
 export default function Settings() {
   const router = useRouter();
-  const setSearchQuery = useSetRecoilState(searchState);
-  const setToken = useSetRecoilState(tokenState);
+  const [_, setToken] = useToken();
 
   function leaveRoom() {
-    setSearchQuery("");
     setToken(undefined);
     router.push("/login");
   }

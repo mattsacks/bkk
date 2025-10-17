@@ -1,16 +1,15 @@
-import { useRecoilState } from "recoil";
 import useSWR, { SWRConfiguration } from "swr";
 
 import { Song } from "@/lib/types";
-import tokenState from "@/store/atoms/tokenState";
 
 import formatTracks from "./formatTracks";
 import { fetcher } from "./request";
+import { useToken } from "./useToken";
 
 type SongData = Song[];
 
 export default function useSongs(swrOptions: SWRConfiguration<SongData> = {}) {
-  const [token] = useRecoilState(tokenState);
+  const [token] = useToken();
 
   const { data, ...rest } = useSWR<SongData>(
     token ? "/songs" : null,
