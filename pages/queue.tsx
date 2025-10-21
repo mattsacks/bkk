@@ -6,7 +6,6 @@ import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import { QueueActions } from "@/components/QueueActions";
 import QueueList from "@/components/QueueList";
-import { isServer } from "@/lib/isServer";
 import useQueue from "@/lib/useQueue";
 import { useToken } from "@/lib/useToken";
 
@@ -17,7 +16,7 @@ export default function QueuePage() {
 
   const { data: user = {}, isLoading } = useSWR(token && "/whoami");
 
-  if (isServer || isLoading) {
+  if (isLoading) {
     return (
       <>
         <AppNav />
