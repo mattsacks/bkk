@@ -11,7 +11,7 @@ import useQueue from "@/lib/useQueue";
 import { useToken } from "@/lib/useToken";
 
 export default function QueuePage() {
-  const token = useToken();
+  const [token] = useToken();
   const { queue } = useQueue();
   const hasQueuedTracks = queue && queue.length > 0;
 
