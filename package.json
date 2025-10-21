@@ -64,5 +64,8 @@
     ">0.5%",
     "last 2.5 years",
     "not dead"
-  ]
+  ],
+  "engines": {
+    "node": "^22.0.0"
+  }
 }
