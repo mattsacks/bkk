@@ -7,7 +7,6 @@ import { mutate } from "swr";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
-import { isServer } from "@/lib/isServer";
 import request from "@/lib/request";
 import { QueuedTrack } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
@@ -31,7 +30,7 @@ export default function QueueItemPage() {
   const router = useRouter();
   const id = parseInt(router.query.id as string);
 
-  const { queue, isValidating } = useQueue();
+  const { queue, isLoading } = useQueue();
 
   const queueData = queue.find((item) => item.id === id) ?? ({} as QueuedTrack);
   const index = queue.indexOf(queueData) ?? -1;
@@ -108,7 +107,7 @@ export default function QueueItemPage() {
     }
   });
 
-  if (isServer || isValidating) {
+  if (isLoading) {
     return (
       <>
         <AppNav />
