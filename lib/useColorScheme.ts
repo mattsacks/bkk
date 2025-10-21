@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 
-import { COLOR_SCHEME_COOKIE, ColorScheme, SECONDS_IN_DAY } from "@/lib/types";
+import { COLOR_SCHEME_COOKIE, ColorScheme, MAX_COOKIE_DAYS } from "@/lib/types";
 
 import { isServer } from "./isServer";
 
@@ -28,7 +28,7 @@ export default function useColorScheme() {
       // system.
       if (newColorScheme !== colorScheme) {
         Cookies.set(COLOR_SCHEME_COOKIE, newColorScheme, {
-          expires: SECONDS_IN_DAY * 7
+          expires: MAX_COOKIE_DAYS
         });
       }
     },

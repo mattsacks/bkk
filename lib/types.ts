@@ -1,6 +1,8 @@
 // --- Local ---
 
 export const SECONDS_IN_DAY = 86_400;
+export const MAX_COOKIE_DAYS = 400;
+
 export const SEARCH_KEY = "mathis_search";
 export const USER_COOKIE = "mathis_user";
 export const THEME_COOKIE = "bkk_theme";

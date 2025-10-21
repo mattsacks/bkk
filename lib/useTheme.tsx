@@ -3,7 +3,13 @@
 import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 
-import { SECONDS_IN_DAY, Theme, THEME_COOKIE, Themes } from "@/lib/types";
+import {
+  MAX_COOKIE_DAYS,
+  SECONDS_IN_DAY,
+  Theme,
+  THEME_COOKIE,
+  Themes
+} from "@/lib/types";
 
 import { isServer } from "./isServer";
 
@@ -35,7 +41,7 @@ export default function useTheme() {
     setTheme(theme);
 
     Cookies.set(THEME_COOKIE, theme, {
-      expires: SECONDS_IN_DAY * 7
+      expires: MAX_COOKIE_DAYS
     });
   }, []);
 

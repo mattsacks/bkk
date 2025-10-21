@@ -3,7 +3,7 @@ import { useCallback, useContext } from "react";
 
 import { DataContext } from "@/components/DataContext";
 
-import { SECONDS_IN_DAY, USER_COOKIE } from "./types";
+import { USER_COOKIE } from "./types";
 
 export function useToken() {
   const { token, setToken } = useContext(DataContext);
@@ -12,7 +12,7 @@ export function useToken() {
     (newToken: string | undefined) => {
       if (newToken) {
         Cookies.set(USER_COOKIE, newToken, {
-          expires: SECONDS_IN_DAY
+          expires: 1
         });
       } else {
         Cookies.remove(USER_COOKIE);
