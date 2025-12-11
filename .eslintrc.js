@@ -1,12 +1,8 @@
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "prettier", "jsx-a11y", "simple-import-sort"],
-  extends: [
-    "next",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
+  plugins: ["@typescript-eslint", "jsx-a11y", "simple-import-sort"],
+  extends: ["next", "plugin:@typescript-eslint/recommended"],
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/ban-ts-comment": "off",
