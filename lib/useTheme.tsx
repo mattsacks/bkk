@@ -3,13 +3,7 @@
 import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  MAX_COOKIE_DAYS,
-  SECONDS_IN_DAY,
-  Theme,
-  THEME_COOKIE,
-  Themes
-} from "@/lib/types";
+import { MAX_COOKIE_DAYS, Theme, THEME_COOKIE, Themes } from "@/lib/types";
 
 import { isServer } from "./isServer";
 

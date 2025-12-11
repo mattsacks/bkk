@@ -8,7 +8,8 @@ import { SearchIcon } from "./icons/SearchIcon";
 import { SettingsIcon } from "./icons/SettingsIcon";
 
 interface AppNavLinkProps
-  extends LinkProps,
+  extends
+    LinkProps,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
   /**
    * Regex matcher for the active pathname for this link. Overrides direct
