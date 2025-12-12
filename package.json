@@ -19,7 +19,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "3.0.5",
     "lodash": "^4.17.21",
-    "next": "15.5.8",
+    "next": "15.5.9",
     "npm": "^10.5.0",
     "postcss": "^8.5.6",
     "postcss-easy-import": "^4.0.0",
