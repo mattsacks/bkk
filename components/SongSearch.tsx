@@ -4,11 +4,11 @@ import { useMemo, useRef } from "react";
 
 interface SongSearchProps {
   onSearch: (query?: string) => void;
+  searchQuery?: string;
 }
 
-function SongSearch({ onSearch }: SongSearchProps) {
+function SongSearch({ onSearch, searchQuery }: SongSearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchQuery = inputRef.current?.value;
 
   const debouncedSearchSongs = useMemo(() => {
     return debounce(onSearch, 333);

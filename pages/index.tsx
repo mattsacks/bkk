@@ -75,7 +75,7 @@ function Index() {
       ) : (
         <div className="app-container flex flex-1 flex-col items-center gap-gutter">
           <div className="bg-background sticky top-0 z-10 w-full">
-            <SongSearch onSearch={onSearch} />
+            <SongSearch onSearch={onSearch} searchQuery={searchQuery} />
           </div>
           <div className="mt-gutter w-full flex-1">
             {searchQuery && <SongList songs={filteredSongs} />}
