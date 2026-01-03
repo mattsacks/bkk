@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import SongList from "@/components/SongList";
 import SongSearch from "@/components/SongSearch";
 import songSearch from "@/lib/songSearch";
-import { Song } from "@/lib/types";
+import { SEARCH_KEY } from "@/lib/types";
 import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
 import { useToken } from "@/lib/useToken";
@@ -21,23 +21,35 @@ function Index() {
   const [_, setToken] = useToken();
   const router = useRouter();
 
-  const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
-
   const { songs, isLoading } = useSongs();
 
-  // Cached so debounced handler can persist between updates
-  const onSearch = useCallback(
-    (query?: string) => {
-      setSearchQuery(query);
+  // Load previous query from storage
+  useEffect(() => {
+    const prevQuery = localStorage.getItem(SEARCH_KEY);
 
-      if (typeof query === "string") {
-        setFilteredSongs(songSearch(query, songs));
-      } else {
-        setFilteredSongs([]);
-      }
-    },
-    [songs]
-  );
+    if (prevQuery) {
+      setSearchQuery(prevQuery);
+    }
+  }, []);
+
+  // Derive filtered songs from search query and songs
+  const filteredSongs = useMemo(() => {
+    if (typeof searchQuery === "string" && searchQuery) {
+      return songSearch(searchQuery, songs);
+    }
+    return [];
+  }, [searchQuery, songs]);
+
+  // Cached so debounced handler can persist between updates
+  const onSearch = useCallback((query?: string) => {
+    setSearchQuery(query);
+
+    if (query) {
+      localStorage.setItem(SEARCH_KEY, query);
+    } else {
+      localStorage.removeItem(SEARCH_KEY);
+    }
+  }, []);
 
   function leaveRoom() {
     setToken(undefined);

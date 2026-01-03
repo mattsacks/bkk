@@ -32,6 +32,7 @@ function SongSearch({ onSearch, searchQuery }: SongSearchProps) {
           autoComplete="off"
           autoCorrect="off"
           className="input w-full"
+          defaultValue={searchQuery}
           enterKeyHint="search"
           id="song-search-input"
           name="search"
