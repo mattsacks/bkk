@@ -3,8 +3,6 @@ import "@/styles/index.css";
 
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { Activity } from "react";
 import React from "react";
 import { SWRConfig } from "swr";
 
@@ -12,15 +10,11 @@ import { DataContext, useInitializeToken } from "@/components/DataContext";
 import { fetcher } from "@/lib/request";
 import useColorScheme from "@/lib/useColorScheme";
 
-import IndexPage from "./index";
-
 function BKK({ Component, pageProps }: AppProps) {
   // Attaches event handler for system colorscheme changes
   useColorScheme();
 
   const [token, setToken] = useInitializeToken();
-  const router = useRouter();
-  const isIndexPage = router.pathname === "/";
 
   return (
     <React.Fragment>
@@ -51,10 +45,7 @@ function BKK({ Component, pageProps }: AppProps) {
       <DataContext value={{ token, setToken }}>
         <SWRConfig value={{ fetcher }}>
           <main>
-            <Activity mode={isIndexPage ? "visible" : "hidden"}>
-              <IndexPage {...pageProps} />
-            </Activity>
-            {!isIndexPage && <Component {...pageProps} />}
+            <Component {...pageProps} />
           </main>
         </SWRConfig>
       </DataContext>
