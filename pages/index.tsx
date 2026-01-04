@@ -24,7 +24,7 @@ function Index() {
 
   // Load previous query from storage
   useEffect(() => {
-    const prevQuery = SongSearch.queries[0];
+    const prevQuery = SongSearch.activeQuery;
 
     if (prevQuery) {
       setSearchQuery(prevQuery);
@@ -40,8 +40,9 @@ function Index() {
   }, [searchQuery, songs]);
 
   // Cached so debounced handler can persist between updates
-  const onSearch = useCallback((query?: string) => {
+  const onSearch = useCallback((query = "") => {
     setSearchQuery(query);
+    SongSearch.activeQuery = query;
 
     if (query) {
       SongSearch.addQuery(query);

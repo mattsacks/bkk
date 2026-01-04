@@ -1,33 +1,8 @@
 import { orderBy } from "lodash";
 
-import { SEARCH_KEY,Song } from "./types";
+import { ACTIVE_SEARCH_KEY, SEARCH_KEY, Song } from "./types";
 
 export class SongSearch {
-  private static calculateRelevanceScore(
-    searchTerm: string,
-    targetString: string
-  ): number {
-    const search = searchTerm.toLowerCase();
-    const target = targetString.toLowerCase();
-    let score = 0;
-
-    // Exact match bonus (highest priority)
-    if (target === search) score += 1000;
-
-    // Starts with bonus
-    if (target.startsWith(search)) score += 500;
-
-    // Word boundary bonus
-    if (target.match(new RegExp(`\\b${search}`, "i"))) score += 300;
-
-    // Length factor (shorter is better for same match)
-    if (target.includes(search)) {
-      score += 100 - target.length;
-    }
-
-    return score;
-  }
-
   /**
    * Filters all loaded songs by a search query.
    *
@@ -72,7 +47,7 @@ export class SongSearch {
   }
 
   /**
-   * Adds a query to the store.
+   * Adds a query to the previous query history.
    */
   static addQuery(query: string) {
     const trimmed = query.trim();
@@ -98,41 +73,10 @@ export class SongSearch {
     this.queries = queries;
   }
 
-  private static _queries: string[] = [];
-  private static _queriesInitialized = false;
-
-  private static _initializeQueries() {
-    if (this._queriesInitialized) {
-      return;
-    }
-
-    // Check if we're in a browser environment with localStorage available
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
-      this._queries = [];
-      this._queriesInitialized = true;
-      return;
-    }
-
-    try {
-      const stored = localStorage.getItem(SEARCH_KEY);
-      if (!stored) {
-        this._queries = [];
-      } else {
-        const parsed = JSON.parse(stored);
-        this._queries = Array.isArray(parsed) ? parsed : [];
-      }
-    } catch {
-      this._queries = [];
-    }
-
-    this._queriesInitialized = true;
-  }
-
   /**
    * Gets the user's previous queries.
    */
   static get queries(): string[] {
-    this._initializeQueries();
     return this._queries;
   }
 
@@ -141,7 +85,6 @@ export class SongSearch {
    */
   static set queries(queries: string[]) {
     this._queries = queries;
-    this._queriesInitialized = true;
     try {
       localStorage.setItem(SEARCH_KEY, JSON.stringify(queries));
     } catch {}
@@ -152,9 +95,90 @@ export class SongSearch {
    */
   static clearQueries() {
     this._queries = [];
-    this._queriesInitialized = true;
     try {
       localStorage.removeItem(SEARCH_KEY);
     } catch {}
   }
+
+  private static _queries: string[] = [];
+  private static _activeQuery = "";
+
+  static {
+    // Initialize from localStorage if available
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      try {
+        const storedQueries = localStorage.getItem(SEARCH_KEY);
+
+        if (storedQueries) {
+          const parsed = JSON.parse(storedQueries);
+          this._queries = Array.isArray(parsed) ? parsed : [];
+        }
+      } catch {
+        this._queries = [];
+      }
+
+      try {
+        const storedActive = localStorage.getItem(ACTIVE_SEARCH_KEY);
+        this._activeQuery = storedActive ?? "";
+      } catch {
+        this._activeQuery = "";
+      }
+    }
+  }
+
+  /**
+   * Gets the user's active input query.
+   */
+  static get activeQuery(): string {
+    return this._activeQuery;
+  }
+
+  /**
+   * Updates the user's active input query.
+   */
+  static set activeQuery(query: string) {
+    this._activeQuery = query;
+    try {
+      localStorage.setItem(ACTIVE_SEARCH_KEY, query);
+    } catch {}
+  }
+
+  /**
+   * Clears the user's active input query.
+   */
+  static clearActiveQuery() {
+    this._activeQuery = "";
+    try {
+      localStorage.removeItem(ACTIVE_SEARCH_KEY);
+    } catch {}
+  }
+
+  /**
+   * Calculates a relevance score for a search term against a target string.
+   */
+  private static calculateRelevanceScore(
+    searchTerm: string,
+    targetString: string
+  ): number {
+    const search = searchTerm.toLowerCase();
+    const target = targetString.toLowerCase();
+    let score = 0;
+
+    // Exact match bonus (highest priority)
+    if (target === search) score += 1000;
+
+    // Starts with bonus
+    if (target.startsWith(search)) score += 500;
+
+    // Word boundary bonus
+    if (target.match(new RegExp(`\\b${search}`, "i"))) score += 300;
+
+    // Length factor (shorter is better for same match)
+    if (target.includes(search)) {
+      score += 100 - target.length;
+    }
+
+    return score;
+  }
+
 }

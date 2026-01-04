@@ -7,6 +7,8 @@ export const MAX_COOKIE_DAYS = 400;
 
 /** Storage key for user's previous search queries. */
 export const SEARCH_KEY = "mathis_search";
+/** Storage key for user's active input query. */
+export const ACTIVE_SEARCH_KEY = "mathis_search_active";
 /** User authentication token. */
 export const USER_COOKIE = "mathis_user";
 /** User preferred theme token. */
