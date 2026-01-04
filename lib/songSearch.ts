@@ -1,6 +1,10 @@
 import { orderBy } from "lodash";
 
-import { ACTIVE_SEARCH_KEY, SEARCH_KEY, Song } from "./types";
+import {
+  ACTIVE_SEARCH_KEY,
+  PREVIOUS_QUERIES_KEY,
+  Song
+} from "./types";
 
 export class SongSearch {
   /**
@@ -86,7 +90,7 @@ export class SongSearch {
   static set queries(queries: string[]) {
     this._queries = queries;
     try {
-      localStorage.setItem(SEARCH_KEY, JSON.stringify(queries));
+      localStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
     } catch {}
   }
 
@@ -96,7 +100,7 @@ export class SongSearch {
   static clearQueries() {
     this._queries = [];
     try {
-      localStorage.removeItem(SEARCH_KEY);
+      localStorage.removeItem(PREVIOUS_QUERIES_KEY);
     } catch {}
   }
 
@@ -105,9 +109,9 @@ export class SongSearch {
 
   static {
     // Initialize from localStorage if available
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       try {
-        const storedQueries = localStorage.getItem(SEARCH_KEY);
+        const storedQueries = localStorage.getItem(PREVIOUS_QUERIES_KEY);
 
         if (storedQueries) {
           const parsed = JSON.parse(storedQueries);
@@ -180,5 +184,4 @@ export class SongSearch {
 
     return score;
   }
-
 }
