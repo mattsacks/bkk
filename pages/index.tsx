@@ -5,9 +5,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import SongList from "@/components/SongList";
-import SongSearch from "@/components/SongSearch";
-import songSearch from "@/lib/songSearch";
-import { SEARCH_KEY } from "@/lib/types";
+import { SongSearchForm } from "@/components/SongSearchForm";
+import { SongSearch } from "@/lib/SongSearch";
 import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
 import { useToken } from "@/lib/useToken";
@@ -25,7 +24,7 @@ function Index() {
 
   // Load previous query from storage
   useEffect(() => {
-    const prevQuery = localStorage.getItem(SEARCH_KEY);
+    const prevQuery = SongSearch.queries[0];
 
     if (prevQuery) {
       setSearchQuery(prevQuery);
@@ -35,7 +34,7 @@ function Index() {
   // Derive filtered songs from search query and songs
   const filteredSongs = useMemo(() => {
     if (typeof searchQuery === "string" && searchQuery) {
-      return songSearch(searchQuery, songs);
+      return SongSearch.search(searchQuery, songs);
     }
     return [];
   }, [searchQuery, songs]);
@@ -45,9 +44,7 @@ function Index() {
     setSearchQuery(query);
 
     if (query) {
-      localStorage.setItem(SEARCH_KEY, query);
-    } else {
-      localStorage.removeItem(SEARCH_KEY);
+      SongSearch.addQuery(query);
     }
   }, []);
 
@@ -87,7 +84,7 @@ function Index() {
       ) : (
         <div className="app-container flex flex-1 flex-col items-center gap-gutter">
           <div className="bg-background sticky top-0 z-10 w-full">
-            <SongSearch onSearch={onSearch} searchQuery={searchQuery} />
+            <SongSearchForm onSearch={onSearch} searchQuery={searchQuery} />
           </div>
           <div className="mt-gutter w-full flex-1">
             {searchQuery && <SongList songs={filteredSongs} />}

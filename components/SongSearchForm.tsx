@@ -2,12 +2,12 @@
 import debounce from "lodash/debounce";
 import { useMemo, useRef } from "react";
 
-interface SongSearchProps {
+interface SongSearchFormProps {
   onSearch: (query?: string) => void;
   searchQuery?: string;
 }
 
-function SongSearch({ onSearch, searchQuery }: SongSearchProps) {
+export function SongSearchForm({ onSearch, searchQuery }: SongSearchFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const debouncedSearchSongs = useMemo(() => {
@@ -78,5 +78,3 @@ function SongSearch({ onSearch, searchQuery }: SongSearchProps) {
     </form>
   );
 }
-
-export default SongSearch;
