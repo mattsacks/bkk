@@ -2,30 +2,19 @@ const js = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const prettier = require("eslint-config-prettier");
 const simpleImportSort = require("eslint-plugin-simple-import-sort");
-const jsxA11y = require("eslint-plugin-jsx-a11y");
-const react = require("eslint-plugin-react");
-const reactHooks = require("eslint-plugin-react-hooks");
-const nextPlugin = require("@next/eslint-plugin-next");
+const nextConfig = require("eslint-config-next");
 
 module.exports = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...nextConfig,
   prettier,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     plugins: {
-      "simple-import-sort": simpleImportSort,
-      "jsx-a11y": jsxA11y,
-      react: react,
-      "react-hooks": reactHooks,
-      "@next/next": nextPlugin
+      "simple-import-sort": simpleImportSort
     },
     rules: {
-      ...react.configs.recommended.rules,
-      ...react.configs["jsx-runtime"].rules,
-      ...reactHooks.configs.recommended.rules,
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/no-var-requires": "off",
