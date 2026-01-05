@@ -1,4 +1,4 @@
-import { useDeferredValue, useMemo } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
@@ -11,27 +11,27 @@ import { useSongSearch } from "@/lib/useSongSearch";
 export default function SongSearchPage() {
   const {
     clearQueries,
+    lastQuery,
     previousQueries,
-    searchQuery,
     submitQuery,
-    updateQuery
+    updateSearchFilter
   } = useSongSearch();
 
   const { songs, isLoading } = useSongs();
 
-  // Defer the search query so the input stays responsive
+  const [searchQuery, setSearchQuery] = useState(lastQuery || "");
   const deferredSearchQuery = useDeferredValue(searchQuery);
+
+  const isPending = searchQuery !== deferredSearchQuery;
 
   // Derive filtered songs from deferred search query
   const filteredSongs = useMemo(() => {
     if (typeof deferredSearchQuery === "string" && deferredSearchQuery) {
       return SongSearch.search(deferredSearchQuery, songs);
+    } else {
+      return [];
     }
-    return [];
   }, [deferredSearchQuery, songs]);
-
-  // Check if search is pending (user typed faster than search completed)
-  const isPending = searchQuery !== deferredSearchQuery;
 
   return (
     <>
@@ -44,20 +44,27 @@ export default function SongSearchPage() {
         <div className="app-container flex flex-1 flex-col items-center gap-gutter">
           <div className="bg-background sticky top-0 z-10 w-full">
             <SongSearchForm
-              onSearch={updateQuery}
+              onSearchChange={(query) => {
+                setSearchQuery(query || "");
+                updateSearchFilter(query);
+              }}
               onSubmit={submitQuery}
-              searchQuery={searchQuery}
+              lastQuery={lastQuery}
             />
           </div>
           {searchQuery && (
             <div className="mt-gutter flex w-full flex-1 flex-col">
-              <div
-                style={{
-                  opacity: isPending ? 0.65 : 1
-                }}
-              >
-                <SongList songs={filteredSongs} />
-              </div>
+              {isPending && filteredSongs.length === 0 ? (
+                <Loading className="flex-1" />
+              ) : (
+                <div
+                  style={{
+                    opacity: isPending ? 0.5 : 1
+                  }}
+                >
+                  <SongList songs={filteredSongs} />
+                </div>
+              )}
             </div>
           )}
           {!searchQuery && previousQueries.length > 0 && (
@@ -82,7 +89,10 @@ export default function SongSearchPage() {
                   <li key={index}>
                     <button
                       className="text-start underline"
-                      onClick={() => submitQuery(query)}
+                      onClick={() => {
+                        setSearchQuery(query);
+                        submitQuery(query);
+                      }}
                     >
                       {query}
                     </button>

@@ -1,18 +1,48 @@
 // Input that filters a list of songs
-import { useRef } from "react";
+import debounce from "lodash/debounce";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface SongSearchFormProps {
-  onSearch: (query?: string) => void;
+  /** When the user changes the search input. */
+  onSearchChange: (query?: string) => void;
+  /** When the user submits a change. */
   onSubmit: (query?: string) => void;
-  searchQuery?: string;
+  /** The latest query that's been preserved in storage. */
+  lastQuery?: string;
 }
 
 export function SongSearchForm({
-  onSearch,
+  onSearchChange,
   onSubmit,
-  searchQuery
+  lastQuery
 }: SongSearchFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const prevLastQueryRef = useRef(lastQuery);
+
+  const [hasSearchInput, setHasSearchInput] = useState(!!lastQuery);
+
+  const debouncedSubmit = useMemo(
+    () => debounce((query: string) => onSubmit(query), 666),
+    [onSubmit]
+  );
+
+  useEffect(() => {
+    return () => debouncedSubmit.cancel();
+  }, [debouncedSubmit]);
+
+  // Sync input value when lastQuery changes externally (i.e, prefilling input)
+  // but don't control it during normal typing
+  useEffect(() => {
+    if (lastQuery !== prevLastQueryRef.current) {
+      prevLastQueryRef.current = lastQuery;
+
+      if (inputRef.current && inputRef.current.value !== lastQuery) {
+        inputRef.current.value = lastQuery ?? "";
+      }
+
+      setHasSearchInput(Boolean(lastQuery));
+    }
+  }, [lastQuery]);
 
   return (
     <form
@@ -21,6 +51,8 @@ export function SongSearchForm({
         e.preventDefault();
 
         inputRef.current?.blur();
+
+        debouncedSubmit.cancel();
 
         const query = inputRef.current?.value || "";
         onSubmit(query);
@@ -32,7 +64,7 @@ export function SongSearchForm({
           autoComplete="off"
           autoCorrect="off"
           className="input w-full"
-          value={searchQuery || ""}
+          defaultValue={lastQuery || ""}
           enterKeyHint="search"
           id="song-search-input"
           name="search"
@@ -42,13 +74,15 @@ export function SongSearchForm({
               .replace(/[\u2018\u2019]/g, "'")
               .replace(/[\u201C\u201D]/g, '"');
 
-            onSearch(query);
+            setHasSearchInput(Boolean(query));
+            onSearchChange(query);
+            debouncedSubmit(query);
           }}
           placeholder="search songz"
           ref={inputRef}
           type="search"
         />
-        {searchQuery && (
+        {hasSearchInput && (
           <button
             aria-label="clear search"
             aria-controls="song-search-input"
@@ -58,6 +92,10 @@ export function SongSearchForm({
                 inputRef.current.value = "";
               }
 
+              debouncedSubmit.cancel();
+
+              setHasSearchInput(false);
+              onSearchChange("");
               onSubmit("");
 
               inputRef.current?.focus();
