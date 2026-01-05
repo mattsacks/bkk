@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { SongSearch } from "./SongSearch";
 
 /**
- * Manages search query state with localStorage persistence.
+ * Manages search query state with sessionStorage persistence.
  * Handles both active query and previous queries history.
  */
 export function useSongSearch() {

@@ -7,10 +7,13 @@ export class SongSearch {
   private static _activeQuery = "";
 
   static {
-    // Initialize from localStorage if available
-    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    // Initialize from sessionStorage if available
+    if (
+      typeof window !== "undefined" &&
+      typeof sessionStorage !== "undefined"
+    ) {
       try {
-        const storedQueries = localStorage.getItem(PREVIOUS_QUERIES_KEY);
+        const storedQueries = sessionStorage.getItem(PREVIOUS_QUERIES_KEY);
 
         if (storedQueries) {
           const parsed = JSON.parse(storedQueries);
@@ -21,7 +24,7 @@ export class SongSearch {
       }
 
       try {
-        const storedActive = localStorage.getItem(ACTIVE_SEARCH_KEY);
+        const storedActive = sessionStorage.getItem(ACTIVE_SEARCH_KEY);
         this._activeQuery = storedActive ?? "";
       } catch {
         this._activeQuery = "";
@@ -73,7 +76,7 @@ export class SongSearch {
   static set queries(queries: string[]) {
     this._queries = queries;
     try {
-      localStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
+      sessionStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
     } catch {}
   }
 
@@ -83,7 +86,7 @@ export class SongSearch {
   static clearQueries() {
     this._queries = [];
     try {
-      localStorage.removeItem(PREVIOUS_QUERIES_KEY);
+      sessionStorage.removeItem(PREVIOUS_QUERIES_KEY);
     } catch {}
   }
 
@@ -101,7 +104,7 @@ export class SongSearch {
     this._activeQuery = query;
 
     try {
-      localStorage.setItem(ACTIVE_SEARCH_KEY, query);
+      sessionStorage.setItem(ACTIVE_SEARCH_KEY, query);
     } catch {}
   }
 
@@ -111,7 +114,7 @@ export class SongSearch {
   static clearActiveQuery() {
     this._activeQuery = "";
     try {
-      localStorage.removeItem(ACTIVE_SEARCH_KEY);
+      sessionStorage.removeItem(ACTIVE_SEARCH_KEY);
     } catch {}
   }
 
