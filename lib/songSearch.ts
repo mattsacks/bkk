@@ -1,12 +1,120 @@
 import { orderBy } from "lodash";
 
-import {
-  ACTIVE_SEARCH_KEY,
-  PREVIOUS_QUERIES_KEY,
-  Song
-} from "./types";
+import { ACTIVE_SEARCH_KEY, PREVIOUS_QUERIES_KEY, Song } from "./types";
 
 export class SongSearch {
+  private static _queries: string[] = [];
+  private static _activeQuery = "";
+
+  static {
+    // Initialize from localStorage if available
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      try {
+        const storedQueries = localStorage.getItem(PREVIOUS_QUERIES_KEY);
+
+        if (storedQueries) {
+          const parsed = JSON.parse(storedQueries);
+          this._queries = Array.isArray(parsed) ? parsed : [];
+        }
+      } catch {
+        this._queries = [];
+      }
+
+      try {
+        const storedActive = localStorage.getItem(ACTIVE_SEARCH_KEY);
+        this._activeQuery = storedActive ?? "";
+      } catch {
+        this._activeQuery = "";
+      }
+    }
+  }
+
+  /**
+   * Adds a query to the previous query history.
+   */
+  static addQuery(query: string) {
+    const trimmed = query.trim();
+
+    if (!trimmed) {
+      return;
+    }
+
+    const queries = this.queries;
+
+    if (queries[0] === trimmed) {
+      return;
+    }
+
+    // Remove existing entry if found
+    const filteredQueries = queries.filter((q) => q !== trimmed);
+
+    // Add the new query to the front
+    filteredQueries.unshift(trimmed);
+
+    const maxQueries = 20;
+
+    if (filteredQueries.length > maxQueries) {
+      filteredQueries.length = maxQueries;
+    }
+
+    this.queries = filteredQueries;
+  }
+
+  /**
+   * Gets the user's previous queries.
+   */
+  static get queries(): string[] {
+    return this._queries;
+  }
+
+  /**
+   * Updates the user's previous queries.
+   */
+  static set queries(queries: string[]) {
+    this._queries = queries;
+    try {
+      localStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
+    } catch {}
+  }
+
+  /**
+   * Removes all user's previous queries.
+   */
+  static clearQueries() {
+    this._queries = [];
+    try {
+      localStorage.removeItem(PREVIOUS_QUERIES_KEY);
+    } catch {}
+  }
+
+  /**
+   * Gets the user's active input query.
+   */
+  static get activeQuery(): string {
+    return this._activeQuery;
+  }
+
+  /**
+   * Updates the user's active input query.
+   */
+  static set activeQuery(query: string) {
+    this._activeQuery = query;
+
+    try {
+      localStorage.setItem(ACTIVE_SEARCH_KEY, query);
+    } catch {}
+  }
+
+  /**
+   * Clears the user's active input query.
+   */
+  static clearActiveQuery() {
+    this._activeQuery = "";
+    try {
+      localStorage.removeItem(ACTIVE_SEARCH_KEY);
+    } catch {}
+  }
+
   /**
    * Filters all loaded songs by a search query.
    *
@@ -48,113 +156,6 @@ export class SongSearch {
     });
 
     return orderBy(songsWithScores, "score", "desc").map((item) => item.song);
-  }
-
-  /**
-   * Adds a query to the previous query history.
-   */
-  static addQuery(query: string) {
-    const trimmed = query.trim();
-
-    if (!trimmed) {
-      return;
-    }
-
-    const queries = this.queries;
-
-    if (queries[0] === trimmed) {
-      return;
-    }
-
-    queries.unshift(trimmed);
-
-    const maxQueries = 20;
-
-    if (queries.length > maxQueries) {
-      queries.length = maxQueries;
-    }
-
-    this.queries = queries;
-  }
-
-  /**
-   * Gets the user's previous queries.
-   */
-  static get queries(): string[] {
-    return this._queries;
-  }
-
-  /**
-   * Updates the user's previous queries.
-   */
-  static set queries(queries: string[]) {
-    this._queries = queries;
-    try {
-      localStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
-    } catch {}
-  }
-
-  /**
-   * Removes all user's previous queries.
-   */
-  static clearQueries() {
-    this._queries = [];
-    try {
-      localStorage.removeItem(PREVIOUS_QUERIES_KEY);
-    } catch {}
-  }
-
-  private static _queries: string[] = [];
-  private static _activeQuery = "";
-
-  static {
-    // Initialize from localStorage if available
-    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-      try {
-        const storedQueries = localStorage.getItem(PREVIOUS_QUERIES_KEY);
-
-        if (storedQueries) {
-          const parsed = JSON.parse(storedQueries);
-          this._queries = Array.isArray(parsed) ? parsed : [];
-        }
-      } catch {
-        this._queries = [];
-      }
-
-      try {
-        const storedActive = localStorage.getItem(ACTIVE_SEARCH_KEY);
-        this._activeQuery = storedActive ?? "";
-      } catch {
-        this._activeQuery = "";
-      }
-    }
-  }
-
-  /**
-   * Gets the user's active input query.
-   */
-  static get activeQuery(): string {
-    return this._activeQuery;
-  }
-
-  /**
-   * Updates the user's active input query.
-   */
-  static set activeQuery(query: string) {
-    this._activeQuery = query;
-    try {
-      localStorage.setItem(ACTIVE_SEARCH_KEY, query);
-    } catch {}
-  }
-
-  /**
-   * Clears the user's active input query.
-   */
-  static clearActiveQuery() {
-    this._activeQuery = "";
-    try {
-      localStorage.removeItem(ACTIVE_SEARCH_KEY);
-    } catch {}
   }
 
   /**

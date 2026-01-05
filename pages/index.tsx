@@ -1,35 +1,23 @@
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import SongList from "@/components/SongList";
 import { SongSearchForm } from "@/components/SongSearchForm";
 import { SongSearch } from "@/lib/SongSearch";
-import useDialog from "@/lib/useDialog";
 import useSongs from "@/lib/useSongs";
-import { useToken } from "@/lib/useToken";
-
-const Dialog = dynamic(() => import("@/components/Dialog"), {
-  ssr: false
-});
+import { useSongSearch } from "@/lib/useSongSearch";
 
 function Index() {
-  const [searchQuery, setSearchQuery] = useState<string | undefined>();
-  const [_, setToken] = useToken();
-  const router = useRouter();
+  const {
+    clearQueries,
+    previousQueries,
+    searchQuery,
+    submitQuery,
+    updateQuery
+  } = useSongSearch();
 
   const { songs, isLoading } = useSongs();
-
-  // Load previous query from storage
-  useEffect(() => {
-    const prevQuery = SongSearch.activeQuery;
-
-    if (prevQuery) {
-      setSearchQuery(prevQuery);
-    }
-  }, []);
 
   // Derive filtered songs from search query and songs
   const filteredSongs = useMemo(() => {
@@ -39,78 +27,58 @@ function Index() {
     return [];
   }, [searchQuery, songs]);
 
-  // Cached so debounced handler can persist between updates
-  const onSearch = useCallback((query = "") => {
-    setSearchQuery(query);
-    SongSearch.activeQuery = query;
-
-    if (query) {
-      SongSearch.addQuery(query);
-    }
-  }, []);
-
-  function leaveRoom() {
-    setToken(undefined);
-    router.push("/login");
-  }
-
-  const leaveRoomDialog = useDialog({
-    confirm: {
-      action: leaveRoom,
-      text: "see ya l8r"
-    }
-  });
-
   const showLoading = isLoading;
 
   return (
     <>
       <AppNav />
       {showLoading ? (
-        <>
-          <div className="app-container flex flex-1 flex-col gap-gutter">
-            <Loading className="flex-1" />
-            <button
-              className="outline-button mx-auto"
-              onClick={() => {
-                leaveRoomDialog.showDialog();
-              }}
-              aria-haspopup="dialog"
-              aria-controls="leave-room-dialog"
-            >
-              Leave room
-            </button>
-          </div>
-        </>
+        <div className="app-container flex flex-1 flex-col gap-gutter">
+          <Loading className="flex-1" />
+        </div>
       ) : (
         <div className="app-container flex flex-1 flex-col items-center gap-gutter">
           <div className="bg-background sticky top-0 z-10 w-full">
-            <SongSearchForm onSearch={onSearch} searchQuery={searchQuery} />
+            <SongSearchForm
+              onSearch={updateQuery}
+              onSubmit={submitQuery}
+              searchQuery={searchQuery}
+            />
           </div>
-          <div className="mt-gutter w-full flex-1">
+          <div className="mt-gutter flex w-full flex-1 flex-col">
             {searchQuery && <SongList songs={filteredSongs} />}
+            {!searchQuery && previousQueries.length > 0 && (
+              <>
+                <div className="mb-gutter flex items-center justify-between">
+                  <p id="previous-queries-label">Previous:</p>
+                  <button
+                    aria-controls="previous-queries-list"
+                    aria-label="Clear previous queries"
+                    className="underline"
+                    onClick={clearQueries}
+                  >
+                    Clear
+                  </button>
+                </div>
+                <ol
+                  id="previous-queries-list"
+                  className="queries-list"
+                  aria-labelledby="previous-queries-label"
+                >
+                  {previousQueries.map((query, index) => (
+                    <li key={index}>
+                      <button
+                        className="text-start underline"
+                        onClick={() => submitQuery(query)}
+                      >
+                        {query}
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
           </div>
-          {!searchQuery && (
-            <button
-              className="outline-button mx-auto"
-              onClick={() => {
-                leaveRoomDialog.showDialog();
-              }}
-              aria-haspopup="dialog"
-              aria-controls="leave-room-dialog"
-            >
-              Leave room
-            </button>
-          )}
-          <Dialog
-            {...leaveRoomDialog}
-            dialogProps={{
-              "aria-labelledby": "leave-room-dialog-label",
-              id: "leave-room-dialog"
-            }}
-          >
-            <h2 id="leave-room-dialog-label">leave the room?</h2>
-          </Dialog>
         </div>
       )}
     </>

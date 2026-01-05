@@ -4,10 +4,15 @@ import { useMemo, useRef } from "react";
 
 interface SongSearchFormProps {
   onSearch: (query?: string) => void;
+  onSubmit: (query?: string) => void;
   searchQuery?: string;
 }
 
-export function SongSearchForm({ onSearch, searchQuery }: SongSearchFormProps) {
+export function SongSearchForm({
+  onSearch,
+  onSubmit,
+  searchQuery
+}: SongSearchFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const debouncedSearchSongs = useMemo(() => {
@@ -20,10 +25,9 @@ export function SongSearchForm({ onSearch, searchQuery }: SongSearchFormProps) {
       onSubmit={(e) => {
         e.preventDefault();
 
-        const query = inputRef.current?.value;
         inputRef.current?.blur();
 
-        onSearch(query);
+        onSubmit(searchQuery);
       }}
     >
       <div className="outlined-input flex w-full">
@@ -32,20 +36,17 @@ export function SongSearchForm({ onSearch, searchQuery }: SongSearchFormProps) {
           autoComplete="off"
           autoCorrect="off"
           className="input w-full"
-          defaultValue={searchQuery}
+          value={searchQuery || ""}
           enterKeyHint="search"
           id="song-search-input"
           name="search"
           onChange={(e) => {
-            e.persist();
-
             // Replace any smart quotes with regular ones
             const query = e.target.value
               .replace(/[\u2018\u2019]/g, "'")
               .replace(/[\u201C\u201D]/g, '"');
 
-            e.target.value = query;
-
+            onSearch(query);
             debouncedSearchSongs(query);
           }}
           placeholder="search songz"
@@ -58,16 +59,13 @@ export function SongSearchForm({ onSearch, searchQuery }: SongSearchFormProps) {
             aria-controls="song-search-input"
             className="search-clear remove-line-height"
             onClick={() => {
-              onSearch();
+              onSearch("");
 
-              if (inputRef.current) {
-                inputRef.current.value = "";
-                inputRef.current.focus();
+              inputRef.current?.focus();
 
-                setTimeout(() => {
-                  window.scrollTo(0, 0);
-                }, 100);
-              }
+              setTimeout(() => {
+                window.scrollTo(0, 0);
+              }, 100);
             }}
             type="button"
           >
