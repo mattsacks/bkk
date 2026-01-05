@@ -77,7 +77,7 @@ export function AppNav() {
               className="app-nav-icon"
               focusable={false}
             />
-            <span className="app-nav-label">Songs</span>
+            <span className="app-nav-label">Sing</span>
           </AppNavLink>
         </li>
       </ul>

@@ -1,0 +1,7 @@
+.queries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style-type: "- ";
+  padding-inline-start: var(--gutter);
+}

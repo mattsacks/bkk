@@ -1,11 +1,19 @@
 // --- Local ---
 
+/** Number of seconds in a day. */
 export const SECONDS_IN_DAY = 86_400;
+/** Maximum number of days a cookie can be stored. */
 export const MAX_COOKIE_DAYS = 400;
 
-export const SEARCH_KEY = "mathis_search";
+/** Storage key for user's previous search queries. */
+export const PREVIOUS_QUERIES_KEY = "bkk_queries";
+/** Storage key for user's active input query. */
+export const ACTIVE_SEARCH_KEY = "bkk_active_search";
+/** User authentication token. */
 export const USER_COOKIE = "mathis_user";
+/** User preferred theme token. */
 export const THEME_COOKIE = "bkk_theme";
+/** User preferred color scheme token. */
 export const COLOR_SCHEME_COOKIE = "bkk_color_scheme";
 
 export type CookieKeys =
