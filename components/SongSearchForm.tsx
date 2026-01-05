@@ -22,7 +22,7 @@ export function SongSearchForm({
   const [hasSearchInput, setHasSearchInput] = useState(!!lastQuery);
 
   const debouncedSubmit = useMemo(
-    () => debounce((query: string) => onSubmit(query), 666),
+    () => debounce((query: string) => onSubmit(query), 1500),
     [onSubmit]
   );
 
