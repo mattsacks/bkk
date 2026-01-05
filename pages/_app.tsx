@@ -1,4 +1,3 @@
-/* eslint-env node */
 import "@/styles/index.css";
 
 import { AppProps } from "next/app";

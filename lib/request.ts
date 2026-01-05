@@ -1,5 +1,4 @@
 // Wrapper around fetch() to make it nicer
-import fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
 import qs from "qs";
 
