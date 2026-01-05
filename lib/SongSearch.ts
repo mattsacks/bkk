@@ -133,7 +133,7 @@ export class SongSearch {
     }
 
     const queryTerms = trimmedQuery.toLowerCase().split(" ");
-    const maxResults = 250;
+    const maxResults = 150;
 
     const filteredSongs: Song[] = [];
 
