@@ -37,6 +37,9 @@ export default function useColorScheme() {
 
   useEffect(() => {
     if (!colorScheme) {
+      // Hydration: Sync color scheme from cookie/system preference
+      // after SSR
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setColorScheme(getColorScheme());
     }
   }, [colorScheme]);

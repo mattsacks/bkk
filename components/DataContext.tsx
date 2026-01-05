@@ -20,6 +20,11 @@ export function useInitializeToken(initialToken?: string) {
     const storedToken = Cookies.get(USER_COOKIE);
 
     if (!token && storedToken) {
+      // Hydration: Sync client-side cookie with state after SSR.
+      // Server can't access cookies, so initial state is
+      // undefined. This effect updates state on client mount to
+      // match cookie.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setToken(storedToken);
     }
   }, [token]);

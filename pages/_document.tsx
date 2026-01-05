@@ -29,7 +29,9 @@ function onLoad() {
 
       try {
         val = decodeURIComponent(val);
-      } catch (e) {}
+      } catch {
+        // Ignore decode errors
+      }
 
       if (key) {
         res[key] = val;
@@ -59,7 +61,7 @@ function onLoad() {
     }
 
     document.documentElement.dataset.colorScheme = colorScheme;
-  } catch (e) {
+  } catch {
     // No-op
   }
 }

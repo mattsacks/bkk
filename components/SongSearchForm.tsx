@@ -40,6 +40,8 @@ export function SongSearchForm({
         inputRef.current.value = lastQuery ?? "";
       }
 
+      // Hydration: Sync state with localStorage after SSR
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasSearchInput(Boolean(lastQuery));
     }
   }, [lastQuery]);

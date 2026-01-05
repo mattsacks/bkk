@@ -77,7 +77,9 @@ export class SongSearch {
     this._queries = queries;
     try {
       sessionStorage.setItem(PREVIOUS_QUERIES_KEY, JSON.stringify(queries));
-    } catch {}
+    } catch {
+      // Ignore storage errors
+    }
   }
 
   /**
@@ -87,7 +89,9 @@ export class SongSearch {
     this._queries = [];
     try {
       sessionStorage.removeItem(PREVIOUS_QUERIES_KEY);
-    } catch {}
+    } catch {
+      // Ignore storage errors
+    }
   }
 
   /**
@@ -105,7 +109,9 @@ export class SongSearch {
 
     try {
       sessionStorage.setItem(ACTIVE_SEARCH_KEY, query);
-    } catch {}
+    } catch {
+      // Ignore storage errors
+    }
   }
 
   /**
@@ -115,7 +121,9 @@ export class SongSearch {
     this._activeQuery = "";
     try {
       sessionStorage.removeItem(ACTIVE_SEARCH_KEY);
-    } catch {}
+    } catch {
+      // Ignore storage errors
+    }
   }
 
   /**
