@@ -28,6 +28,9 @@ export function QueueActions() {
 
   useEffect(() => {
     if (hasQueuedTracks && queue[0].status === "paused" && !isPaused) {
+      // Sync local isPaused state with server-fetched queue status
+      // after SSR hydration
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsPaused(true);
     }
   }, [hasQueuedTracks, queue, isPaused]);

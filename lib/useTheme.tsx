@@ -41,6 +41,8 @@ export default function useTheme() {
 
   useEffect(() => {
     if (!theme) {
+      // Hydration: Sync theme from cookie after SSR
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme(getTheme());
     }
   }, [theme]);

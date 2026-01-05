@@ -16,6 +16,8 @@ export function ThemeSettingsSection() {
 
   useEffect(() => {
     if (!isServer) {
+      // Hydration: Track client-side render state after SSR
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasRendered(true);
     }
   }, [hasRendered]);
@@ -77,7 +79,7 @@ export function ThemeSettingsSection() {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-gutter md:grid-cols-3">
+      <div className="gap-gutter grid grid-cols-2 md:grid-cols-3">
         {ThemeSwatches}
       </div>
     </section>
