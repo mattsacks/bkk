@@ -165,6 +165,13 @@ export class SongSearch {
 
   /**
    * Calculates a relevance score for a search term against a target string.
+   * Higher scores indicate better matches based on exact matches, prefix
+   * matches, word boundaries, and string length.
+   *
+   * @param searchTerm - The search query to match against
+   * @param targetString - The target string (e.g., artist name or song title)
+   * to score
+   * @returns A numeric score where higher values indicate better relevance
    */
   private static calculateRelevanceScore(
     searchTerm: string,
@@ -177,10 +184,10 @@ export class SongSearch {
     // Exact match bonus (highest priority)
     if (target === search) score += 1000;
 
-    // Starts with bonus
+    // Bonus for starts with
     if (target.startsWith(search)) score += 500;
 
-    // Word boundary bonus
+    // Bonus for discrete words
     if (target.match(new RegExp(`\\b${search}`, "i"))) score += 300;
 
     // Length factor (shorter is better for same match)
