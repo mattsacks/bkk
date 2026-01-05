@@ -1,6 +1,5 @@
 // Input that filters a list of songs
-import debounce from "lodash/debounce";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 
 interface SongSearchFormProps {
   onSearch: (query?: string) => void;
@@ -15,10 +14,6 @@ export function SongSearchForm({
 }: SongSearchFormProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const debouncedSearchSongs = useMemo(() => {
-    return debounce(onSearch, 333);
-  }, [onSearch]);
-
   return (
     <form
       role="search"
@@ -27,7 +22,8 @@ export function SongSearchForm({
 
         inputRef.current?.blur();
 
-        onSubmit(searchQuery);
+        const query = inputRef.current?.value || "";
+        onSubmit(query);
       }}
     >
       <div className="outlined-input flex w-full">
@@ -47,7 +43,6 @@ export function SongSearchForm({
               .replace(/[\u201C\u201D]/g, '"');
 
             onSearch(query);
-            debouncedSearchSongs(query);
           }}
           placeholder="search songz"
           ref={inputRef}
@@ -59,7 +54,11 @@ export function SongSearchForm({
             aria-controls="song-search-input"
             className="search-clear remove-line-height"
             onClick={() => {
-              onSearch("");
+              if (inputRef.current) {
+                inputRef.current.value = "";
+              }
+
+              onSubmit("");
 
               inputRef.current?.focus();
 

@@ -123,11 +123,13 @@ export class SongSearch {
    * @returns A list of filtered songs sorted by relevance score.
    */
   static search(query: string, songs: Song[]): Song[] {
-    if (query.trim().length < 2) {
+    const trimmedQuery = query.trim();
+
+    if (!trimmedQuery) {
       return [];
     }
 
-    const queryTerms = query.toLowerCase().split(" ");
+    const queryTerms = trimmedQuery.toLowerCase().split(" ");
     const maxResults = 500;
 
     const filteredSongs: Song[] = [];

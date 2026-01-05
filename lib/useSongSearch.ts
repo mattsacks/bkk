@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import debounce from "lodash/debounce";
+import { useCallback, useMemo, useState } from "react";
 
 import { SongSearch } from "./SongSearch";
 
@@ -7,46 +8,64 @@ import { SongSearch } from "./SongSearch";
  * Handles both active query and previous queries history.
  */
 export function useSongSearch() {
-  const [searchQuery, setSearchQuery] = useState<string | undefined>();
-  const [previousQueries, setPreviousQueries] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string | undefined>(
+    () => SongSearch.activeQuery || undefined
+  );
+  const [previousQueries, setPreviousQueries] = useState<string[]>(
+    () => SongSearch.queries
+  );
 
-  // Sync w/ localStorage
-  useEffect(() => {
-    const activeQuery = SongSearch.activeQuery;
-
-    if (activeQuery) {
-      setSearchQuery(activeQuery);
-    }
-
-    setPreviousQueries(SongSearch.queries);
-  }, []);
+  // Wait for user to stop typing for persisting previous query
+  const debouncedAddQuery = useMemo(
+    () =>
+      debounce((query: string) => {
+        if (query.trim()) {
+          SongSearch.addQuery(query);
+          setPreviousQueries(SongSearch.queries);
+        }
+      }, 666),
+    []
+  );
 
   /**
-   * Updates the active query as user types. Does not persist to search
-   * history.
+   * Updates the active query and persists non-empty queries to search history
+   * after user pauses typing.
    * @param query - The search query string
    * @returns void
    */
-  const updateQuery = useCallback((query = "") => {
-    setSearchQuery(query);
-    SongSearch.activeQuery = query;
-  }, []);
+  const updateQuery = useCallback(
+    (query = "") => {
+      setSearchQuery(query);
+      SongSearch.activeQuery = query;
+
+      // Debounced: Add to history after user stops typing
+      debouncedAddQuery(query);
+    },
+    [debouncedAddQuery]
+  );
 
   /**
-   * Submits a search query. Persists non-empty queries to search history.
+   * Submits a search query. Immediately persists non-empty queries to search
+   * history.
    * @param query - The search query string to submit
    * @returns void
    */
-  const submitQuery = useCallback((query = "") => {
-    setSearchQuery(query);
-    SongSearch.activeQuery = query;
+  const submitQuery = useCallback(
+    (query = "") => {
+      setSearchQuery(query);
+      SongSearch.activeQuery = query;
 
-    // Only persist non-empty queries to history
-    if (query.trim()) {
-      SongSearch.addQuery(query);
-      setPreviousQueries(SongSearch.queries);
-    }
-  }, []);
+      // Cancel any pending debounced calls
+      debouncedAddQuery.cancel();
+
+      // Immediately persist non-empty queries to history
+      if (query.trim()) {
+        SongSearch.addQuery(query);
+        setPreviousQueries(SongSearch.queries);
+      }
+    },
+    [debouncedAddQuery]
+  );
 
   /**
    * Clears all previous search queries from history and resets the active
@@ -61,7 +80,9 @@ export function useSongSearch() {
 
   return {
     clearQueries,
+    /** Array of previous search queries from history */
     previousQueries,
+    /** The current active search query string */
     searchQuery,
     submitQuery,
     updateQuery
