@@ -4,7 +4,7 @@ import { ACTIVE_SEARCH_KEY, PREVIOUS_QUERIES_KEY, Song } from "./types";
 
 export class SongSearch {
   private static _queries: string[] = [];
-  private static _activeQuery = "";
+  private static _currentQuery = "";
 
   static {
     // Initialize from sessionStorage if available
@@ -24,10 +24,10 @@ export class SongSearch {
       }
 
       try {
-        const storedActive = sessionStorage.getItem(ACTIVE_SEARCH_KEY);
-        this._activeQuery = storedActive ?? "";
+        const storedCurrent = sessionStorage.getItem(ACTIVE_SEARCH_KEY);
+        this._currentQuery = storedCurrent ?? "";
       } catch {
-        this._activeQuery = "";
+        this._currentQuery = "";
       }
     }
   }
@@ -95,17 +95,17 @@ export class SongSearch {
   }
 
   /**
-   * Gets the user's active input query.
+   * Gets the user's current input query.
    */
-  static get activeQuery(): string {
-    return this._activeQuery;
+  static get currentQuery(): string {
+    return this._currentQuery;
   }
 
   /**
-   * Updates the user's active input query.
+   * Updates the user's current input query.
    */
-  static set activeQuery(query: string) {
-    this._activeQuery = query;
+  static set currentQuery(query: string) {
+    this._currentQuery = query;
 
     try {
       sessionStorage.setItem(ACTIVE_SEARCH_KEY, query);
@@ -115,10 +115,10 @@ export class SongSearch {
   }
 
   /**
-   * Clears the user's active input query.
+   * Clears the user's current input query.
    */
-  static clearActiveQuery() {
-    this._activeQuery = "";
+  static clearCurrentQuery() {
+    this._currentQuery = "";
     try {
       sessionStorage.removeItem(ACTIVE_SEARCH_KEY);
     } catch {

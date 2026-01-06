@@ -4,11 +4,11 @@ import { SongSearch } from "./SongSearch";
 
 /**
  * Manages search query state with sessionStorage persistence.
- * Handles both active query and previous queries history.
+ * Handles both current query and previous queries history.
  */
 export function useSongSearch() {
-  const [lastQuery, setLastQuery] = useState<string | undefined>(
-    () => SongSearch.activeQuery || undefined
+  const [currentQuery, setCurrentQuery] = useState<string | undefined>(
+    () => SongSearch.currentQuery || undefined
   );
 
   const [previousQueries, setPreviousQueries] = useState<string[]>(
@@ -16,24 +16,23 @@ export function useSongSearch() {
   );
 
   /**
-   * Updates the search filter (called on every keystroke).
+   * Updates the current query (called on every keystroke).
    * @param query - The search query string
    * @returns The query string for filtering
    */
-  const updateSearchFilter = useCallback((query = "") => {
-    SongSearch.activeQuery = query;
-
+  const updateCurrentQuery = useCallback((query = "") => {
+    SongSearch.currentQuery = query;
     return query;
   }, []);
 
   /**
-   * Submits a search query. Sets it as the initial query and persists to history.
+   * Submits a search query. Sets it as the current query and persists to history.
    * @param query - The search query string to submit
    * @returns void
    */
   const submitQuery = useCallback((query = "") => {
-    setLastQuery(query);
-    SongSearch.activeQuery = query;
+    setCurrentQuery(query);
+    SongSearch.currentQuery = query;
 
     // Immediately persist non-empty queries to history
     if (query.trim()) {
@@ -43,21 +42,21 @@ export function useSongSearch() {
   }, []);
 
   /**
-   * Clears all previous search queries from history and resets the active
+   * Clears all previous search queries from history and resets the current
    * query.
    * @returns void
    */
   const clearQueries = useCallback(() => {
     SongSearch.clearQueries();
     setPreviousQueries([]);
-    setLastQuery(undefined);
+    setCurrentQuery(undefined);
   }, []);
 
   return {
     clearQueries,
-    lastQuery,
+    currentQuery,
     previousQueries,
     submitQuery,
-    updateSearchFilter
+    updateCurrentQuery
   };
 }

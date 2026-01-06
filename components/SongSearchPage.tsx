@@ -1,76 +1,80 @@
-import { useDeferredValue, useMemo, useState } from "react";
+import debounce from "lodash/debounce";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 import AppNav from "@/components/AppNav";
 import Loading from "@/components/Loading";
 import SongList from "@/components/SongList";
-import { SongSearchForm } from "@/components/SongSearchForm";
-import { SongSearch } from "@/lib/SongSearch";
+import { SongSearchInput } from "@/components/SongSearchInput";
 import useSongs from "@/lib/useSongs";
 import { useSongSearch } from "@/lib/useSongSearch";
 
 export default function SongSearchPage() {
   const {
     clearQueries,
-    lastQuery,
+    currentQuery,
     previousQueries,
     submitQuery,
-    updateSearchFilter
+    updateCurrentQuery
   } = useSongSearch();
 
   const { songs, isLoading } = useSongs();
 
-  const [searchQuery, setSearchQuery] = useState(lastQuery || "");
+  const [searchQuery, setSearchQuery] = useState(currentQuery || "");
+
+  // Debounced submit for persisting queries to history after user stops typing
+  const debouncedSubmit = useMemo(
+    () => debounce((query: string) => submitQuery(query), 1250),
+    [submitQuery]
+  );
+
+  // Cancel any pending updates on component unmount
+  useEffect(() => {
+    return () => debouncedSubmit.cancel();
+  }, [debouncedSubmit]);
+
   const deferredSearchQuery = useDeferredValue(searchQuery);
-
-  const isPending = searchQuery !== deferredSearchQuery;
-
-  // Derive filtered songs from deferred search query
-  const filteredSongs = useMemo(() => {
-    if (typeof deferredSearchQuery === "string" && deferredSearchQuery) {
-      return SongSearch.search(deferredSearchQuery, songs);
-    } else {
-      return [];
-    }
-  }, [deferredSearchQuery, songs]);
 
   return (
     <>
       <AppNav />
       {isLoading ? (
-        <div className="app-container flex flex-1 flex-col gap-gutter">
+        <div className="app-container gap-gutter flex flex-1 flex-col">
           <Loading className="flex-1" />
         </div>
       ) : (
-        <div className="app-container flex flex-1 flex-col items-center gap-gutter">
+        <div className="app-container gap-gutter flex flex-1 flex-col items-center">
           <div className="bg-background sticky top-0 z-10 w-full">
-            <SongSearchForm
-              onSearchChange={(query) => {
-                setSearchQuery(query || "");
-                updateSearchFilter(query);
+            <form
+              role="search"
+              onSubmit={(e) => {
+                e.preventDefault();
+                debouncedSubmit.cancel();
+                submitQuery(searchQuery);
               }}
-              onSubmit={submitQuery}
-              lastQuery={lastQuery}
-            />
+            >
+              <SongSearchInput
+                value={searchQuery}
+                onChange={(query) => {
+                  setSearchQuery(query);
+                  updateCurrentQuery(query);
+                  debouncedSubmit(query);
+                }}
+                onSubmit={() => {
+                  debouncedSubmit.cancel();
+                  submitQuery(searchQuery);
+                }}
+              />
+            </form>
           </div>
           {searchQuery && (
             <div className="mt-gutter flex w-full flex-1 flex-col">
-              {isPending && filteredSongs.length === 0 ? (
-                <Loading className="flex-1" />
-              ) : (
-                <div
-                  style={{
-                    opacity: isPending ? 0.5 : 1
-                  }}
-                >
-                  <SongList songs={filteredSongs} />
-                </div>
-              )}
+              <SongList query={deferredSearchQuery} songs={songs} />
             </div>
           )}
           {!searchQuery && previousQueries.length > 0 && (
             <div className="mt-gutter flex w-full flex-1 flex-col">
               <div className="mb-gutter flex items-center justify-between">
-                <p id="previous-queries-label">Previous:</p>
+                <p id="previous-queries-label">Previous</p>
                 <button
                   aria-controls="previous-queries-list"
                   aria-label="Clear previous queries"
