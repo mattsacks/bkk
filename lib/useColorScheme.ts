@@ -24,8 +24,8 @@ export default function useColorScheme() {
       setColorScheme(newColorScheme);
       document.documentElement.dataset.colorScheme = newColorScheme;
 
-      // Store if the color scheme doesn't match the current value matched by the
-      // system.
+      // Store if the color scheme doesn't match the current value matched by
+      // the system.
       if (newColorScheme !== colorScheme) {
         Cookies.set(COLOR_SCHEME_COOKIE, newColorScheme, {
           expires: MAX_COOKIE_DAYS
