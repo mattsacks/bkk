@@ -1,7 +1,7 @@
 import request from "lib/request";
 import { QueuedTrack, Song } from "lib/types";
 import usePost from "lib/usePost";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { mutate } from "swr";
 
 let buttonAnimationTimeout: number;
@@ -11,7 +11,7 @@ interface SongListItemProps {
   song: Song;
 }
 
-function SongListItem(props: SongListItemProps) {
+export function SongListItem(props: SongListItemProps) {
   const { queuedTrack, song } = props;
   const { postRequest } = usePost("/tracks", {
     song_id: song.id
@@ -46,7 +46,7 @@ function SongListItem(props: SongListItemProps) {
   return (
     <div className="song-list-item">
       <div className="p-3 text-left capitalize">
-        <h4 className="mb-0.5 text-balance text-lg leading-none md:mb-0 md:text-xl">
+        <h4 className="mb-0.5 text-lg leading-none text-balance md:mb-0 md:text-xl">
           {song.name}
         </h4>
         <h3 className="text-sm">{song.artist}</h3>
@@ -76,4 +76,9 @@ function SongListItem(props: SongListItemProps) {
   );
 }
 
-export default SongListItem;
+/**
+ * Memoized version of a song list item. Only updates when it's ID has changed.
+ */
+export const SongListItemMemo = memo(SongListItem, (prevProps, nextProps) => {
+  return prevProps.song.id === nextProps.song.id;
+});

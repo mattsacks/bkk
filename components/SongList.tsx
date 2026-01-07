@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import SongListItem from "@/components/SongListItem";
+import { SongListItemMemo } from "@/components/SongListItem";
 import { SongSearch } from "@/lib/SongSearch";
 import { Song } from "@/lib/types";
 import useQueue from "@/lib/useQueue";
@@ -28,14 +28,16 @@ function SongList({ query, songs }: SongListProps) {
   const ListItems = filteredSongs.map((song) => {
     const queuedTrack = queue.find((q) => q.song_id === song.id);
 
-    return <SongListItem key={song.id} queuedTrack={queuedTrack} song={song} />;
+    return (
+      <SongListItemMemo key={song.id} queuedTrack={queuedTrack} song={song} />
+    );
   });
 
   if (filteredSongs.length === 0) {
-    return <div className="flex w-full flex-col gap-8">no songs found</div>;
+    return <div className="song-list-container">no songs found</div>;
   }
 
-  return <div className="flex w-full flex-col gap-4 sm:gap-6">{ListItems}</div>;
+  return <div className="song-list-container">{ListItems}</div>;
 }
 
 export default SongList;
