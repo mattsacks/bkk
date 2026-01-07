@@ -33,6 +33,7 @@ export default function SongSearchPage() {
   }, [debouncedSubmit]);
 
   const deferredSearchQuery = useDeferredValue(searchQuery);
+  const isSearchPending = deferredSearchQuery !== searchQuery;
 
   return (
     <>
@@ -68,7 +69,7 @@ export default function SongSearchPage() {
           </div>
           {searchQuery && (
             <div className="mt-gutter flex w-full flex-1 flex-col">
-              <SongList query={deferredSearchQuery} songs={songs} />
+              <SongList isPending={isSearchPending} query={deferredSearchQuery} songs={songs} />
             </div>
           )}
           {!searchQuery && previousQueries.length > 0 && (

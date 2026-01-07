@@ -6,13 +6,15 @@ import { Song } from "@/lib/types";
 import useQueue from "@/lib/useQueue";
 
 interface SongListProps {
+  /** Whether or not the search is using a deferred value. */
+  isPending?: boolean;
   /** The search query. */
   query: string;
   /** Songs available for filtering & display. */
   songs: Song[];
 }
 
-function SongList({ query, songs }: SongListProps) {
+function SongList({ isPending = false, query, songs }: SongListProps) {
   const { queue } = useQueue();
 
   // Perform expensive search filtering here, with the deferred query value
@@ -33,11 +35,11 @@ function SongList({ query, songs }: SongListProps) {
     );
   });
 
-  if (filteredSongs.length === 0) {
+  if (filteredSongs.length === 0 && !isPending) {
     return <div className="song-list-container">no songs found</div>;
+  } else {
+    return <div className="song-list-container">{ListItems}</div>;
   }
-
-  return <div className="song-list-container">{ListItems}</div>;
 }
 
 export default SongList;
