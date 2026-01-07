@@ -2,17 +2,17 @@
 :root {
   color-scheme: light dark;
 
-  --default-light: #FAFAFA;
-  --default-dark: #0A0A0A;
+  --default-light: #fafafa;
+  --default-dark: #0a0a0a;
 
   --rose-light: rgb(250, 175, 190);
   --rose-dark: rgb(138, 73, 85);
 
-  --terminal-light: #00FF84;
-  --terminal-dark: #001C15;
+  --terminal-light: #00ff84;
+  --terminal-dark: #001c15;
 
-  --sky-white: rgb(209, 223, 243);
-  --sky-blue: rgb(87, 126, 197);
+  --weird-light: rgb(242 191 88);
+  --weird-dark: rgb(13 16 19);
 
   /**
    * Unused themes
@@ -45,9 +45,9 @@
   --color-dark: var(--terminal-dark);
 }
 
-[data-theme="sky"] {
-  --color-light: var(--sky-white);
-  --color-dark: var(--sky-blue);
+[data-theme="weird"] {
+  --color-light: var(--weird-light);
+  --color-dark: var(--weird-dark);
 }
 
 [data-color-scheme="light"] {
@@ -68,14 +68,13 @@
     --color-accent: var(--color-dark);
     --color-background: var(--color-light);
   }
-  
-  /** WIP */
- /* @supports (color: light-dark(var(--color-light), var(--dark))) { */
- /*   --color-accent: light-dark(var(--color-dark), var(--color-light)); */
- /*   --color-background: light-dark(var(--color-light), var(--color-dark)); */
- /* } */
-}
 
+  /** WIP */
+  /* @supports (color: light-dark(var(--color-light), var(--dark))) { */
+  /*   --color-accent: light-dark(var(--color-dark), var(--color-light)); */
+  /*   --color-background: light-dark(var(--color-light), var(--color-dark)); */
+  /* } */
+}
 
 /**
  * Waiting for baseline.
