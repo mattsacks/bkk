@@ -1,0 +1,11 @@
+.song-list-container {
+  /* content-visibility: auto; */
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--spacing-gutter);
+
+  @variant sm {
+    gap: var(--spacing-gutter-2);
+  }
+}

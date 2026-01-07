@@ -17,6 +17,7 @@
 @import "./components/invert.css" layer(components);
 @import "./components/list-item.css" layer(components);
 @import "./components/queries-list.css" layer(components);
+@import "./components/song-list.css" layer(components);
 @import "./components/submit.css" layer(components);
 
 @import "./pages/login.css" layer(components);
