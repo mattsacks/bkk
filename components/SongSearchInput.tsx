@@ -1,4 +1,4 @@
-import { useDeferredValue } from "react";
+import { useDeferredValue, useRef } from "react";
 
 interface SongSearchInputProps {
   /** Called when the input value changes */
@@ -14,7 +14,8 @@ export function SongSearchInput({
   onChange,
   onSubmit
 }: SongSearchInputProps) {
-  // Use deferred value for responsive input while search processing happens
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const deferredValue = useDeferredValue(value);
   const hasSearchInput = Boolean(deferredValue);
 
@@ -44,6 +45,7 @@ export function SongSearchInput({
           }
         }}
         placeholder="search songz"
+        ref={inputRef}
         type="search"
         value={value}
       />
@@ -54,6 +56,8 @@ export function SongSearchInput({
           className="search-clear remove-line-height"
           onClick={() => {
             onChange("");
+
+            inputRef.current?.focus();
 
             setTimeout(() => {
               window.scrollTo(0, 0);
