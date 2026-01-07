@@ -2,7 +2,8 @@ import useSWR, { SWRConfiguration } from "swr";
 
 import { Song } from "@/lib/types";
 
-import formatTracks from "./formatTracks";
+import { computeSongSearch } from "./computeSongSearch";
+import { formatArtistName } from "./formatArtistName";
 import { fetcher } from "./request";
 import { useToken } from "./useToken";
 
@@ -15,7 +16,8 @@ export default function useSongs(swrOptions: SWRConfiguration<SongData> = {}) {
     token ? "/songs" : null,
     async (endpoint: string) => {
       const songs = await fetcher<SongData>(endpoint);
-      return formatTracks(songs);
+
+      return songs.map(formatArtistName).map(computeSongSearch);
     },
     {
       revalidateIfStale: false,

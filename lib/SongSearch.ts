@@ -141,24 +141,40 @@ export class SongSearch {
     }
 
     const queryTerms = trimmedQuery.toLowerCase().split(" ");
-    const maxResults = 150;
+    const maxResults = 100;
 
     const filteredSongs: Song[] = [];
 
     // Filter with early exit when we hit max results
     for (const song of songs) {
-      if (filteredSongs.length >= maxResults) break;
+      if (filteredSongs.length >= maxResults) {
+        break;
+      }
 
-      const songString = `${song.artist} ${song.name}`.toLowerCase();
+      // Use pre-computed search query
+      const songString = song.search.query;
+
       if (queryTerms.every((term) => songString.includes(term))) {
         filteredSongs.push(song);
       }
     }
 
+    const searchLower = trimmedQuery.toLowerCase();
+    const wordBoundaryRegex = new RegExp(`\\b${searchLower}`, "i");
+
     // Calculate relevance scores and sort by them
     const songsWithScores = filteredSongs.map((song) => {
-      const artistScore = this.calculateRelevanceScore(query, song.artist);
-      const nameScore = this.calculateRelevanceScore(query, song.name);
+      const artistScore = this.calculateRelevanceScore(
+        searchLower,
+        song.search.artist,
+        wordBoundaryRegex
+      );
+
+      const nameScore = this.calculateRelevanceScore(
+        searchLower,
+        song.search.name,
+        wordBoundaryRegex
+      );
 
       const score = Math.max(artistScore, nameScore);
 
@@ -168,7 +184,11 @@ export class SongSearch {
       };
     });
 
-    return orderBy(songsWithScores, "score", "desc").map((item) => item.song);
+    const ordered = orderBy(songsWithScores, "score", "desc").map(
+      (item) => item.song
+    );
+
+    return ordered;
   }
 
   /**
@@ -176,31 +196,38 @@ export class SongSearch {
    * Higher scores indicate better matches based on exact matches, prefix
    * matches, word boundaries, and string length.
    *
-   * @param searchTerm - The search query to match against
-   * @param targetString - The target string (e.g., artist name or song title)
-   * to score
+   * @param searchLower - Pre-computed lowercase search query
+   * @param targetLower - Pre-computed lowercase target string
+   * @param wordBoundaryRegex - Pre-compiled regex for word boundary matching
    * @returns A numeric score where higher values indicate better relevance
    */
   private static calculateRelevanceScore(
-    searchTerm: string,
-    targetString: string
+    searchLower: string,
+    targetLower: string,
+    wordBoundaryRegex: RegExp
   ): number {
-    const search = searchTerm.toLowerCase();
-    const target = targetString.toLowerCase();
     let score = 0;
 
     // Exact match bonus (highest priority)
-    if (target === search) score += 1000;
+    if (targetLower === searchLower) {
+      score += 1000;
+      return score; // Early exit - no need to check further
+    }
 
     // Bonus for starts with
-    if (target.startsWith(search)) score += 500;
+    if (targetLower.startsWith(searchLower)) {
+      score += 500;
+      return score; // Early exit - word boundary regex won't add value
+    }
 
-    // Bonus for discrete words
-    if (target.match(new RegExp(`\\b${search}`, "i"))) score += 300;
+    // Bonus for discrete words - use pre-compiled regex
+    if (targetLower.match(wordBoundaryRegex)) {
+      score += 300;
+    }
 
     // Length factor (shorter is better for same match)
-    if (target.includes(search)) {
-      score += 100 - target.length;
+    if (targetLower.includes(searchLower)) {
+      score += 100 - targetLower.length;
     }
 
     return score;

@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 import { QueuedTrack } from "@/lib/types";
 
-import formatTracks from "./formatTracks";
+import { formatArtistName } from "./formatArtistName";
 import { fetcher } from "./request";
 import { useToken } from "./useToken";
 
@@ -14,7 +14,7 @@ export default function useQueue() {
     async (endpoint: string) => {
       const data = await fetcher<{ tracks: QueuedTrack[] }>(endpoint);
 
-      return formatTracks(data.tracks);
+      return data.tracks.map(formatArtistName);
     }
   );
 

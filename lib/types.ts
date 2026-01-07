@@ -29,11 +29,21 @@ export type ColorScheme = "light" | "dark";
 
 // --- API ---
 
+export interface SongSearchQuery {
+  /** The song artist's name, lowercased for text match. */
+  artist: string;
+  /** The song name, lowercased for text match. */
+  name: string;
+  /** A query string to match against the song, usually `${artist} ${name}`. */
+  query: string;
+}
+
 export interface Song {
   artist: string;
   id: number;
   name: string;
   tags: string;
+  search: SongSearchQuery;
 }
 
 export interface User {
