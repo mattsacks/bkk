@@ -74,7 +74,7 @@ function SongList({ isPending = false, query, songs }: SongListProps) {
       {ListItems}
       {hasMore && (
         <button
-          className="outline-button"
+          className="button"
           onClick={() => {
             scrollPositionRef.current = window.scrollY;
             setPage((prev) => prev + 1);
