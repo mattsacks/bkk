@@ -141,13 +141,13 @@ export class SongSearch {
     }
 
     const queryTerms = trimmedQuery.toLowerCase().split(" ");
-    const maxResults = 100;
+    const MAX_RESULTS = 500;
 
     const filteredSongs: Song[] = [];
 
-    // Filter with early exit when we hit max results
+    // Filter matching songs with early exit at MAX_RESULTS
     for (const song of songs) {
-      if (filteredSongs.length >= maxResults) {
+      if (filteredSongs.length >= MAX_RESULTS) {
         break;
       }
 

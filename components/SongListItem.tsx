@@ -77,7 +77,7 @@ export function SongListItem(props: SongListItemProps) {
 }
 
 /**
- * Memoized version of a song list item. Only updates when it's ID has changed.
+ * Memoized version of a song list item. Only updates when its ID.
  */
 export const SongListItemMemo = memo(SongListItem, (prevProps, nextProps) => {
   return prevProps.song.id === nextProps.song.id;
