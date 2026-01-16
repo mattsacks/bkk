@@ -7,13 +7,16 @@
 
 :root {
   --gutter: 16px;
+  --gutter-0_5: calc(var(--gutter) * 0.5);
+  --gutter-1_5: calc(var(--gutter) * 1.5);
   --gutter-2: calc(var(--gutter) * 2);
   --gutter-3: calc(var(--gutter) * 3);
   --gutter-4: calc(var(--gutter) * 4);
 }
 
 @theme {
-  --border-radius: 2px;
+  --border-radius: 3px;
+  --inset-border-radius: 2px;
   --border-width: 2px;
   --breakpoint-xs: 360px;
   --flex-2: 2 2 0%;
@@ -26,10 +29,14 @@
 
   --color-accent: var(--color-accent);
   --color-background: var(--color-background);
-  --spacing-gutter-2: calc(var(--gutter) * 2);
+  --spacing-gutter-4: var(--gutter-4);
+  --spacing-gutter-3: var(--gutter-3);
+  --spacing-gutter-2: var(--gutter-2);
+  --spacing-gutter-1_5: var(--gutter-1_5);
+  --spacing-gutter-0_5: var(--gutter-0_5);
   --spacing-gutter: var(--gutter);
-  --terminal-primary: var(--terminal-primary);
-  --terminal-secondary: var(--terminal-secondary);
+  --term-primary: var(--term-primary);
+  --term-secondary: var(--term-secondary);
 }
 
 html {

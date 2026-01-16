@@ -2,8 +2,6 @@
 
 @import "tailwindcss";
 @import "./reset.css" layer(base);
-/* @import "tailwindcss/components" layer(components); */
-/* @import "tailwindcss/utilities" layer(utilities); */
 @import "./global.css" layer(base);
 @import "./colors.css" layer(base);
 

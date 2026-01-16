@@ -23,7 +23,7 @@ form[role="search"] {
 
 .search-clear {
   background-color: var(--color-accent);
-  border-radius: max(calc(var(--border-radius) - var(--border-width)), 1px);
+  border-radius: var(--inset-border-radius);
   color: var(--color-background);
   margin: calc(var(--border-radius) * 2);
   padding-inline: calc(var(--spacing) * 2.5);

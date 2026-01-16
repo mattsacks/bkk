@@ -24,7 +24,7 @@
 }
 
 .app-nav-link {
-  border-radius: max(calc(var(--border-radius) - var(--border-width)), 1px);
+  border-radius: var(--inset-border-radius);
   display: inline-block;
   margin: calc(var(--border-width) * 2);
   padding-block: var(--gutter);
@@ -50,8 +50,8 @@
   margin-inline: auto;
   width: var(--size);
 
-  &+.app-nav-label {
-    margin-block-start: 8px;
+  & + .app-nav-label {
+    margin-block-start: var(--spacing-gutter-0_5);
     display: block;
   }
 }
@@ -60,12 +60,7 @@
   font-size: 0.875rem;
 
   @supports(text-box-edge: cap alphabetic) {
-    line-height: 0;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
-  }
-
-  @supports not (text-box-edge: cap alphabetic) {
-    line-height: 1;
   }
 }

@@ -1,26 +1,55 @@
-.queue-actions {
-  --action-background-color: var(--color-primary);
-  --action-text-color: var(--color-secondary);
+.queue-empty-state {
+  border: var(--border-width) dotted var(--color-accent);
+  padding-block: var(--spacing-gutter-2);
 }
 
-.queue-action {
-  background-color: var(--color-primary);
-  border-radius: var(--border-radius);
-  color: var(--color-secondary);
+.queue-actions {
+  --action-background-color: var(--color-accent);
+  --action-text-color: var(--color-background);
+  border-top: 2px solid var(--color-background);
   display: flex;
-  gap: 0.25em;
-  padding: 0.5em 0.5em;
+  width: 100%;
+}
+
+.queue-actions li {
+  display: flex;
+  width: 100%;
+}
+
+.queue-actions .action {
+  border-radius: 0;
+  justify-content: center;
+  padding: 12px;
+  width: 100%;
+}
+
+.queue-actions li + li .action {
+  border-left: var(--border-width) solid var(--color-background);
+}
+
+.queue-actions li:first-child .action {
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.queue-actions li:last-child .action {
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.action-label {
+  display: none;
 }
 
 /* Icons within actions that modify the queue from the queue list. */
-.queue-action-icon {
-  --size: 16px;
+.action-icon {
+  --size: 20px;
   height: var(--size);
   width: var(--size);
 }
 
 .queue-heading {
-  font-size: var(--text-4xl);
+  font-size: var(--text-md);
+  margin-bottom: calc(var(--spacing-gutter));
+  /* text-align: center; */
 
   @supports(text-box-edge: text) {
     text-box-edge: text;

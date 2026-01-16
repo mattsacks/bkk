@@ -23,7 +23,7 @@ export type CookieKeys =
 
 export type CookieStore = Record<CookieKeys, string>;
 
-export const Themes = ["bkk", "weird", "terminal", "rose"] as const;
+export const Themes = ["bkk", "weird", "term", "rose"] as const;
 export type Theme = (typeof Themes)[number];
 export type ColorScheme = "light" | "dark";
 

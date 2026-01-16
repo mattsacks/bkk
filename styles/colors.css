@@ -8,8 +8,8 @@
   --rose-light: rgb(250, 175, 190);
   --rose-dark: rgb(138, 73, 85);
 
-  --terminal-light: #00ff84;
-  --terminal-dark: #001c15;
+  --term-light: #00ff84;
+  --term-dark: #001c15;
 
   --weird-light: rgb(242 191 88);
   --weird-dark: rgb(13 16 19);
@@ -40,9 +40,9 @@
   --color-dark: var(--rose-dark);
 }
 
-[data-theme="terminal"] {
-  --color-light: var(--terminal-light);
-  --color-dark: var(--terminal-dark);
+[data-theme="term"] {
+  --color-light: var(--term-light);
+  --color-dark: var(--term-dark);
 }
 
 [data-theme="weird"] {

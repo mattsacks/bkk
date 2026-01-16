@@ -1,11 +1,11 @@
+.list-item {
+  display: grid;
+}
+
 .remove-line-height {
   @supports(text-box-edge: cap alphabetic) {
-    line-height: 0;
+    display: block;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
-  }
-
-  @supports not (text-box-edge: cap alphabetic) {
-    line-height: auto;
   }
 }

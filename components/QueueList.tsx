@@ -7,22 +7,18 @@ interface Props {
 }
 
 function QueueList({ queueData }: Props) {
-  const NowSinging = <QueueItem queue={queueData[0]} label="Now Singing" />;
-
-  const UpNext = queueData[1] ? (
-    <QueueItem queue={queueData[1]} label="Up Next" />
-  ) : null;
+  // const NowSinging = <QueueItem queue={queueData[0]} label="Now Singing" />;
 
   const QueueRest = queueData
-    .slice(2)
+    .slice(1)
     .map((queue, index) => (
-      <QueueItem label={`#${index + 3}`} key={queue.id} queue={queue} />
+      <li key={queue.id}>
+      <QueueItem label={`[${index + 2}]`} queue={queue} />
+      </li>
     ));
 
   return (
-    <ul className="mb-6 h-full">
-      {NowSinging}
-      {UpNext}
+    <ul className="mb-6 h-full gap-gutter flex flex-col">
       {QueueRest}
     </ul>
   );

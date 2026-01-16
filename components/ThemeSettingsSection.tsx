@@ -54,7 +54,7 @@ export function ThemeSettingsSection() {
 
   return (
     <section>
-      <div className="mb-2 flex justify-between">
+      <div className="mb-gutter-0.5 flex justify-between">
         <div>Theme</div>
         <div
           aria-label="Buttons for changing the preferred color-scheme"

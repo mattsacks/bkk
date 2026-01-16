@@ -78,7 +78,7 @@ export function QueueActions() {
 
   return (
     <>
-      <ul className="queue-actions flex gap-3">
+      <ul className="queue-actions flex">
         <li>
           <button
             type="button"
