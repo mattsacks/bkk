@@ -8,6 +8,7 @@
 :root {
   --gutter: 16px;
   --gutter-0_5: calc(var(--gutter) * 0.5);
+  --gutter-0_75: calc(var(--gutter) * 0.75);
   --gutter-1_5: calc(var(--gutter) * 1.5);
   --gutter-2: calc(var(--gutter) * 2);
   --gutter-3: calc(var(--gutter) * 3);
@@ -29,11 +30,12 @@
 
   --color-accent: var(--color-accent);
   --color-background: var(--color-background);
-  --spacing-gutter-4: var(--gutter-4);
-  --spacing-gutter-3: var(--gutter-3);
-  --spacing-gutter-2: var(--gutter-2);
-  --spacing-gutter-1_5: var(--gutter-1_5);
   --spacing-gutter-0_5: var(--gutter-0_5);
+  --spacing-gutter-0_75: var(--gutter-0_75);
+  --spacing-gutter-1_5: var(--gutter-1_5);
+  --spacing-gutter-2: var(--gutter-2);
+  --spacing-gutter-3: var(--gutter-3);
+  --spacing-gutter-4: var(--gutter-4);
   --spacing-gutter: var(--gutter);
   --term-primary: var(--term-primary);
   --term-secondary: var(--term-secondary);
